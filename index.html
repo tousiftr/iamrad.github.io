@@ -61,7 +61,7 @@
                  <a class="navbar-brand js-scroll-trigger" href="#page-top">
 
 
-                <span class="d-block d-lg-none">--</span>
+                <span class="d-block d-lg-none">#data</span>
                 <span class="d-none d-lg-block">
                 <img class="img-fluid rounded-circle mx-auto mb-3" src="assets/img/iamradxyz.gif" alt="cat" width="150" height="250"></span>
             </a>
@@ -143,12 +143,12 @@
                     </div>
 
 
-                    <p class="lead mb-5">  <br> I'm a highly motivated Data Analyst with a Master's degree in Data Analytics and a solid background in Computer Science.I've been working in this field for over 3 years, and during that time, I've honed my technical skills to a proficient level. I'm well-versed in tools like Excel, Power BI, Tableau, SQL, and Python.
+                    <p class="lead mb-5">  <br> I have over 2 years of hands-on experience working as a Data/Reporting Analyst with expertise in diverse industries, including retail, disability services and support organization, SaaS, and the education sector. Additionally, I hold a Master of Science degree from Swinburne University of Technology in Data Analytics, as well as a B.Sc. in Computer Science and Engineering. Technically I have been working with Microsoft PowerBI, SQL, Excel, and Python. I am self-motivated with a strong work ethic and proven ability to deliver on set goals and objectives. I build rapport quickly with external and internal stakeholders, creating empathy and ensuring positive outcomes. I have strong analytical, planning, organisational and time management skills that contribute to successfully managing competing deadlines and excelling in challenging and fast-paced environments.
                     <br>
                     <br>
                     <br>
 
-                    <b>  Let's discuss how I can assist your data needs! </b></p>
+                    <b>  I am open to new opportunities and look forward to leveraging my expertise in data analysis to drive meaningful insights and business success.</b></p>
                     <br>
                     <br>
                     <br>       
@@ -702,18 +702,7 @@
            <link rel="stylesheet" href="css/cap.css">
   
             <label class="submit__control">
-            <h3>Are you human?</h3>
-          <div class="submit__generated"> 
-</div>
-    <i class="fa fa-refresh"></i>
-    
-                  </label>
-
-        <input class="submit overlay"  type="submit" value="Submit" />
-                 <div class="submit__overlay"></div>
- 
-
-              
+             
 
 
     
@@ -721,9 +710,73 @@
 
                 <button type="submit" class="btn btn-primary px-4 btn-lg">Send</button>
     
+  <!--Website Count -->
+ <style>
+    /* Styles for website counter */
+    .counter-container {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
+        background-color: #f2f2f2;
+        border: 1px solid #eee;
+        padding: 10px;
+        width: 150px;
+        text-align: center;
+        /*box-shadow: 5px 5px #888888;*/
+    }
 
- 
+    .website-counter {
+        background-color: black;
+        color: white;
+        font-weight: 700;
+        margin-top: 10px;
+        padding: 6px 6px 4px;
+        border-radius: 3px;
+        margin-right: 0;
+    }
 
+    /* Styles for reset button */
+    #reset {
+        margin-top: 20px;
+        background-color: #008cba;
+        cursor: pointer;
+        font-size: 18px;
+        padding: 8px 20px;
+        color: white;
+        border: 0;
+    }
+</style>
+
+<body>
+    <div class="counter-container">
+        <div>Visitor hits</div>
+        <div class="website-counter"></div>
+    </div>
+    <!-- <button id="reset">Reset</button> -->
+</body>
+
+<script>
+    var counterContainer = document.querySelector(".website-counter");
+    var resetButton = document.querySelector("#reset");
+    var visitCount = localStorage.getItem("page_view");
+    // Check if page_view entry is present
+    if (visitCount) {
+        visitCount = Number(visitCount) + 1;
+        localStorage.setItem("page_view", visitCount);
+    } else {
+        visitCount = 1;
+        localStorage.setItem("page_view", 1);
+    }
+    counterContainer.innerHTML = visitCount;
+    // Adding onClick event listener
+    resetButton.addEventListener("click", () => {
+        visitCount = 1;
+        localStorage.setItem("page_view", 1);
+        counterContainer.innerHTML = visitCount;
+    });
+</script>
    
              
         
@@ -760,7 +813,7 @@
     <div id="block-block-3" class="block block-block">
 
      <div class="content">
-    <p><span style="font-size:14px">©tousifalam v230623f.00</span></p>
+    <p><span style="font-size:14px">©tousifalam v250823a.00</span></p>
 
      </div>
      </div>
