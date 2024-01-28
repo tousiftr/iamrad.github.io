@@ -1,0 +1,53 @@
+ /*quote */  
+.containerqoute {
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 5px;
+        }
+@keyframes example {
+    from {background-color: powderblue;}
+    to {background-color: white;},
+  
+span#print{
+ 
+}
+  
+    background-color: white;
+    padding:100px, 1px, 1px, 1px ;
+}
+#top {
+  text-align:center;
+  display:block;
+  border-radius:25px;
+  position:relative;
+  margin:8% auto auto auto;
+  width:400px;
+  padding:40px 20px;
+  display:table;
+  background-color: #F0E4FE;
+  
+}
+
+
+button {
+    width:150px;
+    margin:auto;
+    display:block;
+      border-radius:55px;
+      color:whitesmoke;
+      background-color: #542CE8;
+      font-size:0.55em;
+      cursor:pointer;
+  box-shadow: 0 1px #542CE8;
+}
+ .button:hover {background-color: #8627B2}
+
+.button:active {
+  background-color: #542CE8;
+  box-shadow: 0 5px #542CE8;
+  transform: translateY(8px);
+}
+ 
+
+ 
