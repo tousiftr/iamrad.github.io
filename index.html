@@ -1,903 +1,1183 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-       <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-ML87N8FG1H"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ML87N8FG1H"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-ML87N8FG1H');
+  </script>
 
-  gtag('config', 'G-ML87N8FG1H');
-</script>
-        
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title> 📊 📈 📉 </title>
-        <link rel="icon" type="image/x-icon" href="assets/img/trp.png " />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i" rel="stylesheet" type="text/css" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
-        
-    </head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Portfolio of Rad Tousif A. — Data/Reporting Analyst" />
+  <title>📊 📈 📉</title>
+  <link rel="icon" type="image/x-icon" href="assets/img/trp.png" />
+
+  <!-- Fonts & Icons -->
+  <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i&display=swap" rel="stylesheet" />
+
+  <!-- Bootstrap + Theme -->
+  <link href="css/styles.css" rel="stylesheet" />
+
+  <!-- Page-specific compact styles (no floats; responsive grids) -->
+  <style>
+    :root{
+      --card-radius:12px; --muted:#6b7280; --line:#e5e7eb; --pad:14px; --gap:16px;
+      --logo-size:42px; /* tweak this to make logos smaller/larger */
+    }
+    body{scroll-behavior:smooth}
+
+    /* NAV avatar sizing */
+    .navbar-brand img{ width:150px; height:150px; object-fit:cover }
+
+    /* Utility */
+    .cardish{border:1px solid var(--line); border-radius:var(--card-radius); background:#fff;}
+
+    /* EXPERIENCE */
+    .experience-grid{ display:grid; grid-template-columns:1fr; gap:var(--gap); }
+    @media (min-width:768px){ .experience-grid{ grid-template-columns:1fr 1fr; } }
+    @media (min-width:1200px){ .experience-grid{ grid-template-columns:1fr 1fr 1fr; } }
+    .experience-card{ display:flex; align-items:center; gap:12px; padding:var(--pad); }
+    .company-logo{ width:var(--logo-size); height:var(--logo-size); object-fit:contain; border-radius:8px; flex-shrink:0 }
+    .experience-text h3{ font-size:1.05rem; margin:0; line-height:1.2 }
+    .experience-text .subheading{ font-size:.92rem; color:var(--muted); margin:.125rem 0 0 }
+
+    /* SKILLS */
+    .skills-card{ padding:20px; }
+    .skills-title{ font-size:1.25rem; margin-bottom:12px }
+    .skills-content{ display:grid; grid-template-columns:1fr; gap:var(--gap) }
+    @media (min-width:992px){ .skills-content{ grid-template-columns:1.3fr .7fr } }
+    .skill-inline{ margin:0; line-height:1.7 }
+    .logo-grid{ list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px }
+    @media (min-width:576px){ .logo-grid{ grid-template-columns:repeat(4, minmax(0,1fr)); } }
+    @media (min-width:992px){ .logo-grid{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
+    .tile{ display:flex; align-items:center; justify-content:center; padding:10px; border:1px solid var(--line); border-radius:10px; background:#fff; min-height:72px }
+    .logo{ width:44px; height:44px; object-fit:contain }
+    .logo-fallback{ font-size:.85rem; color:var(--muted) }
+
+    /* PROJECTS */
+    .project-card{ display:flex; gap:14px; padding:var(--pad); }
+    .project-thumb{ width:140px; height:100px; object-fit:cover; border-radius:8px; flex-shrink:0 }
+    .project-title{ margin:0 0 6px }
+    .project-note{ color:var(--muted); margin:4px 0 0 }
+
+    /* COUNTER */
+    .counter-container{ position:fixed; bottom:10px; right:10px; font-family:Arial, Helvetica, sans-serif; font-size:15px; background:#f2f2f2; border:1px solid #eee; padding:10px; width:150px; text-align:center }
+    .website-counter{ background:#000; color:#fff; font-weight:700; margin-top:10px; padding:6px 6px 4px; border-radius:3px }
+
+    /* Misc cleanups */
+    section.resume-section{ scroll-margin-top:80px }
+    a.clean{ color:#545454; text-decoration:none }
+    a.clean:hover{ text-decoration:underline }
+      /* Subtle motion on cards & tiles */
+    .cardish{ transition: transform .25s ease, box-shadow .25s ease; }
+    .cardish:hover{ transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+    .logo-grid .tile{ transition: transform .25s ease, box-shadow .25s ease; }
+    .logo-grid .tile:hover{ transform: translateY(-3px) scale(1.03); box-shadow: 0 6px 16px rgba(0,0,0,.06); }
+</style>
+  <!-- Animate On Scroll (AOS) -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+</head>
+
+<body id="page-top">
+  <!-- Splash / Welcome (kept as-is) -->
+  <div class="welcome">
+    <span id="splash-overlay" class="splash"></span>
+    <span id="welcome" class="z-depth-4"></span>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+      <span class="d-block d-lg-none">#data</span>
+      <span class="d-none d-lg-block">
+        <img class="img-fluid rounded-circle mx-auto mb-3" src="assets/img/iamradxyz.gif" alt="Profile" width="150" height="150" loading="lazy" />
+      </span>
+    </a>
+
+    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
+        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
+        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
+        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#certification">Certification</a></li>
+        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#achievement">Achievement & Volunteering</a></li>
+        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contactme">Contact Me</a></li>
+      </ul>
+    </div>
+
+    <!-- Minimal loader SVG retained -->
+    <svg version="1.1" id="L6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" xml:space="preserve" aria-hidden="true">
+      <rect fill="none" stroke="#fff" stroke-width="4" x="25" y="25" width="50" height="50">
+        <animateTransform attributeName="transform" dur="0.5s" from="0 50 50" to="180 50 50" type="rotate" id="strokeBox" attributeType="XML" begin="rectBox.end"/>
+      </rect>
+      <rect x="27" y="27" fill="#fff" width="46" height="50">
+        <animate attributeName="height" dur="2.5s" attributeType="XML" from="50" to="0" id="rectBox" fill="freeze" begin="0s;strokeBox.end"/>
+      </rect>
+    </svg>
+  </nav>
+
+  <!-- Page Content -->
+  <main>
+    <!-- About -->
+         <section class="resume-section" id="about">
+  <div class="resume-section-content">
+
+    <style>
+      /* Grid layout */
+      .about-grid {
+        display: grid;
+        gap: 10px;
+        align-items: start;
+        grid-template-columns: 1fr;
+      }
+      @media (min-width: 1320px) {
+        .about-grid {
+          grid-template-columns: 1fr 1.1fr; /* bio : timeline */
+        }
+      }
+      .cardish {
+        border: 1px solid var(--line, #e5e7eb);
+        border-radius: 12px;
+        background: #fff;
+        padding: 20px;
+      }
+
+      /* Timeline visuals */
+      .timeline-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .timeline-title { font-size: 1.1rem; margin: 0 }
+      .timeline-legend {
+        display: flex; gap: 6px; color: var(--muted, #6b7280);
+        font-size: .85rem; flex-wrap: wrap;
+      }
+      .chip { width: 12px; height: 12px; border-radius: 3px; display: inline-block }
+      .chip.edu { background: #7c3aed }
+      .chip.job { background: #2563eb }
+
+      .tl-stage { position: relative }
+      .tl-svg { width: 100%; height: 360px; overflow: visible }
+      .bar { rx: 6; ry: 6; cursor: pointer }
+      .bar.edu { fill: #7c3aed33; stroke: #7c3aed; stroke-width: 1.5 }
+      .bar.job { fill: #2563eb26; stroke: #2563eb; stroke-width: 1.5 }
+      .tl-tip {
+        position: absolute; padding: 6px 10px; background: #111827; color: #fff;
+        font-size: .8rem; border-radius: 6px; white-space: nowrap;
+        pointer-events: none; opacity: 0; transition: .15s;
+      }
+      .tl-tip.show { opacity: 1 }
+    </style>
+
+    <div class="about-grid">
+      <!-- LEFT: Bio -->
+      <div class="about-left cardish" data-aos="fade-up">
+        <h3 id="greeting"></h3>
+        <br>
+        <h3 class="mb-0">Rad <span class="text-primary">Tousif A.</span></h3>
+        <div>Dhaka, Bangladesh· <a href="mailto:rad.tousif@gmail.com">rad.tousif@gmail.com</a></div>
+
+        <p class="lead mb-5">
+          I have over 4 years of hands-on experience working as a Data/Reporting Analyst with expertise in diverse industries, including fintech, retail, disability services and support organization, SaaS, and the education sector. Additionally, I hold a Master of Science degree from Swinburne University of Technology in Data Analytics, as well as a B.Sc. in Computer Science and Engineering. Technically I have been working with Microsoft PowerBI, SQL, Excel, and Python. I am self-motivated with a strong work ethic and proven ability to deliver on set goals and objectives. I build rapport quickly with external and internal stakeholders, creating empathy and ensuring positive outcomes. I have strong analytical, planning, organisational and time management skills that contribute to successfully managing competing deadlines and excelling in challenging and fast-paced environments.
           
-   
+          <br>
+          <br>
+          <b>I am open to new opportunities and look forward to leveraging my expertise in data analysis to drive meaningful insights and business success.</b>
+        </p>
 
+        <div class="social-icons">
+          <a class="social-icon" href="https://www.linkedin.com/in/rad.tousif/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+          <a class="social-icon" href="mailto:rad.tousif@gmail.com"><i class="far fa-envelope-open"></i></a>
+          <a class="social-icon" href="tel:+8801793"><i class="fas fa-phone"></i></a>
+          <a class="social-icon" href="https://github.com/tousiftr" target="_blank"><i class="fab fa-github"></i></a>
+        </div>
+      </div>
 
-           <body id="page-top">
-
-
-              <div class="welcome">
-               <span id="splash-overlay" class="splash"></span>
-                <span id="welcome" class="z-depth-4"></span> 
-
-                 </div>
- 
- 
- 
-<!-- 
-
-#about
-#experience
-#skills
-#projects
-#education
-#certification
-#achievement
-#contactme 
--->
-                 
- 
-
-        <!-- Navigation-->
-                 <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-
-
-                 <a class="navbar-brand js-scroll-trigger" href="#page-top">
-
-
-                <span class="d-block d-lg-none">#data</span>
-                <span class="d-none d-lg-block">
-                <img class="img-fluid rounded-circle mx-auto mb-3" src="assets/img/iamradxyz.gif" alt="cat" width="150" height="250"></span>
-            </a>
-
-
-
-            <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-
-              
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-                
-                 <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
-                 
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
-
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Project</a></li>
-
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
-
-                <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#certification">Certification</a></li>
-
-              <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#achievement">Achievement & Volunteering</a></li>
-                    
-             <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contactme">Contact Me</a></li>
-                </ul>
-              
-
+      <!-- RIGHT: Timeline -->
+      <div class="about-right">
+        <!-- ===== Timeline (unchanged) ===== -->
+        <div class="timeline-box cardish" data-aos="fade-up">
+          <div class="timeline-head">
+            <h3 class="timeline-title">Timeline (2012–2025)</h3>
+            <div class="timeline-legend">
+              <span><span class="chip edu"></span> Education</span>
+              <span><span class="chip job"></span> Job</span>
             </div>
-
-
-         <svg version="1.1" id="L6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-         viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
-        <rect fill="none" stroke="#fff" stroke-width="4" x="25" y="25" width="50" height="50">
-           <animateTransform
-     attributeName="transform"
-     dur="0.5s"
-     from="0 50 50"
-     to="180 50 50"
-     type="rotate"
-     id="strokeBox"
-     attributeType="XML"
-     begin="rectBox.end"/>
-       </rect>
-   <rect x="27" y="27" fill="#fff" width="46" height="50">
-  <animate
-     attributeName="height"
-     dur="2.5s"
-     attributeType="XML"
-     from="50" 
-     to="0"
-     id="rectBox" 
-     fill="freeze"
-     begin="0s;strokeBox.end"/>
-  </rect>
-       </svg>
-        </nav>
- 
-
-
-       <!-- Page Content-->
- 
-            <!-- About--> 
-
-            <section class="resume-section" id="about" >
-            <div class="resume-section-content">
-                <h3 id="greeting"></h3>
-
-               
-
-                <div class="containerqoute" >
-                     <link rel="stylesheet" type="text/css" href="css/quote.css">
-                    <div id="top">
-                    <button class="button" id="click" onclick="nextElement();">Favorite Quote</button>
-                    <span id="print"></span>
-                    </div><script src="js/quote.js">
-                    </script> 
-                    </div>
-                  
-                    <br>
-                    <br>             
-                    <h3 class="mb-0">Rad <span class="text-primary">Tousif A.</span>
-                    </h3>
-
-    
-                    <div class="">Melbourne, Australia  
-                        <a href="mailto:tousif.tr@gmail.com"></a> 
-
-                    </div>
-                    
-                    
-                    
-                    <div>
- 
-                    <p class="lead mb-5">  <br> I have over 3 years of hands-on experience working as a Data/Reporting Analyst with expertise in diverse industries, including fintech, retail, disability services and support organization, SaaS, and the education sector. Additionally, I hold a Master of Science degree from Swinburne University of Technology in Data Analytics, as well as a B.Sc. in Computer Science and Engineering. Technically I have been working with Microsoft PowerBI, SQL, Excel, and Python. I am self-motivated with a strong work ethic and proven ability to deliver on set goals and objectives. I build rapport quickly with external and internal stakeholders, creating empathy and ensuring positive outcomes. I have strong analytical, planning, organisational and time management skills that contribute to successfully managing competing deadlines and excelling in challenging and fast-paced environments.
-                    <br>
-                    <br>
-                    <br>
-
-                    <b>  I am open to new opportunities and look forward to leveraging my expertise in data analysis to drive meaningful insights and business success.</b></p>
-                    <br>
-                    <br>
-                    <br>       
-                   </div>
-                        <div class="d-flex flex-column flex-md-row justify-content-end mb-5">
-                        <div class="flex-grow-6">
-
-                        <div class="social-icons">
-                        <a class="social-icon" href="https://www.linkedin.com/in/tousifrad/" target="_blank" ><i class="fab fa-linkedin-in"></i></a>
-                        <a class="social-icon" href="mailto:tousif.tr@gmail.com" target="_blank"><i class="far fa-envelope-open " target="mailto:rad.tousif@gmail.com" ></i></a>
-                        <a class="social-icon" href="tel:+61414070942" target="_blank"><i class="fas fa-phone" maiarget="_blank"></i></a>
-                        <a class="social-icon" href="https://github.com/tousiftr" target="_blank" ><i class="fab fa-github"></i></a>
-                            </div>
-                        </div>
-
-                   </div></section>
-                   <hr class="m-0"/>
-
-            <!-- Experience-->
-            <section class="resume-section" id="experience">
-                <div class="resume-section-content">
-                     <h2 class="mb-5">Experience</h2>
-
-
-
-               <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">      
-                          
-                        <a href="https://mmc.edu.au/" target="_blank">
-                          <img style="margin-right: 10px;
-                                float: left;padding-bottom: 8px;" src="assets/img/pepperstone.png" alt="logo" width="80" height="85" class="mb-0"> </a>
-
-                                <h3 class="mb-0" style="padding-top: 0px;">Data Analyst</h3>
-                                <div style="display: block; margin:0 0 0 0; margin-left: 10px;" class="subheading mb-3"> Pepperstone</div>
-                                
-                                
-
-                             </ul></p>
-                      </div>
-                       <!-- <div class="flex-shrink-0"><span class="text-primary"> 2023 - 2023</span></div> -->
-
-                    </div>
-                  
-                                     
-
-               <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">      
-                          
-                        <a href="https://www.onemda.com.au/" target="_blank">
-                          <img style="margin-right: 10px;
-                                float: left;padding-bottom: 8px;" src="assets/img/onemda.png" alt="logo" width="80" height="85" class="mb-0"> </a>
-
-                                <h3 class="mb-0" style="padding-top: 0px;">Reporting and Business Analyst</h3>
-                                <div style="display: block; margin:0 0 0 0; margin-left: 10px;" class="subheading mb-3">The Onemda Association Inc</div>
-
-
-                    <!--
-
-                            <p><li>Extracting and collating daily, weekly, monthly, and quarterly data from different software sources </li>
-                            <li>Creating weekly dashboard, policy fortnightly report and monthly performance report with dynamic dashboard for the CEO and Board Members </li>
-                            <li>Providing ongoing documentation for all reporting activities and actions as undertaken</li>
-                            <li>Configuring and maintaining the CRM system, including adding new users, troubleshooting issues, and implementing updates and upgrades</li>     
-                            <li>Updating and review reporting processes, analyse the collection, and recording of data, and undertake initiatives and tasks to improve data management and quality of reporting</li>
-                            <li>Interpreting data, analysing results using statistical techniques and providing ongoing reports</li>   
-                           
-                    -->
-                             </ul></p>
-                      </div>
-                       <!-- <div class="flex-shrink-0"><span class="text-primary"> 2023 - 2023</span></div> -->
-
-                    </div>
-                  
-
-
-               <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">      
-                          
-                        <a href="https://mmc.edu.au/" target="_blank">
-                          <img style="margin-right: 10px;
-                                float: left;padding-bottom: 8px;" src="assets/img/mmc.png" alt="logo" width="80" height="85" class="mb-0"> </a>
-
-                                <h3 class="mb-0" style="padding-top: 0px;">Digital Records Analyst</h3>
-                                <div style="display: block; margin:0 0 0 0; margin-left: 10px;" class="subheading mb-3"> Melbourne Metropolitan College</div>
-
- <!--
-                            <p><li>Collaborating with the Learning & Development team on new, innovative ways to maximise training effectiveness through the LMS</li>
-                            <li>Generating and managing standard, custom, and ad-hoc report requests </li>
-                            <li>Scheduling courses and creating compliance reports for the college</li>
-                            <li>Communicating across various levels of organisation </li>     
-                            <li>Creating pivot tables and modifying spreadsheets to achieve analytical goals</li>
--->                           
-                    
-                             </ul></p>
-                       </div>
-                       <!-- <div class="flex-shrink-0"><span class="text-primary">2022 - 2022</span></div> -->
-                    </div>
-                  
-
-
-                      <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                          <a href="https://www.woolworthsgroup.com.au/" target="_blank">      
-                          <img style="margin-right: 10px;
-                                float: left;padding-bottom: 8px;" src="assets/img/ww.png" alt="logo" width="80" height="80" class="mb-0"> </a>
-                                <h3 class="mb-0" style="padding-top: 0px;">Customer Service Supervisor</h3>
-                                <div style="display: block; margin:0 0 0 0; margin-left: 10px;" class="subheading mb-3"> Woolworths Supermarkets</div>
-
-                        <!--
-                            <p><li>Managing a team of up to 15 staff </li>
-                            <li>Monitoring business metrics to measure and manage customer service effectiveness </li>
-                            <li>Determining work procedures, work schedules, and workflow for employees</li>
-                            <li>Providing supervision and technical assistance to the customer service team </li>
-                            <li>Performing annual reviews, appraisals, and performance management reviews</li>                 
-                         -->         
-                            
-                            </ul></p>
-                    </div>
-                       <!--  <div class="flex-shrink-0"><span class="text-primary"> 2019 -  2022 </span></div> -->
-                    </div>
-
-
-
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">      
-                          
-                        <a href="https://www.swoopanalytics.com/" target="_blank">
-                          <img style="margin-right: 10px;
-                                float: left;padding-bottom: 8px;" src="assets/img/swoop.png" alt="logo" width="80" height="85" class="mb-0"> </a>
-
-                                <h3 class="mb-0" style="padding-top: 0px;">Data Analyst</h3>
-                                <div style="display: block; margin:0 0 0 0; margin-left: 10px;" class="subheading mb-3"> Swoop Analytics</div>
-<!--
-
-                            <p><li>Performing the test run using SharePoint analysis </li>
-                            <li>Repurposing data from existing applications </li>
-                            <li>Deriving new data from existing data sources</li>
-
-                            <li>Using the data to build dashboards, reports, and visualizations for data analysis</li>     
-                            <li>Gathering collaboration data and defined analytical processes </li>
-                            <li>Using the data to better understand client data and increased accuracy rate by 90%</li>
-                            <li>Extracting data, I used Microsoft graph API and postman API</li>
-                            <li>Collaborating with the development team on ETL tasks, maintaining data integrity and verifying pipeline stability</li>
--->
-                    
-                             </ul></p>
-                        </div>
-                      <!--  <div class="flex-shrink-0"><span class="text-primary"> 2021 -  2021</span></div> -->
-                    </div>
-
-
-                  <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">      
-                          <a href="https://www.swinburne.edu.au/" target="_blank">
-                          <img style="margin-right: 10px;
-                                float: left;padding-bottom: 8px;" src="assets/img/sut.jpg" alt="logo" width="80" height="85" class="mb-0"></a>
-                                <h3 class="mb-0" style="padding-top: 0px;">Data Analyst </h3>
-                                <div style="display: block; margin:0 0 0 0; margin-left: 10px;" class="subheading mb-3"> Swinburne University of Technology</div>
-<!--
-
-
-                            <p><li>Collecting raw data from Twitter using Rest API </li>
-                            <li>Preparing the data for better analysis for sentimental analysis </li>
-                            <li>Working with client-based on Twitter Covid-19 Hate Speech analysis</li>
-                            <li>Providing clients regular updates about the project</li>
-                            <li>Creating a dashboard and storytelling report with a hypothesis helping present the result to non-technical stakeholders</li>
-                            <li>Technical tools utilised were Tableau for (visualisation and dashboard) and Python/Open Refine (data cleansing)</li>
-                             </ul></p>
--->
-                        </div>
-                       <!-- <div class="flex-shrink-0"><span class="text-primary"> 2020 -  2020</span></div> -->
-                    </div>
-
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                          <a href="http://www.northsouth.edu/" target="_blank">      
-                          <img style="margin-right: 10px;
-                                float: left;padding-bottom: 8px;" src="assets/img/nsu.jpg" alt="logo" width="80" height="80" class="mb-0"> </a>
-                                <h3 class="mb-0" style="padding-top: 0px;"> Research Data Analyst</h3>
-                                <div style="display: block; margin:0 0 0 0; margin-left: 10px;" class="subheading mb-3"> North South University</div>
-  <!--                          
-                                <div style="display: block; margin:0 0 0 0; margin-left: 10px;" class="subheading mb-3"> Swinburne University of Technology</div>
-
-
-                            <p><li>Collecting the data and performing quantitative analysis </li>
-                            <li>Organized and analysed behavioural data in SAS resulting in 90% fewer errors and streaming data processing by over 4 weeks</li>
-                            <li>Performed statistical, qualitative and quantitative analysis</li>
-                            <li>Developed fact sheets, graphs, and tables to analyse and summarize survey data</li>
-          
--->             
-                            </ul></p>
-                        </div>
-                         <!-- <div class="flex-shrink-0"><span class="text-primary"> 2015 - 2015</span></div> -->
-                    </div>
-  
-      
-                     
-                    </div>
-                </div>
-            </section>
-            <hr class="m-0" />
-          
-            <!-- Skills-->
-            <section class="resume-section" id="skills">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Skills</h2>
-                    <div class="subheading mb-3" >TECHNICAL SKILLS</div>
-
-                   
-                    <ul class="list-inline dev-icons"> 
-                     
-                     <div class="subheading mb-3">      
-                       <li  class="mb-3"  style="color:#1a0000;" > Programming: SQL,Python, R, PHP, JavaScript </li>
-                       <li class="mb-3" style="color:#1a0000;"> Databases: SQL, NoSQL, Microsoft Access, Oracle, dbt Cloud </li>
-                   
-                       <li class="mb-3" style="color:#1a0000;"> Machine Learning Models: Supervised Learning, Unsupervised
-                         Learning, Reinforcement</li>
-                    <li class="mb-3" style="color:#1a0000;"> Reporting/ BI Tools:Microsoft Power BI, Microsoft Excel,Tableau</li>
-                    <li class="mb-3" style="color:#1a0000;"> Cloud Services: Microsoft Azure</li>
-
-                    <li class="mb-3" style="color:#1a0000;"> MarTech : Google Analytics 4, Google Tag Manager </li>
-
-                </div>
-                    
-                    </ul>
-                    <div class="subheading mb-3">Key Skills </div>
-                    <ul class="fa-ul mb-0">
-                        <li style="color:#1a0000;"><span class="fa-li"><i class="fas fa-check"></i></span>Data Cleansing </li>
-                        <li style="color:#1a0000;"><span class="fa-li"><i class="fas fa-check"></i></span>Data Manipulation & Validation</li>
-                        <li style="color:#1a0000;"><span class="fa-li"><i class="fas fa-check"></i></span>Data Insight Analysis</li>
-                        <li style="color:#1a0000;"><span class="fa-li"><i class="fas fa-check"></i></span>Reporting &  Analysis </li>
-                        <li style="color:#1a0000;"> <span class="fa-li"><i class="fas fa-check"></i></span>Stakeholder Management</li>
-                        <li style="color:#1a0000;"> <span class="fa-li"><i class="fas fa-check"></i></span>Data Visualisation</li>
-                    </ul>
-                </div>
-            </section>
-            <hr class="m-0" />
-
-
-
- <!-- Projects-->
-           <section class="resume-section" id="projects">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Projects</h2>
-                    
-
-                      <section class="resume-section" id="Dashboards">
-    <div class="resume-section-content">
-        
-        <h4 class="mb-5">Interactive Dashboards</h4>
-        
-              
-            
-            <!-- Projects/Customer NPS-->
-
-        <div class="d-flex flex-column flex-md-row justify-content-between mb-2">
-            <div class="flex-grow-1">
-             <a style="margin-left: 10px; float: left;padding-bottom: 8px;" href="https://app.powerbi.com/view?r=eyJrIjoiMDVlOTI2ODktNTIyZS00ZjMzLWJkYzMtZGZmZDU0MjI1ZmZhIiwidCI6IjE3NTFjZGNhLWVmNmItNGJkZS05ZmVlLTE2ZDMwYjdiMjdkMSJ9"  target="_blank"> 
-               
-                <img src="assets/img/CustomerNPS.gif" style="margin-right: 10px;float: left;padding-bottom: 128px;">  
-          </a>  <h4> <a style="color:#545454;" href="https://app.powerbi.com/view?r=eyJrIjoiMDVlOTI2ODktNTIyZS00ZjMzLWJkYzMtZGZmZDU0MjI1ZmZhIiwidCI6IjE3NTFjZGNhLWVmNmItNGJkZS05ZmVlLTE2ZDMwYjdiMjdkMSJ9" target="_blank">  Customer Net Promoter Score Dashboard</a></h2>
-             <div>
-            <p style="padding-top: 1px;"> 
-             [The dashboard background takes 30-60 seconds to load]
-            <br>• Live connected Dashboard to analyze customer NPS score  
-            <br>• Tool - PowerBI.
-            <br><b>• Click on the Thumbnail or Title to experience the Interactive Dashboard on PowerBI.</b> 
-             </p> 
-            </div>
-             </div>
-              </div>
-            
-                    
-            <!-- Projects/HR Analytics-->
-
-        <div class="d-flex flex-column flex-md-row justify-content-between mb-2">
-            <div class="flex-grow-1">
-             <a style="margin-left: 10px; float: left;padding-bottom: 8px;" href="https://app.powerbi.com/view?r=eyJrIjoiYTg1MTUxMzAtOTFiZi00MDU3LWI1MWQtZTUxNGM1MGRiOTI2IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection"  target="_blank"> 
-               
-                <img src="assets/img/HRanalytics.gif" style="margin-right: 10px;float: left;padding-bottom: 128px;">  
-          </a>  <h4> <a style="color:#545454;" href="https://app.powerbi.com/view?r=eyJrIjoiYTg1MTUxMzAtOTFiZi00MDU3LWI1MWQtZTUxNGM1MGRiOTI2IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" target="_blank">  HR Analytics Dashboard</a></h2>
-             <div>
-            <p style="padding-top: 1px;"> 
-             [The dashboard background takes 30-60 seconds to load]
-            <br>• HR Analytics Dashboard
-            <br>• Data Preparation  - SQL 
-            <br>• Tool - PowerBI
-            <br> <b>• Click on the Thumbnail or Title to experience the Interactive Dashboard on PowerBI.</b> 
-             </p>  
-            </div>
-             </div>
-              </div>
-
-
-                    
-            <!-- Projects/Sale KPI Monthly Analytics-->
-
-        <div class="d-flex flex-column flex-md-row justify-content-between mb-2">
-            <div class="flex-grow-1">
-             <a style="margin-left: 10px; float: left;padding-bottom: 8px;" href="https://app.powerbi.com/view?r=eyJrIjoiN2UzNWVhY2EtMzY5Yy00ZTE3LThjNzEtNmEzODQ1NjU4OGU1IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection"  target="_blank"> 
-               
-                <img src="assets/img/SalesDashboardKPI.gif" style="margin-right: 10px;float: left;padding-bottom: 128px;">  
-          </a>  <h4> <a style="color:#545454;" href="https://app.powerbi.com/view?r=eyJrIjoiN2UzNWVhY2EtMzY5Yy00ZTE3LThjNzEtNmEzODQ1NjU4OGU1IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" target="_blank">   Monthly Sale KPI Dashboard</a></h2>
-             <div>
-            <p style="padding-top: 1px;"> 
-             [The dashboard background takes 30-60 seconds to load]
-            <br>• Monthly Sale KPI Dashboard(SuperMarket)
-            <br>• Data Preparation - (Power Query) 
-            <br>• Tool - PowerBI
-            <br> <b>• Click on the Thumbnail or Title to experience the Interactive Dashboard on PowerBI.</b> 
-             </p>  
-            </div>
-             </div>
-              </div>
-
-
-
-            <h4 class="mb-5">Dashboards</h4>
-
-
-            <!-- Projects/Sprocket Central Pty Ltd -->
-
-
-         <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-            <div class="flex-grow-1">
-             <a style="margin-left: 10px; float: left;padding-bottom: 8px;" href="https://drive.google.com/file/d/10Dorgkb_2JtmMTCP3eRFxbTpJvFUQmxD/view?usp=sharing" target="_blank">                        
-             <img src="assets/img/SprocketCentralPtyLty.gif" style="margin-right: 10px;float: left;padding-bottom: 128px;"> </a>  
-             <h4> <a style="color:#545454;" href="https://github.com/tousifrad/Sprocket-Central-Pty-Ltd/blob/main/Dashboard.pdf" target="_blank">Customer Segmentation Analysis (Sprocket Central Pty Ltd ) </a></h2>
-            <div>
-            <p style="padding-top: 1px;"> • Final Report of Customer Segmentation Analytics
-            <br>• Analysed customer data insights and created a dashboard using Tableau
-            <br>• Developed RFM analysis from customer demographics and transaction history
-             </p> 
-               </div>
-                </div>
-                 </div>
-
-
-
-          <!-- Projects/PORTUGUESE BANKING INSTITUTION. -->
-
-
-         <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-            <div class="flex-grow-1">
-             <a style="margin-left: 10px; float: left;padding-bottom: 8px;" href="https://drive.google.com/file/d/10Dorgkb_2JtmMTCP3eRFxbTpJvFUQmxD/view?usp=sharing" target="_blank">                        
-             <img src="assets/img/BankingMarketDataAnalysis.gif" style="margin-right: 10px;float: left;padding-bottom: 128px;"> </a>  
-             <h4> <a style="color:#545454;" href="https://github.com/tousifrad/Bank-Marketing-Analysis/blob/main/Report.pdf" target="_blank">
-             Marketing Campaign(Portuguese Banking Institution) </a></h2>
-            <div>
-            <p style="padding-top: 1px;"> • Final Report of Marketing Campaign
-            <br>• Analsed Bank clients demographics data and Performed carious analysis for next marketing campaign.
-            <br>• Tools: Python
-             </p> 
-               </div>
-                </div>
-                 </div>
-
- 
-            <!-- Projects/Census Income -->
-
-
-          <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-            <div class="flex-grow-1">
-             <a style="margin-left: 10px; float: left;padding-bottom: 8px;" href="https://drive.google.com/file/d/1W62jfwiM1sfGWdINhmGZwk8wMcOptjVe/view?usp=sharing" target="_blank">                        
-             <img src="assets/img/AdultSalaryDataset.gif" style="margin-right: 10px;float: left;padding-bottom: 128px;"> </a>  
-             <h4> <a style="color:#545454;" href="https://github.com/tousifrad/Adult-Data-Set/blob/main/Report.pdf" target="_blank">
-             Salary Analysis(Census Income) </a></h2>
-            <div>
-            <p style="padding-top: 1px;"> • Final Report of Census Income
-            <br>• Analyzed salary insights a large number of datase
-            <br>• Tools: Python
-             </p> 
-               </div>
-                </div>
-                 </div>
-
-
-           
-            <h4 class="mb-5"> DATA ANALYTICS PROJECTS  </h4>
-
-
-            <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-            <div class="flex-grow-1">
-              
-             <h5> <a style="color:#545454;" href="https://github.com/tousifrad/Adult-Data-Set/blob/main/Report.pdf" target="_blank">
-            Melbourne Housing Market </a></h5>
-            <div>
-            <p style="padding-top: 1px;"> •  Predicting Melbourne House Prices
-            <br>• Performed exploratory Analysis e.g., Choropleth Map for 15 years of real estate dataset and generated dashboard using Tableau
-            <br>• Tools: Python, Tableau
-             </p> 
-               </div>
-                </div>
-                 </div>
-
-            </section>
-            <hr class="m-0" />
-
-
-
-            <!-- Education-->
-            <section class="resume-section" id="education">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Education</h2>
-                                          
-
-
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                                  <a href="https://www.swinburne.edu.au/" target="_blank">
-                                <img style="margin-right: 10px;
-                                float: left;padding-bottom: 8px;" src="assets/img/sut.jpg" alt="logo" width="130" height="130" class="mb-0"> </a>
-                                <h3 class="mb-0" style="padding-top: 0px;">Master of Information Technology(Professional Computing)</h3> 
-                            <div class="subheading mb-0"> Specialisation:Data Analytics</div>
-                            <div class="subheading mb-10"> Swinburne University of Technologyy </div>
-                             <div>
-                   
-                                  <br>
-                                  <br>
-                          
-                          
-                            <ul> • Introduction to Data Science</ul>
-                            <ul> • Applied Business Analytics and Data Visualisation</ul>
-                            <ul> • Big Data</ul>
-                            <ul> • Requirements Analysis and Modelling</ul>
-                            <ul> • Database Systems </ul>
-                            <ul> • Knowledge Management and Analytics</ul>
-                            <ul> • User-Centred Design</ul>
-                            <ul> • Business Information Systems Analysis</ul>
-                            <ul> • Knowledge Management and Analytics</ul>
-                         
-                              </p>
-                            </div>
-                        </div>
-                 <!--       <div class="flex-shrink-0"><span class="text-primary"> December 2020</span></div> -->
-
- 
-                    </div>
-                     
-
-
-
-                       <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        
-                                   <div class="flex-grow-1">
-                                <a href="http://www.northsouth.edu/" target="_blank">
-                                <img style="margin-right: 10px;
-                                float: left;padding-bottom: 8px;" src="assets/img/nsu.jpg" alt="logo" width="150" height="150" class="mb-0"> <br></a>
-                                  
-                                   <h3 class="mb-0" style="padding-top: 0px;">North South University</h3> 
-                            <div class="subheading mb-2">B.Sc Computer Science & Engineering </div>
-
-                            <br>
-                            <br>
-                            <br>
-                            
-                            <ul> • Data Structures and Algorithms</ul>
-                            <ul> • Digital Logic Design</ul>
-                            <ul> • Database Systems</ul>
-                            <ul> • Operating Systems Design</ul>
-                            <ul> • Software Engineering </ul>
-                            <ul> • Computer Organization and Architecture</ul>
-                            <ul> • Design and Analysis of Algorithms</ul>
-                            <ul> • Cyber Security</ul>
-                            <ul> • Capstone project</ul>
-
-
-                          
-                        </div>
-                     <!--      <div class="flex-shrink-0"><span class="text-primary"> 2017</span></div> -->
-                    </div>
-
-                </div>
-            </section>
-            <hr class="m-0" />
-
-
-
-
-            <!-- Certification  -->
-     
-          <section class="resume-section" id="certification">
-         
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Certification</h2>
-                    <div class="subheading mb-3"><b>VIRTUAL INTERNSHIPS</b></div>
-                      <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h4> <a href="https://www.theforage.com/virtual-internships/theme/m7W4GMqeT3bh9Nb2c/KPMG-Data-Analytics-Virtual-Internship" target="_blank"><img src="assets/img/kpmg.jpg" alt="logo" width="80" height="70" class="mb-0"></a> <a style="color:#545454;" href="https://insidesherpa.s3.amazonaws.com/completion-certificates/KPMG/m7W4GMqeT3bh9Nb2c_KPMG_9KYpqA7t3SNSFtJTm_completion_certificate.pdf" target="_blank"> KPMG Data Analytics Consulting Virtual Internship </a></h4> 
-                             <li>Conducted Data Quality Assessment to identify and analyze distinct insights from various transaction data and customer information. </li>  
-                                <li>Developed an RFM (Recency, Frequency, Monetary) model to interpret customer demographics.</li>
-                                <li>Utilized Tableau to create visualizations and present insightful findings derived from the RFM model.</li>
-                        </div>
-                    </div>
-
-                <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                            <h4> <a href="https://insidesherpa.s3.amazonaws.com/completion-certificates/ANZ/ZLJCsrpkHo9pZBJNY_ANZ_ecnABLGA5duc4Gkf6_1626152272731_completion_certificate.pdf" target="_blank"><img src="assets/img/Anz.png" alt="logo" width="80" height="70" class="mb-0"></a> <a style="color:#545454;" href="https://insidesherpa.s3.amazonaws.com/completion-certificates/ANZ/ZLJCsrpkHo9pZBJNY_ANZ_ecnABLGA5duc4Gkf6_1626152272731_completion_certificate.pdf" target="_blank">  Data@ANZ Program </a></h4> 
-                             <li> Conducted Exploratory Data Analysis (EDA) to uncover unique insights from various transaction data and customer information </li>  
-                                <li> Utilized regression and decision-tree algorithms for Predictive Analysis.</li>
-                        </div>
-                    </div>
-
-
-
-                <div class="subheading mb-3"><b>Online Course</b></div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-         
-                    <p> • <b><a href="https://www.datacamp.com/statement-of-accomplishment/course/55e329bc0a90281b57a7e895d083a146106048f3" target="_blank">Introduction to R</a> </b> (DataCamp) </p>
-                    <p> • <b><a href="https://www.linkedin.com/learning/certificates/a0263bdd5e793d558f25143584cab80c0ca036f8ff2a14de59d4c7f9b7ced246" target="_blank">Data Visualization: Storytelling</a> </b>  (LinkedIn Learning)  </p>
-                    <p> • <b><a href=" " target="_blank">Introduction to Data Analysis Using Excel</a> </b> (Rice University/Coursera)  </p>
-                    <p> • <b><a href="https://www.coursera.org/account/accomplishments/certificate/4T34LWWNW4BL" target="_blank">Getting Started with Power BI Desktop</a></b>(Coursera)</p>
-                    <p> • <b><a href="https://www.coursera.org/account/accomplishments/certificate/SVD8F3HJMLT2" target="_blank">Analyze Box Office Data with Seaborn and Python</a></b> (Coursera) </p>
-                    <p> • <b><a href="https://analytics.google.com/analytics/academy/certificate/_xueASlOR1ebKfY19IeD0Q" target="_blank">Google Analytics for Beginners</a></b> (Google) </p>
-                    <p> • <b><a href="https://analytics.google.com/analytics/academy/certificate/6SP8Whs2SFeoCWEI0kXMBA" target="_blank">Advanced Google Analytics</a></b> (Google) </p>
-             </div>
-                </div>
-
-        </section>
-
-
-             
-
-            <!-- Achievement  -->
-            <section class="resume-section" id="achievement">
-                <div class="resume-section-content">
-                    <h2 class="mb-5">Achievement & Volunteering</h2>
-                    
-
-                    <div class="subheading mb-3"><b>Achievement</b></div>
-                      <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-                           
-                          •<b style="color:#1a0000;">IEEE (Institute of Electrical and Electronics Engineers) NSU INSB Poster Competition Winner 2015</b>
-
-                        </div>
-                   
-                    </div>
-
-
-             
-                 <!--Volunteering-->
-                 
-                    <div class="subheading mb-3"><b>Volunteering</b></div>
-                    <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
-                        <div class="flex-grow-1">
-              • <b><a style="color:#1a0000;" href="http://www.northsouth.edu/osa/clubs/apc.html" target="_blank"> NSU Art & Photography Club </b></a><br>Organised 10+ photo exhibitions national and international level. 
-               <br>
-               <br>
-               • <b><a style="color:#1a0000;" href="https://www.jaago.com.bd/" target="_blank"> JAAGO Foundation-Volunteer for Bangladesh</b></a> 
-               <br>
-                Promoted awareness for underprivileged children on Universal Children’s Day 
-
-            
-             </div>
-                </div></section>
-
-
-   <!-- Contact Me  -->
-
-                <section class="resume-section" id="contactme">
-   
-                <div class="resume-section-content" >
-   
-                <div class="container">
-                  <div class="row">
-                       <div class="col-sm">
-
-                       <h3>Get in touch with me:</h3>
-                         <br>
-                        <h4>I AM AVAILABLE FOR:</h4>
-               
-                        <p><li>Data Analysis</li>
-                        <p><li>Data Visualisation</li>
-                        <p><li>Data Reporting</li>
-                            
-            <br> 
-             
-
-           <p><b>Would you be interested in collaboration? or Conversation about data</b></p>
-
-            <br> 
-   
-            <label><h4>Send me a message</h4></label>
-      
-        <div class="mb-5 row">
-        <div class="col">
-
-         <form action="https://formspree.io/f/mjvdnaoj" id="contact_form" name="contact_form" method="POST">         
-
-            <label>Name</label>
-
-            <input type="text" required maxlength="50" class="form-control" id="first_name" name="first_name">
-            <label for="email_addr">Email</label>
-
-            <input type="email" required maxlength="50" class="form-control" id="email_addr" name="email"
-                placeholder="name@example.com">
-
-            <label for="phone_input">Phone</label>
-            <input type="tel" required maxlength="50" class="form-control" id="phone_input" name="Phone"
-                placeholder="Phone">
-      
-             <label for="message">Message</label>
-              <textarea class="form-control" id="message" name="message" rows="5"></textarea>
-       
-              
-              <input type="hidden" name="_next" value="https://iamrad.xyz/ThankYou.html" onclick="FormSentConfirmation()"/>
-                <script>
-            var contactform =  document.getElementById('contactform');
-            contactform.setAttribute('action', 'https://formspree.io/thanks?language=en');
+          </div>
+          <div class="tl-stage">
+            <svg class="tl-svg"></svg>
+            <div class="tl-tip" id="tl-tip"></div>
+          </div>
+        </div>
+
+        <script>
+          (function(){
+            const items = [
+              { label:"North South University", start:2012, end:2017, type:"edu", logo:"assets/img/nsu.jpg" },
+              { label:"Research Data Analyst • NSU", start:2015, end:2016, type:"job", logo:"assets/img/nsu.jpg" },
+              { label:"Swinburne University of Technology", start:2019, end:2020, type:"edu", logo:"assets/img/sut.jpg"},
+              { label:"Woolworths Supermarkets", start:2019, end:2022, type:"job", logo:"assets/img/ww.png" },
+              { label:"Swoop Analytics — Data Analyst", start:2021, end:2021, type:"job", logo:"assets/img/swoop.png" },
+              { label:"Melbourne Metropolitan College", start:2022, end:2022, type:"job", logo:"assets/img/mmc.png" },
+              { label:"Onemda — Reporting Analyst", start:2023, end:2023, type:"job", logo:"assets/img/onemda.png" },
+              { label:"Pepperstone — Data Analyst", start:2023, end:2025, type:"job", logo:"assets/img/pepperstone.png" }
+            ];
+            const YEAR_MIN=2012, YEAR_MAX=2026;
+
+            const svg=document.querySelector("#about .tl-svg");
+            const tip=document.getElementById("tl-tip");
+            const W=svg.clientWidth||240, H=svg.clientHeight||240;
+            const margin={top:30,right:20,bottom:30,left:85};
+            const innerW=W-margin.left-margin.right, innerH=H-margin.top-margin.bottom;
+            const x=yr=>((yr-YEAR_MIN)/(YEAR_MAX-YEAR_MIN))*innerW;
+            const rowH=innerH/items.length, barH=18;
+            const g=document.createElementNS("http://www.w3.org/2000/svg","g");
+            g.setAttribute("transform",`translate(${margin.left},${margin.top})`);
+            svg.appendChild(g);
+
+            for(let yr=YEAR_MIN;yr<=YEAR_MAX;yr++){
+              const gx=x(yr);
+              const grid=document.createElementNS("http://www.w3.org/2000/svg","line");
+              grid.setAttribute("x1",gx);grid.setAttribute("x2",gx);
+              grid.setAttribute("y1",0);grid.setAttribute("y2",innerH);
+              grid.setAttribute("stroke","#e5e7eb");
+              g.appendChild(grid);
+              if(yr%2===0){
+                const txt=document.createElementNS("http://www.w3.org/2000/svg","text");
+                txt.setAttribute("x",gx);txt.setAttribute("y",innerH+18);
+                txt.setAttribute("text-anchor","middle");
+                txt.textContent=yr;
+                g.appendChild(txt);
+              }
+            }
+
+            items.forEach((d,i)=>{
+              const y=i*rowH+6, xs=x(d.start), xe=x(d.end), w=Math.max(8,xe-xs);
+
+              const rect=document.createElementNS("http://www.w3.org/2000/svg","rect");
+              rect.setAttribute("class",`bar ${d.type}`);
+              rect.setAttribute("x",xs);rect.setAttribute("y",y);
+              rect.setAttribute("width",w);rect.setAttribute("height",barH);
+              rect.addEventListener("mousemove",e=>{
+                tip.textContent=`${d.label} (${d.start}–${d.end})`;
+                tip.classList.add("show");
+                tip.style.left=(e.pageX+10)+"px"; tip.style.top=(e.pageY-28)+"px";
+              });
+              rect.addEventListener("mouseleave",()=>tip.classList.remove("show"));
+              g.appendChild(rect);
+
+              const img=document.createElementNS("http://www.w3.org/2000/svg","image");
+              img.setAttributeNS("http://www.w3.org/1999/xlink","href",d.logo);
+              img.setAttribute("x",-60);img.setAttribute("y",y-8);
+              img.setAttribute("width","34");img.setAttribute("height","34");
+              g.appendChild(img);
+            });
+          })();
         </script>
 
-           <link rel="stylesheet" href="css/cap.css">
-  
-            <label class="submit__control">
-             
+        <!-- ===== Skills — Connected Network (buttons removed, bold labels) ===== -->
+<div class="cardish" id="skills-network" data-aos="fade-up" style="margin-top:10px">
+  <style>
+    /* Scoped to #skills-network */
+    #skills-network .sn-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+    #skills-network .sn-sub{color:var(--muted,#6b7280);margin:0 0 12px}
+    #skills-network .sn-wrap{position:relative}
+    /* smaller box height */
+    #skills-network .sn-svg{width:100%;height:190px;display:block}
+    #skills-network .link{stroke:#9ca3af;stroke-opacity:.7}
+    #skills-network .node{cursor:grab;transition:opacity .15s, transform .15s}
+    #skills-network .node:active{cursor:grabbing}
+    /* bigger + bold skill label text */
+    #skills-network .label{font-size:20px;font-weight:700;fill:#111827;pointer-events:none}
+    #skills-network .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:14px}
+    #skills-network .chip{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px}
+    /* tooltip */
+    #skills-network .tip{
+      position:absolute;padding:6px 10px;background:#111827;color:#fff;font-size:.95rem;border-radius:6px;
+      white-space:nowrap;pointer-events:none;opacity:0;transform:translate(-50%,-120%);transition:.12s opacity
+    }
+    #skills-network .tip.show{opacity:1}
+  </style>
+
+  <div class="sn-head">
+    <h5 class="mb-0">Skills</h5>
+    <!-- buttons removed -->
+  </div>
+  <p class="sn-sub">Hover to highlight relationships. Drag nodes to reposition. Click a node to lock selection.</p>
+
+  <div class="sn-wrap">
+    <svg class="sn-svg" viewBox="0 0 580 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="sn-title">
+      <title id="sn-title">Skill relationship network</title>
+    </svg>
+    <div class="tip" id="sn-tip"></div>
+  </div>
+
+  <div class="legend" id="sn-legend"></div>
+
+  <script>
+    (function(){
+      // ===== DATA =====
+      const groups = {
+        Viz:   "#2563eb", // Power BI / Tableau
+        Core:  "#7c3aed", // SQL / Excel
+        ELT:   "#ef4444", // dbt
+        Code:  "#059669"  // Python
+      };
+
+      const nodes = [
+        { id:"Power BI", group:"Viz",  value:5, color:"#2563eb" },
+        { id:"Tableau",  group:"Viz",  value:4, color:"#f59e0b" },
+        { id:"SQL",      group:"Core", value:5, color:"#7c3aed" },
+        { id:"Excel",    group:"Core", value:4, color:"#4b5563" },
+        { id:"dbt",      group:"ELT",  value:4, color:"#ef4444" },
+        { id:"Python",   group:"Code", value:4, color:"#059669" }
+      ];
+
+      const links = [
+        { s:"SQL",      t:"Power BI", w:1.2 },
+        { s:"SQL",      t:"Tableau",  w:1.8 },
+        { s:"SQL",      t:"dbt",      w:1.4 },
+        { s:"Python",   t:"dbt",      w:1.2 },
+        { s:"Python",   t:"SQL",      w:1.2 },
+        { s:"Excel",    t:"Power BI", w:1.3 },
+        { s:"Excel",    t:"SQL",      w:0.8 },
+        { s:"Power BI", t:"Tableau",  w:0.6 }
+      ];
+
+      // ===== DOM/geometry =====
+      const root = document.getElementById("skills-network");
+      const svg  = root.querySelector(".sn-svg");
+      const tip  = root.querySelector("#sn-tip");
+      const legendEl   = root.querySelector("#sn-legend");
+
+      // match the viewBox height
+      const W = 680, H = 260, CX = W/2, CY = H/2;
+
+      // Legend
+      Object.entries(groups).forEach(([label, col])=>{
+        const wrap = document.createElement("div");
+        const chip = document.createElement("span");
+        chip.className="chip"; chip.style.background = col;
+        wrap.appendChild(chip);
+        wrap.appendChild(document.createTextNode(label));
+        legendEl.appendChild(wrap);
+      });
+
+      // Helpers
+      const NS="http://www.w3.org/2000/svg";
+      const S=(tag,attrs={})=>{ const el=document.createElementNS(NS,tag); for(const k in attrs) el.setAttribute(k,attrs[k]); return el; };
+      const clamp=(v,min,max)=> Math.max(min, Math.min(max, v));
+
+      const idx = Object.fromEntries(nodes.map((n,i)=>[n.id,i]));
+      const L = links.map(l=>({ i:idx[l.s], j:idx[l.t], w:l.w }));
+
+      // Init positions
+      nodes.forEach((n,i)=>{
+        n.x = CX + 180*Math.cos((i/nodes.length)*Math.PI*2);
+        n.y = CY + 100*Math.sin((i/nodes.length)*Math.PI*2);
+        n.vx = 0; n.vy = 0; n.fx = null; n.fy = null;
+        n.r = 12 + n.value*3;
+      });
+
+      // Elements
+      const gLinks = S("g"); svg.appendChild(gLinks);
+      const gNodes = S("g"); svg.appendChild(gNodes);
+
+      const lineEls = L.map(l=>{
+        const ln = S("line",{class:"link","stroke-width":1.3});
+        gLinks.appendChild(ln); return ln;
+      });
+
+      const nodeEls = nodes.map((n,i)=>{
+        const g = S("g",{class:"node","data-i":i});
+        const c = S("circle",{r:n.r, fill:n.color || "#999"});
+        const t = S("text",{class:"label",x:n.r+6,y:5});
+        t.textContent = n.id;
+        g.appendChild(c); g.appendChild(t);
+        gNodes.appendChild(g);
+        return g;
+      });
+
+      // Highlighting
+      let selected = null;
+      function applyHighlight(idx){
+        nodeEls.forEach((g,i)=> g.classList.toggle("dim", idx!==null && i!==idx));
+        lineEls.forEach((ln,k)=>{
+          const {i,j} = L[k];
+          const dim = (idx!==null && i!==idx && j!==idx);
+          ln.style.opacity = dim ? 0.25 : 0.9;
+          ln.style.strokeWidth = (idx!==null && (i===idx || j===idx)) ? 2.2 : 1.3;
+        });
+      }
+      function setSelected(idx){
+        selected = (selected===idx ? null : idx);
+        applyHighlight(selected);
+      }
+
+      // Dragging
+      let dragI = null;
+      svg.addEventListener("pointerdown", e=>{
+        const g = e.target.closest(".node"); if(!g) return;
+        dragI = +g.dataset.i;
+        nodes[dragI].fx = nodes[dragI].x;
+        nodes[dragI].fy = nodes[dragI].y;
+        setSelected(dragI);
+        g.setPointerCapture(e.pointerId);
+      });
+      svg.addEventListener("pointermove", e=>{
+        if(dragI==null) return;
+        const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+        const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+        nodes[dragI].fx = clamp(svgPt.x, 20, W-20);
+        nodes[dragI].fy = clamp(svgPt.y, 20, H-20);
+      });
+      svg.addEventListener("pointerup", ()=>{ dragI=null; });
+
+      // Tooltip + click
+      nodeEls.forEach((g,i)=>{
+        g.addEventListener("mousemove", e=>{
+          const n = nodes[i];
+          tip.textContent = `${n.id} • ${n.group} • level ${n.value}`;
+          tip.classList.add("show");
+          tip.style.left = e.pageX + "px";
+          tip.style.top  = (e.pageY - 16) + "px";
+          if(selected===null) applyHighlight(i);
+        });
+        g.addEventListener("mouseleave", ()=>{ tip.classList.remove("show"); if(selected===null) applyHighlight(null); });
+        g.addEventListener("click", ()=> setSelected(i));
+      });
+
+      // Tiny force layout
+    const K_REP=15000, K_SPR=0.04, LEN=200, DAMP=0.85, CTR=0.02;
+      function step(){
+        // repulsion
+        for(let a=0;a<nodes.length;a++){
+          for(let b=a+1;b<nodes.length;b++){
+            const na=nodes[a], nb=nodes[b];
+            let dx=nb.x-na.x, dy=nb.y-na.y;
+            let dist2=dx*dx+dy*dy+0.01, d=Math.sqrt(dist2);
+            let f=K_REP/dist2; dx/=d; dy/=d;
+            na.vx-=f*dx; na.vy-=f*dy; nb.vx+=f*dx; nb.vy+=f*dy;
+          }
+        }
+        // springs
+        L.forEach(({i,j,w})=>{
+          const na=nodes[i], nb=nodes[j];
+          let dx=nb.x-na.x, dy=nb.y-na.y, d=Math.max(0.01,Math.hypot(dx,dy));
+          const target = LEN - (w-1)*20, k = K_SPR*(d-target), ux=dx/d, uy=dy/d;
+          na.vx+=k*ux; na.vy+=k*uy; nb.vx-=k*ux; nb.vy-=k*uy;
+        });
+        // center + integrate
+        nodes.forEach(n=>{
+          n.vx+=(CX-n.x)*CTR; n.vy+=(CY-n.y)*CTR;
+          n.vx*=DAMP; n.vy*=DAMP;
+          n.x += (n.fx!=null ? (n.fx-n.x)*0.3 : n.vx);
+          n.y += (n.fy!=null ? (n.fy-n.y)*0.3 : n.vy);
+          n.x = clamp(n.x, 20, W-20); n.y = clamp(n.y, 20, H-20);
+        });
+      }
+      function render(){
+        lineEls.forEach((ln,k)=>{
+          const {i,j}=L[k], a=nodes[i], b=nodes[j];
+          ln.setAttribute("x1",a.x); ln.setAttribute("y1",a.y);
+          ln.setAttribute("x2",b.x); ln.setAttribute("y2",b.y);
+        });
+        nodeEls.forEach((g,i)=> g.setAttribute("transform",`translate(${nodes[i].x},${nodes[i].y})`));
+      }
+      function tick(){ step(); render(); requestAnimationFrame(tick); }
+      render(); tick();
+      applyHighlight(null);
+    })();
+  </script>
+</div>
+<!-- ===== /Skills — Connected Network ===== -->
+
+    </div>
+
+  </div>
+    </section>
 
 
-    
-               <br>
+ 
+    <!-- Experience -->
+                  <!-- ==== Experience Subway Timeline (aligned nodes) ==== -->
+                <section class="xp-subway force-light" aria-label="Experience timeline"  id="experience">
+                  <h2 class="xp-title">Experience</h2>
 
+                  <ol class="xp-stations">
+                    <!-- Pepperstone -->
+                    <li class="xp-stop">
+                      <a class="xp-card" href="https://pepperstone.com/en/" target="_blank" rel="noopener" aria-label="Pepperstone — Data Analyst">
+                        <img src="assets/img/pepperstone.png" alt="Pepperstone logo" class="xp-logo" loading="lazy">
+                        <div class="xp-text">
+                          <span class="xp-role">Data Analyst</span>
+                          <span class="xp-company">Pepperstone</span>
+                        </div>
+                      </a>
+                    </li>
+
+                    <!-- Onemda -->
+                    <li class="xp-stop">
+                      <a class="xp-card" href="https://www.onemda.com.au/" target="_blank" rel="noopener" aria-label="The Onemda Association Inc — Reporting and Business Analyst">
+                        <img src="assets/img/onemda.png" alt="Onemda logo" class="xp-logo" loading="lazy">
+                        <div class="xp-text">
+                          <span class="xp-role">Reporting &amp; Business Analyst</span>
+                          <span class="xp-company">The Onemda Association Inc</span>
+                        </div>
+                      </a>
+                    </li>
+
+                    <!-- Melbourne Metropolitan College -->
+                    <li class="xp-stop">
+                      <a class="xp-card" href="https://mmc.edu.au/" target="_blank" rel="noopener" aria-label="Melbourne Metropolitan College — Digital Records Analyst">
+                        <img src="assets/img/mmc.png" alt="Melbourne Metropolitan College logo" class="xp-logo" loading="lazy">
+                        <div class="xp-text">
+                          <span class="xp-role">Digital Records Analyst</span>
+                          <span class="xp-company">Melbourne Metropolitan College</span>
+                        </div>
+                      </a>
+                    </li>
+
+                    <!-- Woolworths -->
+                    <li class="xp-stop">
+                      <a class="xp-card" href="https://www.woolworthsgroup.com.au/" target="_blank" rel="noopener" aria-label="Woolworths Supermarkets — Customer Service Supervisor">
+                        <img src="assets/img/ww.png" alt="Woolworths logo" class="xp-logo" loading="lazy">
+                        <div class="xp-text">
+                          <span class="xp-role">Customer Service Supervisor</span>
+                          <span class="xp-company">Woolworths Supermarkets</span>
+                        </div>
+                      </a>
+                    </li>
+
+                    <!-- Swoop Analytics -->
+                    <li class="xp-stop">
+                      <a class="xp-card" href="https://www.swoopanalytics.com/" target="_blank" rel="noopener" aria-label="Swoop Analytics — Data Analyst">
+                        <img src="assets/img/swoop.png" alt="Swoop Analytics logo" class="xp-logo" loading="lazy">
+                        <div class="xp-text">
+                          <span class="xp-role">Data Analyst</span>
+                          <span class="xp-company">Swoop Analytics</span>
+                        </div>
+                      </a>
+                    </li>
+
+                    <!-- Swinburne University of Technology -->
+                    <li class="xp-stop">
+                      <a class="xp-card" href="https://www.swinburne.edu.au/" target="_blank" rel="noopener" aria-label="Swinburne University of Technology — Data Analyst">
+                        <img src="assets/img/sut.jpg" alt="Swinburne University of Technology logo" class="xp-logo" loading="lazy">
+                        <div class="xp-text">
+                          <span class="xp-role">Data Analyst</span>
+                          <span class="xp-company">Swinburne University of Technology</span>
+                        </div>
+                      </a>
+                    </li>
+
+                    <!-- North South University -->
+                    <li class="xp-stop">
+                      <a class="xp-card" href="http://www.northsouth.edu/" target="_blank" rel="noopener" aria-label="North South University — Research Data Analyst">
+                        <img src="assets/img/nsu.jpg" alt="North South University logo" class="xp-logo" loading="lazy">
+                        <div class="xp-text">
+                          <span class="xp-role">Research Data Analyst</span>
+                          <span class="xp-company">North South University</span>
+                        </div>
+                      </a>
+                    </li>
+                  </ol>
+                </section>
+
+                <style>
+                  /* ================= Base styles (fixed) ================= */
+                  .xp-subway{
+                    /* theme tokens */
+                    --track: hsl(215 20% 70%);
+                    --track-fill: hsl(215 85% 54%);
+                    --stop-bg: #fff;
+                    --stop-ring: hsl(215 25% 88%);
+                    --text: hsl(215 20% 18%);
+                    --muted: hsl(215 10% 45%);
+                    --shadow: 0 6px 18px rgba(0,0,0,.08);
+                    --radius: 18px;
+                    --logo: 56px;
+
+                    /* geometry tokens (sane defaults) */
+                    --track-thickness: 4px;        /* line thickness */
+                    --track-top: 28px;             /* desktop: line Y offset */
+                    --track-left-mobile: 28px;     /* mobile: vertical line X offset */
+                    --node-size: 28px;             /* circle diameter */
+                    --node-ring: 3px;              /* circle border */
+                  }
+                  @media (prefers-color-scheme: dark){
+                    .xp-subway{
+                      --track: hsl(220 10% 30%);
+                      --track-fill: hsl(210 90% 60%);
+                      --stop-bg: hsl(222 18% 14%);
+                      --stop-ring: hsl(220 14% 22%);
+                      --text: hsl(210 15% 92%);
+                      --muted: hsl(215 12% 70%);
+                      --shadow: 0 6px 18px rgba(0,0,0,.35);
+                    }
+                  }
+
+                  .xp-title{ margin:0 0 1rem; font-size:clamp(1.35rem,1.2rem + 1vw,1.9rem); letter-spacing:.2px; }
+
+                  .xp-stations{
+                    list-style:none;
+                    padding:1.5rem 0 0;     /* FIX: was 65rem */
+                    margin:0;               /* FIX: was 65 */
+                    display:grid;
+                    gap:1.2rem;
+                    position:relative;
+                    --progress:1; --fill-x:1; --fill-y:1;
+                  }
+
+                  /* ===== Mobile: vertical track ===== */
+                  .xp-stations::before,
+                  .xp-stations::after{
+                    content:"";
+                    position:absolute;
+                    inset:0 auto 0 var(--track-left-mobile);
+                    width:var(--track-thickness);
+                    border-radius:4px;
+                    background:var(--track);
+                  }
+                  .xp-stations::after{
+                    transform-origin:top left;
+                    background:var(--track-fill);
+                    scale:var(--fill-x) var(--fill-y);
+                    animation:fillTrack 600ms ease-out forwards;
+                  }
+                  @keyframes fillTrack{ to{ scale:1 1; } }
+
+                  .xp-stop{ position:relative; }
+                  .xp-stop::before{
+                    content:"";
+                    position:absolute;
+                    top:6px; /* small offset from top of card */
+                    /* CENTER ON VERTICAL TRACK */
+                    left:calc(var(--track-left-mobile) + (var(--track-thickness)/2) - (var(--node-size)/2));
+                    width:var(--node-size);
+                    height:var(--node-size);
+                    background:var(--stop-bg);
+                    border:var(--node-ring) solid var(--stop-ring);
+                    border-radius:999px;
+                    box-shadow:var(--shadow);
+                    z-index:2;
+                    transition:border-color .2s ease, box-shadow .2s ease;
+                  }
+
+                  .xp-card{
+                    display:grid;
+                    grid-template-columns:var(--logo) 1fr;
+                    align-items:center;
+                    gap:1rem;
+                    padding:.75rem .9rem .75rem 4.5rem;
+                    text-decoration:none;
+                    color:inherit;
+                    background:var(--stop-bg);
+                    border:1px solid var(--stop-ring);  /* FIX: was 65px */
+                    border-radius:var(--radius);
+                    box-shadow:var(--shadow);
+                    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+                    outline:none;
+                  }
+                  .xp-card:hover,
+                  .xp-card:focus-visible{
+                    transform:translateY(-2px);
+                    box-shadow:0 10px 28px rgba(0,0,0,.12);
+                    border-color:var(--track-fill);
+                  }
+
+                  .xp-logo{ width:var(--logo); height:var(--logo); object-fit:cover; border-radius:12px; display:block; transition:transform .2s ease; }
+                  .xp-text{ display:grid; gap:.15rem; }
+                  .xp-role{ font-weight:700; font-size:1rem; line-height:1.2; }
+                  .xp-company{ font-size:.9rem; color:var(--muted); }
+
+                  /* ===== Desktop: horizontal track ===== */
+                  @media (min-width:860px){
+                    .xp-stations{
+                      grid-auto-flow:column;
+                      grid-auto-columns:1fr;
+                      align-items:start;
+                      gap:1.5rem;
+                      padding-top:3.5rem;
+                      --fill-x:var(--progress); --fill-y:1;
+                    }
+                    .xp-stations::before,
+                    .xp-stations::after{
+                      inset:var(--track-top) 0 auto 0;   /* place horizontal line */
+                      height:var(--track-thickness); width:100%;
+                    }
+                    .xp-stop::before{
+                      /* CENTER ON HORIZONTAL TRACK */
+                      top:calc(var(--track-top) + (var(--track-thickness)/2) - (var(--node-size)/2));
+                      left:calc(50% - (var(--node-size)/2));
+                    }
+                    .xp-card{
+                      grid-template-columns:1fr;
+                      text-align:center;
+                      padding:3.5rem 1rem 1rem;
+                    }
+                    .xp-logo{ justify-self:center; }
+                  }
+
+                  /* ===== Light/compact theme (keeps geometry) ===== */
+                  .xp-subway.force-light{
+                    --track:#E5ECF6; --track-fill:#4F9CF9;
+                    --stop-bg:rgba(255,255,255,.92); --stop-ring:#E9EEF7;
+                    --text:#0F172A; --muted:#5B6B7A;
+                    --shadow:0 6px 22px rgba(15,23,42,.10);
+                    --radius:16px; --logo:42px;
+
+                    /* keep node + line tokens so alignment stays perfect */
+                    --node-size:28px; --node-ring:3px; --track-thickness:4px;
+
+                    padding:10px 14px 18px;
+                    border:1px solid #EEF1F6; border-radius:20px;
+                    background:
+                      radial-gradient(800px 200px at 20% -80px,#F5F9FF,transparent 60%),
+                      radial-gradient(600px 180px at 80% -60px,#EEF6FF,transparent 60%),
+                      #fff;
+                  }
+                  .xp-subway.force-light .xp-title{ font-size:clamp(1.15rem,1rem + .7vw,1.5rem); }
+                  .xp-subway.force-light .xp-stations{ max-width:1100px; margin:0 auto; gap:1.2rem; padding-top:1.1rem; }
+                  .xp-subway.force-light .xp-stations::before{ background:linear-gradient(90deg,#DBE5F3,#E8EEF8); }
+                  .xp-subway.force-light .xp-stations::after{
+                    background:linear-gradient(90deg,var(--track-fill),#8EC5FF);
+                    box-shadow:0 0 0 1px rgba(79,156,249,.08) inset;
+                  }
+                  .xp-subway.force-light .xp-card{
+                    gap:.6rem; padding:.55rem .75rem .55rem 3.5rem;
+                    border:1px solid #E9EEF7; background:rgba(255,255,255,.92);
+                    backdrop-filter:saturate(140%) blur(2px);
+                  }
+                  @media (min-width:860px){ .xp-subway.force-light .xp-card{ padding:2.2rem .9rem .9rem; } }
+                  .xp-subway.force-light .xp-card:hover,
+                  .xp-subway.force-light .xp-card:focus-visible{
+                    border-color:#B9D5FF; box-shadow:0 12px 30px rgba(79,156,249,.16); transform:translateY(-3px);
+                  }
+                  .xp-subway.force-light .xp-role{ font-size:.95rem; }
+                  .xp-subway.force-light .xp-company{ font-size:.82rem; color:#5B6B7A; }
+
+                  /* hover niceties */
+                  .xp-subway .xp-stop:hover::before,
+                  .xp-subway .xp-stop:focus-within::before{
+                    border-color:var(--track-fill);
+                    box-shadow:0 0 0 8px rgba(79,156,249,.10),0 6px 18px rgba(79,156,249,.12);
+                  }
+                  .xp-subway .xp-card:hover .xp-logo{ transform:translateY(-1px) scale(1.02); }
+                </style>
+
+
+                <style>
+                  /* === Easy knobs for line, circle & spacing === */
+                  .xp-subway.force-light{
+                    /* LINE */
+                    --track-top: 2px;        /* desktop line vertical position (was 28px) */
+                    --track-thickness: 6px;   /* line thickness */
+
+                    /* CIRCLE */
+                    --node-size: 30px;        /* circle diameter */
+                    --node-ring: 2px;         /* circle border thickness (was 3–4px) */
+
+                    /* CONTENT GAP */
+                    --node-gap: 3px;         /* space between bottom of circle and card content */
+                  }
+
+                  /* apply the tokens */
+                  @media (min-width:400px){
+                    .xp-subway.force-light .xp-stations::before,
+                    .xp-subway.force-light .xp-stations::after{
+                      inset: var(--track-top) 0 auto 0;
+                      height: var(--track-thickness);
+                    }
+                    .xp-subway.force-light .xp-stop::before{
+                      width: var(--node-size);
+                      height: var(--node-size);
+                      border-width: var(--node-ring);
+                      top: calc(var(--track-top) + (var(--track-thickness)/2) - (var(--node-size)/2)); /* centers node on line */
+                      left: calc(50% - (var(--node-size)/2));
+                    }
+                    .xp-subway.force-light .xp-card{
+                      /* room for the circle + desired gap before text */
+                      padding-top: calc(var(--node-size) + var(--node-gap));
+                    }
+                  }
+
+                  /* mobile: keep node centered on the vertical track */
+                  @media (max-width:859px){
+                    .xp-subway.force-light .xp-stop::before{
+                      left: calc(28px + (var(--track-thickness)/2) - (var(--node-size)/2));
+                      border-width: var(--node-ring);
+                    }
+                    .xp-subway.force-light .xp-card{
+                      /* tighten mobile if you like */
+                      padding-left: calc(3.5rem - (20px - var(--node-size))/2);
+                    }
+                  }
+                </style>
+
+                <script>
+                  // Reveal cards smoothly when the section enters view
+                  (function () {
+                    const list = document.querySelector('.xp-subway .xp-stations');
+                    if (!list || !('IntersectionObserver' in window)) return;
+                    const cards = Array.from(list.querySelectorAll('.xp-card'));
+                    cards.forEach(el => { el.style.opacity = 0; el.style.transform = 'translateY(6px)'; });
+                    const io = new IntersectionObserver(entries => {
+                      if (!entries[0].isIntersecting) return;
+                      cards.forEach((el, i) => {
+                        el.style.transition = 'opacity .45s ease ' + (i * 60) + 'ms, transform .45s ease ' + (i * 60) + 'ms';
+                        el.style.opacity = 1; el.style.transform = 'translateY(0)';
+                      });
+                      io.disconnect();
+                    }, { threshold: .2 });
+                    io.observe(list);
+                  })();
+
+                  // Fill the line up to the hovered job (desktop & mobile)
+                  (function () {
+                    const list = document.querySelector('.xp-subway .xp-stations');
+                    if (!list) return;
+                    const stops = Array.from(list.querySelectorAll('.xp-stop'));
+                    const set = i => list.style.setProperty('--progress', stops.length < 2 ? 1 : i / (stops.length - 1));
+                    stops.forEach((stop, i) => {
+                      stop.addEventListener('mouseenter', () => set(i));
+                      stop.addEventListener('focusin', () => set(i));
+                    });
+                    list.addEventListener('mouseleave', () => set(stops.length - 1));
+                    set(stops.length - 1); // default full
+                  })();
+                </script>
+                <!-- ==== /Experience Subway Timeline ==== -->
+
+
+    <!-- Skills -->
+    <section class="resume-section" id="skills">
+      <div class="resume-section-content">
+        <h2 class="mb-4">Skills</h2>
+
+        <div class="cardish skills-card">
+          <h3 class="skills-title">Data Analytics &amp; Business Intelligence</h3>
+          <div class="skills-content">
+            <div class="skills-left">
+              <div class="subheading mb-2">Data Analytics &amp; BI Tools</div>
+              <p class="skill-inline">• SQL • DBT • Snowflake • Redshift • Power BI (DAX, Power Query) • Tableau Cloud • Excel (Advanced: PivotTables, Power Query) • Google Analytics • Python (Pandas, NumPy, Matplotlib, Seaborn)</p>
+
+              <div class="subheading mb-2 mt-3">Data Management</div>
+              <p class="skill-inline">• ETL Pipeline Design • Data Modelling • Data Cleansing &amp; Transformation • Data Quality Assurance</p>
+
+              <div class="subheading mb-2 mt-3">Applications &amp; Platforms</div>
+              <p class="skill-inline">• Salesforce • Penelope CRM • MySQL Workbench • Oracle • SharePoint • JIRA • Power Apps</p>
+            </div>
+
+            <ul class="logo-grid" aria-label="Tool logos">
+              <li><div class="tile"><img class="logo" loading="lazy" src="https://cdn.simpleicons.org/snowflake/29B5E8" alt="Snowflake" title="Snowflake" data-label="Snowflake" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
+              <li><div class="tile"><img class="logo" loading="lazy" src="assets/img/Powerbi.logo.png" alt="Power BI" title="Power BI" data-label="Power BI" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
+              <li><div class="tile"><img class="logo" loading="lazy" src="assets/img/Tableau.png" alt="Tableau" title="Tableau" data-label="Tableau" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
+              <li><div class="tile"><img class="logo" loading="lazy" src="assets/img/excel.png" alt="Excel" title="Microsoft Excel" data-label="Excel" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
+              <li><div class="tile"><img class="logo" loading="lazy" src="https://cdn.simpleicons.org/googleanalytics/E37400" alt="Google Analytics" title="Google Analytics 4" data-label="GA4" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||'GA4'}))"></div></li>
+              <li><div class="tile"><img class="logo" loading="lazy" src="https://cdn.simpleicons.org/mysql/4479A1" alt="MySQL" title="MySQL Workbench" data-label="MySQL" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
+              <li><div class="tile"><img class="logo" loading="lazy" src="https://cdn.simpleicons.org/jira/0052CC" alt="JIRA" title="JIRA" data-label="JIRA" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
+              <li><div class="tile"><img class="logo" loading="lazy" src="assets/img/dbt.png" alt="dbt" title="dbt" data-label="dbt" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
+              <li><div class="tile"><img class="logo" loading="lazy" src="assets/img/python.jpg" alt="Python" title="Python" data-label="Python" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects (trimmed structure; keep your existing links) -->
+    <section class="resume-section" id="projects">
+      <div class="resume-section-content">
+        <h2 class="mb-4">Projects</h2>
+
+        <h4 class="mb-3">Interactive Dashboards</h4>
+
+        <article data-aos="fade-up" class="cardish project-card mb-3">
+          <a href="https://app.powerbi.com/view?r=eyJrIjoiMDVlOTI2ODktNTIyZS00ZjMzLWJkYzMtZGZmZDU0MjI1ZmZhIiwidCI6IjE3NTFjZGNhLWVmNmItNGJkZS05ZmVlLTE2ZDMwYjdiMjdkMSJ9" class="thumb-link" target="_blank" rel="noopener">
+            <img class="project-thumb" src="assets/img/CustomerNPS.gif" alt="Customer NPS dashboard preview" loading="lazy" />
+          </a>
+          <div>
+            <h5 class="project-title"><a class="clean" href="https://app.powerbi.com/view?r=eyJrIjoiMDVlOTI2ODktNTIyZS00ZjMzLWJkYzMtZGZmZDU0MjI1ZmZhIiwidCI6IjE3NTFjZGNhLWVmNmItNGJkZS05ZmVlLTE2ZDMwYjdiMjdkMSJ9" target="_blank" rel="noopener">Customer Net Promoter Score Dashboard</a></h5>
+            <p class="project-note">Background may take 30–60s to load • Live connected dashboard • Tool: Power BI</p>
+          </div>
+        </article>
+
+        <article data-aos="fade-up" class="cardish project-card mb-3">
+          <a href="https://app.powerbi.com/view?r=eyJrIjoiYTg1MTUxMzAtOTFiZi00MDU3LWI1MWQtZTUxNGM1MGRiOTI2IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" class="thumb-link" target="_blank" rel="noopener">
+            <img class="project-thumb" src="assets/img/HRanalytics.gif" alt="HR Analytics dashboard preview" loading="lazy" />
+          </a>
+          <div>
+            <h5 class="project-title"><a class="clean" href="https://app.powerbi.com/view?r=eyJrIjoiYTg1MTUxMzAtOTFiZi00MDU3LWI1MWQtZTUxNGM1MGRiOTI2IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" target="_blank" rel="noopener">HR Analytics Dashboard</a></h5>
+            <p class="project-note">Background may take 30–60s • Data prep: SQL • Tool: Power BI</p>
+          </div>
+        </article>
+
+        <article data-aos="fade-up" class="cardish project-card mb-4">
+          <a href="https://app.powerbi.com/view?r=eyJrIjoiN2UzNWVhY2EtMzY5Yy00ZTE3LThjNzEtNmEzODQ1NjU4OGU1IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" class="thumb-link" target="_blank" rel="noopener">
+            <img class="project-thumb" src="assets/img/SalesDashboardKPI.gif" alt="Monthly Sales KPI dashboard preview" loading="lazy" />
+          </a>
+          <div>
+            <h5 class="project-title"><a class="clean" href="https://app.powerbi.com/view?r=eyJrIjoiN2UzNWVhY2EtMzY5Yy00ZTE3LThjNzEtNmEzODQ1NjU4OGU1IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" target="_blank" rel="noopener">Monthly Sales KPI Dashboard</a></h5>
+            <p class="project-note">Background may take 30–60s • Data prep: Power Query • Tool: Power BI</p>
+          </div>
+        </article>
+
+        <h4 class="mb-3">Dashboards</h4>
+        <article data-aos="fade-up" class="cardish project-card mb-3">
+          <a href="https://drive.google.com/file/d/10Dorgkb_2JtmMTCP3eRFxbTpJvFUQmxD/view?usp=sharing" target="_blank" rel="noopener">
+            <img class="project-thumb" src="assets/img/SprocketCentralPtyLty.gif" alt="Customer Segmentation preview" loading="lazy" />
+          </a>
+          <div>
+            <h5 class="project-title"><a class="clean" href="https://github.com/tousifrad/Sprocket-Central-Pty-Ltd/blob/main/Dashboard.pdf" target="_blank" rel="noopener">Customer Segmentation Analysis (Sprocket Central Pty Ltd)</a></h5>
+            <p class="project-note">Final report • RFM analysis • Tableau dashboard</p>
+          </div>
+        </article>
+
+        <article data-aos="fade-up" class="cardish project-card mb-3">
+          <a href="https://drive.google.com/file/d/10Dorgkb_2JtmMTCP3eRFxbTpJvFUQmxD/view?usp=sharing" target="_blank" rel="noopener">
+            <img class="project-thumb" src="assets/img/BankingMarketDataAnalysis.gif" alt="Bank marketing preview" loading="lazy" />
+          </a>
+          <div>
+            <h5 class="project-title"><a class="clean" href="https://github.com/tousifrad/Bank-Marketing-Analysis/blob/main/Report.pdf" target="_blank" rel="noopener">Marketing Campaign (Portuguese Banking Institution)</a></h5>
+            <p class="project-note">EDA • Predictive models (regression, decision trees) • Python</p>
+          </div>
+        </article>
+
+        <article data-aos="fade-up" class="cardish project-card mb-4">
+          <a href="https://drive.google.com/file/d/1W62jfwiM1sfGWdINhmGZwk8wMcOptjVe/view?usp=sharing" target="_blank" rel="noopener">
+            <img class="project-thumb" src="assets/img/AdultSalaryDataset.gif" alt="Census income preview" loading="lazy" />
+          </a>
+          <div>
+            <h5 class="project-title"><a class="clean" href="https://github.com/tousifrad/Adult-Data-Set/blob/main/Report.pdf" target="_blank" rel="noopener">Salary Analysis (Census Income)</a></h5>
+            <p class="project-note">Exploratory analysis • Large dataset • Python</p>
+          </div>
+        </article>
+
+        <h4 class="mb-3">Data Analytics Projects</h4>
+        <article data-aos="fade-up" class="cardish project-card">
+          <div>
+            <h5 class="project-title"><a class="clean" href="https://github.com/tousifrad/Adult-Data-Set/blob/main/Report.pdf" target="_blank" rel="noopener">Melbourne Housing Market</a></h5>
+            <p class="project-note">Predicting Melbourne house prices • EDA incl. choropleth over 15 years • Tools: Python, Tableau</p>
+          </div>
+        </article>
+      </div>
+    </section>
+    <hr class="m-0" />
+
+    <!-- Education -->
+    <section class="resume-section" id="education">
+      <div class="resume-section-content">
+        <h2 class="mb-4">Education</h2>
+
+        <article data-aos="fade-up" class="cardish project-card mb-3">
+          <a href="https://www.swinburne.edu.au/" target="_blank" rel="noopener">
+            <img class="project-thumb" src="assets/img/sut.jpg" alt="Swinburne University logo" loading="lazy" />
+          </a>
+          <div>
+            <h3 class="mb-1">Master of Information Technology (Professional Computing)</h3>
+            <div class="subheading mb-1">Specialisation: Data Analytics</div>
+            <div class="subheading mb-2">Swinburne University of Technology</div>
+            <ul style="margin:0 0 0 1rem">
+              <li>Introduction to Data Science</li>
+              <li>Applied Business Analytics and Data Visualisation</li>
+              <li>Big Data</li>
+              <li>Requirements Analysis and Modelling</li>
+              <li>Database Systems</li>
+              <li>Knowledge Management and Analytics</li>
+              <li>User-Centred Design</li>
+              <li>Business Information Systems Analysis</li>
+            </ul>
+          </div>
+        </article>
+
+        <article data-aos="fade-up" class="cardish project-card">
+          <a href="http://www.northsouth.edu/" target="_blank" rel="noopener">
+            <img class="project-thumb" src="assets/img/nsu.jpg" alt="North South University logo" loading="lazy" />
+          </a>
+          <div>
+            <h3 class="mb-1">North South University</h3>
+            <div class="subheading mb-2">B.Sc Computer Science &amp; Engineering</div>
+            <ul style="margin:0 0 0 1rem">
+              <li>Data Structures and Algorithms</li>
+              <li>Digital Logic Design</li>
+              <li>Database Systems</li>
+              <li>Operating Systems Design</li>
+              <li>Software Engineering</li>
+              <li>Computer Organization and Architecture</li>
+              <li>Design and Analysis of Algorithms</li>
+              <li>Cyber Security</li>
+              <li>Capstone project</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+    </section>
+    <hr class="m-0" />
+
+    <!-- Certification -->
+    <section class="resume-section" id="certification">
+      <div class="resume-section-content">
+        <h2 class="mb-4">Certification</h2>
+
+        <div class="subheading mb-2"><b>Virtual Internships</b></div>
+        <article data-aos="fade-up" class="cardish project-card mb-3">
+          <a href="https://www.theforage.com/virtual-internships/theme/m7W4GMqeT3bh9Nb2c/KPMG-Data-Analytics-Virtual-Internship" target="_blank" rel="noopener">
+            <img class="project-thumb" src="assets/img/kpmg.jpg" alt="KPMG" loading="lazy" />
+          </a>
+          <div>
+            <h4 class="project-title"><a class="clean" href="https://insidesherpa.s3.amazonaws.com/completion-certificates/KPMG/m7W4GMqeT3bh9Nb2c_KPMG_9KYpqA7t3SNSFtJTm_completion_certificate.pdf" target="_blank" rel="noopener">KPMG Data Analytics Consulting Virtual Internship</a></h4>
+            <ul style="margin:0 0 0 1rem">
+              <li>Data quality assessment across transactions &amp; customer info</li>
+              <li>RFM modelling for customer demographics</li>
+              <li>Tableau visualisations for insights</li>
+            </ul>
+          </div>
+        </article>
+
+        <article data-aos="fade-up" class="cardish project-card mb-4">
+          <a href="https://insidesherpa.s3.amazonaws.com/completion-certificates/ANZ/ZLJCsrpkHo9pZBJNY_ANZ_ecnABLGA5duc4Gkf6_1626152272731_completion_certificate.pdf" target="_blank" rel="noopener">
+            <img class="project-thumb" src="assets/img/Anz.png" alt="ANZ" loading="lazy" />
+          </a>
+          <div>
+            <h4 class="project-title"><a class="clean" href="https://insidesherpa.s3.amazonaws.com/completion-certificates/ANZ/ZLJCsrpkHo9pZBJNY_ANZ_ecnABLGA5duc4Gkf6_1626152272731_completion_certificate.pdf" target="_blank" rel="noopener">Data@ANZ Program</a></h4>
+            <ul style="margin:0 0 0 1rem">
+              <li>EDA on transactions &amp; customer data</li>
+              <li>Predictive analysis: regression &amp; decision trees</li>
+            </ul>
+          </div>
+        </article>
+
+        <div class="subheading mb-2"><b>Online Courses</b></div>
+        <ul>
+          <li><b><a href="https://www.datacamp.com/statement-of-accomplishment/course/55e329bc0a90281b57a7e895d083a146106048f3" target="_blank" rel="noopener">Introduction to R</a></b> (DataCamp)</li>
+          <li><b><a href="https://www.linkedin.com/learning/certificates/a0263bdd5e793d558f25143584cab80c0ca036f8ff2a14de59d4c7f9b7ced246" target="_blank" rel="noopener">Data Visualization: Storytelling</a></b> (LinkedIn Learning)</li>
+          <li><b><a href="#" target="_blank" rel="noopener">Introduction to Data Analysis Using Excel</a></b> (Rice University / Coursera)</li>
+          <li><b><a href="https://www.coursera.org/account/accomplishments/certificate/4T34LWWNW4BL" target="_blank" rel="noopener">Getting Started with Power BI Desktop</a></b> (Coursera)</li>
+          <li><b><a href="https://www.coursera.org/account/accomplishments/certificate/SVD8F3HJMLT2" target="_blank" rel="noopener">Analyze Box Office Data with Seaborn and Python</a></b> (Coursera)</li>
+          <li><b><a href="https://analytics.google.com/analytics/academy/certificate/_xueASlOR1ebKfY19IeD0Q" target="_blank" rel="noopener">Google Analytics for Beginners</a></b> (Google)</li>
+          <li><b><a href="https://analytics.google.com/analytics/academy/certificate/6SP8Whs2SFeoCWEI0kXMBA" target="_blank" rel="noopener">Advanced Google Analytics</a></b> (Google)</li>
+        </ul>
+      </div>
+    </section>
+    <hr class="m-0" />
+
+    <!-- Achievement & Volunteering -->
+    <section class="resume-section" id="achievement">
+      <div class="resume-section-content">
+        <h2 class="mb-4">Achievement &amp; Volunteering</h2>
+
+        <div class="subheading mb-2"><b>Achievement</b></div>
+        <p><b style="color:#1a0000;">IEEE NSU INSB Poster Competition Winner 2015</b></p>
+
+        <div class="subheading mb-2"><b>Volunteering</b></div>
+        <ul>
+          <li><b><a class="clean" style="color:#1a0000;" href="http://www.northsouth.edu/osa/clubs/apc.html" target="_blank" rel="noopener">NSU Art &amp; Photography Club</a></b> — Organised 10+ photo exhibitions (national &amp; international)</li>
+          <li><b><a class="clean" style="color:#1a0000;" href="https://www.jaago.com.bd/" target="_blank" rel="noopener">JAAGO Foundation — Volunteer for Bangladesh</a></b> — Promoted awareness for underprivileged children on Universal Children’s Day</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Contact Me -->
+    <section class="resume-section" id="contactme">
+      <div class="resume-section-content">
+        <h2 class="mb-4">Contact Me</h2>
+        <div class="container">
+          <div class="row">
+            <div class="col-sm">
+              <h4>Get in touch with me:</h4>
+              <h5 class="mt-3">I am available for:</h5>
+              <ul>
+                <li>Data Analysis</li>
+                <li>Data Visualisation</li>
+                <li>Data Reporting</li>
+                <li>Analytics Engineering</li>
+              </ul>
+              <p><b>Interested in collaboration or just a conversation about data?</b></p>
+
+              <h4 class="mt-3">Send me a message</h4>
+              <form action="https://formspree.io/f/mjvdnaoj" id="contact_form" name="contact_form" method="POST">
+                <div class="mb-3">
+                  <label for="first_name">Name</label>
+                  <input type="text" required maxlength="50" class="form-control" id="first_name" name="first_name">
+                </div>
+                <div class="mb-3">
+                  <label for="email_addr">Email</label>
+                  <input type="email" required maxlength="50" class="form-control" id="email_addr" name="email" placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                  <label for="phone_input">Phone</label>
+                  <input type="tel" maxlength="50" class="form-control" id="phone_input" name="phone" placeholder="Phone">
+                </div>
+                <div class="mb-3">
+                  <label for="message">Message</label>
+                  <textarea class="form-control" id="message" name="message" rows="5"></textarea>
+                </div>
+                <input type="hidden" name="_next" value="https://iamrad.xyz/ThankYou.html" />
                 <button type="submit" class="btn btn-primary px-4 btn-lg">Send</button>
-    
-  <!--Website Count -->
- <style>
-    /* Styles for website counter */
-    .counter-container {
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        font-family: Arial, Helvetica, sans-serif;
-        font-size: 15px;
-        background-color: #f2f2f2;
-        border: 1px solid #eee;
-        padding: 10px;
-        width: 150px;
-        text-align: center;
-        /*box-shadow: 5px 5px #888888;*/
-    }
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
-    .website-counter {
-        background-color: black;
-        color: white;
-        font-weight: 700;
-        margin-top: 10px;
-        padding: 6px 6px 4px;
-        border-radius: 3px;
-        margin-right: 0;
-    }
+  <!-- Visitor Counter -->
+  <div class="counter-container" aria-live="polite">
+    <div>Visitor hits</div>
+    <div class="website-counter">0</div>
+  </div>
 
-    /* Styles for reset button */
-    #reset {
-        margin-top: 20px;
-        background-color: #008cba;
-        cursor: pointer;
-        font-size: 18px;
-        padding: 8px 20px;
-        color: white;
-        border: 0;
-    }
-</style>
+  <footer id="footer" role="contentinfo" class="clearfix text-center py-3">
+    <p><span style="font-size:14px">©tousifalam v270725a.00</span></p>
+  </footer>
 
-<body>
-    <div class="counter-container">
-        <div>Visitor hits</div>
-        <div class="website-counter"></div>
-    </div>
-    <!-- <button id="reset">Reset</button> -->
+  <!-- Scripts -->
+  <script src="js/jquery.min.js"></script>
+  <script src="js/bootstrap.bundle.min.js"></script>
+  <script src="js/jquery.easing.min.js"></script>
+  <script src="js/scripts.js"></script>
+  <script src="js/cap.js"></script>
+  <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+
+  <!-- Counter logic with smooth count-up -->
+  <script>
+    (function(){
+      var el = document.querySelector('.website-counter');
+      var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var prev = 0;
+      try { prev = Number(localStorage.getItem('page_view') || '0'); } catch(e) {}
+      var next = prev + 1;
+      try { localStorage.setItem('page_view', String(next)); } catch(e) {}
+
+      if (!el) return;
+      if (prefersReduced) { el.textContent = next; return; }
+
+      var start = null, duration = 600;
+      function tick(ts){
+        if (!start) start = ts;
+        var p = Math.min(1, (ts - start) / duration);
+        var val = Math.floor(prev + (next - prev) * p);
+        el.textContent = val;
+        if (p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>document.addEventListener('DOMContentLoaded',function(){ AOS.init({ duration:700, easing:'ease-out-quart', once:true, offset:80 }); });</script>
+
+
 </body>
-
-<script>
-    var counterContainer = document.querySelector(".website-counter");
-    var resetButton = document.querySelector("#reset");
-    var visitCount = localStorage.getItem("page_view");
-    // Check if page_view entry is present
-    if (visitCount) {
-        visitCount = Number(visitCount) + 1;
-        localStorage.setItem("page_view", visitCount);
-    } else {
-        visitCount = 1;
-        localStorage.setItem("page_view", 1);
-    }
-    counterContainer.innerHTML = visitCount;
-    // Adding onClick event listener
-    resetButton.addEventListener("click", () => {
-        visitCount = 1;
-        localStorage.setItem("page_view", 1);
-        counterContainer.innerHTML = visitCount;
-    });
-</script>
-   
-             
-        
-    </div>
-
-             
-        <div class="col-sm">
-            <div class="d-flex flex-column flex-md-row justify-content-end mb-5">
-
-                <div class="badge-base LI-profile-badge" data-locale="en_US" data-size="large" data-theme="light" data-type="VERTICAL" data-vanity="tousifrad" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://au.linkedin.com/in/tousifrad?trk=profile-badge"> <label><h4>Connect with Me on LinkedIn</h4></label></a>
-
-                    </div>                    
-              </div>
-            </div>    
-           </div>
-
-
-        <!-- Bootstrap core JS-->
-        <script src=" js/jquery.min.js"></script>
-        <script src="js/bootstrap.bundle.min.js"></script>
-       
-        <!-- Third party plugin JS-->
-        <script src="js/jquery.easing.min.js"></script>
-        
-        <!-- Core theme JS-->
-        <script src="js/scripts.js"></script> 
-        <script src="js/cap.js"></script>
-
-        <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
-  
-    
-    <footer id="footer" role="contentinfo" class="clearfix">
-          
-    <div id="block-block-3" class="block block-block">
-
-     <div class="content">
-    <p><span style="font-size:14px">©tousifalam v280124a.00</span></p>
-
-     </div>
-     </div>
-   </footer> 
-
-
-    </body>
 </html>
-
