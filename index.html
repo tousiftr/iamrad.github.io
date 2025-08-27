@@ -618,7 +618,7 @@
   max-width: 1600px;        /* make the container wider */
   margin-left: 65;           /* align flush to the left */
   margin-right: auto;       /* keep right side flexible */
-  padding: 0rem 2rem 3rem;  /* more breathing space */
+  padding: 2rem 2rem 3rem;  /* more breathing space */
 }
 
 /* Widen spacing between stops */
@@ -979,53 +979,108 @@
 
     <!-- Education -->
     <section class="resume-section" id="education">
-      <div class="resume-section-content">
-        <h2 class="mb-4">Education</h2>
+  <style>
+    .education-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr); /* Two equal columns */
+      gap: 2rem;
+      align-items: start;
+    }
 
-        <article data-aos="fade-up" class="cardish project-card mb-3">
-          <a href="https://www.swinburne.edu.au/" target="_blank" rel="noopener">
-            <img class="project-thumb" src="assets/img/sut.jpg" alt="Swinburne University logo" loading="lazy" />
-          </a>
-          <div>
-            <h3 class="mb-1">Master of Information Technology (Professional Computing)</h3>
-            <div class="subheading mb-1">Specialisation: Data Analytics</div>
-            <div class="subheading mb-2">Swinburne University of Technology</div>
-            <ul style="margin:0 0 0 1rem">
-              <li>Introduction to Data Science</li>
-              <li>Applied Business Analytics and Data Visualisation</li>
-              <li>Big Data</li>
-              <li>Requirements Analysis and Modelling</li>
-              <li>Database Systems</li>
-              <li>Knowledge Management and Analytics</li>
-              <li>User-Centred Design</li>
-              <li>Business Information Systems Analysis</li>
-            </ul>
-          </div>
-        </article>
+    .project-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
 
-        <article data-aos="fade-up" class="cardish project-card">
-          <a href="http://www.northsouth.edu/" target="_blank" rel="noopener">
-            <img class="project-thumb" src="assets/img/nsu.jpg" alt="North South University logo" loading="lazy" />
-          </a>
-          <div>
-            <h3 class="mb-1">North South University</h3>
-            <div class="subheading mb-2">B.Sc Computer Science &amp; Engineering</div>
-            <ul style="margin:0 0 0 1rem">
-              <li>Data Structures and Algorithms</li>
-              <li>Digital Logic Design</li>
-              <li>Database Systems</li>
-              <li>Operating Systems Design</li>
-              <li>Software Engineering</li>
-              <li>Computer Organization and Architecture</li>
-              <li>Design and Analysis of Algorithms</li>
-              <li>Cyber Security</li>
-              <li>Capstone project</li>
-            </ul>
-          </div>
-        </article>
-      </div>
-    </section>
-    <hr class="m-0" />
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    .project-thumb {
+      max-width: 80px;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .project-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .subheading {
+      font-size: 0.95rem;
+      color: #555;
+    }
+
+    .project-card ul {
+      margin: 0.75rem 0 0 1.2rem;
+      padding: 0;
+      list-style: disc;
+      font-size: 0.9rem;
+      color: #333;
+    }
+
+    @media (max-width: 768px) {
+      .education-grid {
+        grid-template-columns: 1fr; /* Stack on small screens */
+      }
+    }
+  </style>
+
+  <div class="resume-section-content">
+    <h2 class="mb-4">Education</h2>
+
+    <div class="education-grid">
+      <!-- First column -->
+      <article data-aos="fade-up" class="cardish project-card">
+        <a href="https://www.swinburne.edu.au/" target="_blank" rel="noopener">
+          <img class="project-thumb" src="assets/img/sut.jpg" alt="Swinburne University logo" loading="lazy" />
+        </a>
+        <div>
+          <h3 class="mb-1">Master of Information Technology (Professional Computing)</h3>
+          <div class="subheading mb-1">Specialisation: Data Analytics</div>
+          <div class="subheading mb-2">Swinburne University of Technology</div>
+          <ul>
+            <li>Introduction to Data Science</li>
+            <li>Applied Business Analytics and Data Visualisation</li>
+            <li>Big Data</li>
+            <li>Requirements Analysis and Modelling</li>
+            <li>Database Systems</li>
+            <li>Knowledge Management and Analytics</li>
+            <li>User-Centred Design</li>
+            <li>Business Information Systems Analysis</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Second column -->
+      <article data-aos="fade-up" class="cardish project-card">
+        <a href="http://www.northsouth.edu/" target="_blank" rel="noopener">
+          <img class="project-thumb" src="assets/img/nsu.jpg" alt="North South University logo" loading="lazy" />
+        </a>
+        <div>
+          <h3 class="mb-1">North South University</h3>
+          <div class="subheading mb-2">B.Sc Computer Science &amp; Engineering</div>
+          <ul>
+            <li>Data Structures and Algorithms</li>
+            <li>Digital Logic Design</li>
+            <li>Database Systems</li>
+            <li>Operating Systems Design</li>
+            <li>Software Engineering</li>
+            <li>Computer Organization and Architecture</li>
+            <li>Design and Analysis of Algorithms</li>
+            <li>Cyber Security</li>
+            <li>Capstone project</li>
+          </ul>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
 
     <!-- Certification -->
     <section class="resume-section" id="certification">
