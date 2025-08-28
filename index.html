@@ -113,6 +113,7 @@
       </ul>
     </div>
 
+ <main>
     <!-- Minimal loader SVG retained -->
     <svg version="1.1" id="L6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" xml:space="preserve" aria-hidden="true">
       <rect fill="none" stroke="#fff" stroke-width="4" x="25" y="25" width="50" height="50">
@@ -125,8 +126,9 @@
   </nav>
 
   <!-- Page Content -->
-  <main>
+ 
     <!-- About -->
+
           <section class="resume-section" id="about">
   <div class="resume-section-content">
 
@@ -134,7 +136,7 @@
       /* -------- Layout -------- */
       .about-grid {
         display: grid;
-        gap: 12px;
+        gap: 16px;
         align-items: start;
         grid-template-columns: 1fr;
       }
@@ -186,14 +188,14 @@
       .tl-tip.show { opacity: 1 }
 
       /* -------- Skills Network -------- */
-      #skills-network .sn-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+      #skills-network .sn-head{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:10px}
       #skills-network .sn-sub{color:var(--muted,#6b7280);margin:0 0 12px}
       #skills-network .sn-wrap{position:relative}
       #skills-network .sn-svg{width:100%;height: clamp(220px, 42vw, 320px);display:block}
       #skills-network .link{stroke:#9ca3af;stroke-opacity:.7}
       #skills-network .node{cursor:grab;transition:opacity .15s, transform .15s}
       #skills-network .node:active{cursor:grabbing}
-      #skills-network .label{font-size:20px;font-weight:700;fill:#111827;pointer-events:none}
+      #skills-network .label{font-size:15px;font-weight:700;fill:#111827;pointer-events:none}
       #skills-network .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:14px}
       #skills-network .chip{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px}
       #skills-network .tip{
@@ -224,11 +226,11 @@
         <br>
 
         <p class="lead mb-5">
-          Data & Reporting Analyst with 4+ years of experience in Australia, delivering data-driven insights across FinTech, SaaS, Education, Retail, and Not-for-Profit sectors. Hold a Master’s in Data Analytics from Swinburne University of Technology (Australia) and a B.Sc. in Computer Science & Engineering.
+          Data & Reporting Analyst with 4+ years of experience in Australia, delivering data-driven insights across FinTech, SaaS, Education, Retail, and Not-for-Profit sectors. Hold a Master’s in Data Analytics from Swinburne University of Technology (Australia) and a B.Sc. in Computer Science & Engineering. 
 
-Proficient in SQL, Snowflake, Tableau, DBT, Power BI (DAX, Power Query), Excel, and Python, with strong expertise in data modelling, ETL pipeline design, and interactive dashboard development. Adept at automating reporting solutions and building end-to-end analytics workflows that improve efficiency and enable business decision-making.
+          Proficient in SQL, Snowflake, Tableau, DBT, Power BI (DAX, Power Query), Excel, and Python, with strong expertise in data modelling, ETL pipeline design, and interactive dashboard development. Adept at automating reporting solutions and building end-to-end analytics workflows that improve efficiency and enable business decision-making.
 
-Recognized for strong stakeholder engagement, problem-solving, and time management skills, with a proven track record of delivering results in fast-paced environments. Highly self-motivated with the ability to manage competing priorities while driving analytical solutions that create measurable impact.
+          Recognized for strong stakeholder engagement, problem-solving, and time management skills, with a proven track record of delivering results in fast-paced environments. Highly self-motivated with the ability to manage competing priorities while driving analytical solutions that create measurable impact.
           <br><br>
           <b>I am open to new opportunities and look forward to leveraging my expertise in data analysis to drive meaningful insights and business success.</b>
         </p>
@@ -252,8 +254,11 @@ Recognized for strong stakeholder engagement, problem-solving, and time manageme
 </div></div>
 
       <!-- RIGHT: Timeline -->
-      <div class="about-right">
-        <div class="timeline-box cardish" data-aos="fade-up">
+       
+      <div class="right-stack">
+
+        <!-- Timeline -->
+        <div class="timeline-box cardish">
           <div class="timeline-head">
             <h3 class="timeline-title">Timeline (2012–2025)</h3>
             <div class="timeline-legend">
@@ -262,152 +267,135 @@ Recognized for strong stakeholder engagement, problem-solving, and time manageme
             </div>
           </div>
           <div class="tl-stage">
-            <!-- Use viewBox to scale nicely on mobile -->
-            <svg class="tl-svg" viewBox="0 0 800 420" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="tl-title"></svg>
-            <div class="tl-tip" id="tl-tip" aria-hidden="true"></div>
+            <svg class="tl-svg" viewBox="0 0 780 400" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="tl-title"></svg>
           </div>
         </div>
 
-        <script>
-          (function(){
-            const items = [
-              { label:"North South University", start:2012, end:2017, type:"edu", logo:"assets/img/nsu.jpg" },
-              { label:"Research Data Analyst • NSU", start:2015, end:2016, type:"job", logo:"assets/img/nsu.jpg" },
-              { label:"Freelancer", start:2017, end:2018, type:"job", logo:"assets/img/fl.jpg" },
-              { label:"Swinburne University of Technology", start:2019, end:2020, type:"edu", logo:"assets/img/sut.jpg"},
-              { label:"Woolworths Supermarkets", start:2019, end:2022, type:"job", logo:"assets/img/ww.png" },
-              { label:"Swoop Analytics — Data Analyst", start:2021, end:2021, type:"job", logo:"assets/img/swoop.png" },
-              { label:"Melbourne Metropolitan College", start:2022, end:2022, type:"job", logo:"assets/img/mmc.png" },
-              { label:"Onemda — Reporting Analyst", start:2023, end:2023, type:"job", logo:"assets/img/onemda.png" },
-              { label:"Pepperstone — Data Analyst", start:2023, end:2025, type:"job", logo:"assets/img/pepperstone.png" }
-            ];
-            const YEAR_MIN=2012, YEAR_MAX=2026;
-
-            const svg = document.querySelector("#about .tl-svg");
-            const tip = document.getElementById("tl-tip");
-
-            function draw() {
-              svg.replaceChildren(); // clear
-              const vb = svg.viewBox.baseVal;
-              const W = vb.width, H = vb.height;
-              const margin = { top: 30, right: 20, bottom: 40, left: 95 };
-              const innerW = W - margin.left - margin.right;
-              const innerH = H - margin.top - margin.bottom;
-
-              const x = yr => ((yr - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * innerW;
-              const rowH = innerH / items.length, barH = Math.min(22, Math.max(14, rowH - 10));
-
-              const g = document.createElementNS("http://www.w3.org/2000/svg","g");
-              g.setAttribute("transform",`translate(${margin.left},${margin.top})`);
-              svg.appendChild(g);
-
-              // grid + labels
-              for (let yr = YEAR_MIN; yr <= YEAR_MAX; yr++) {
-                const gx = x(yr);
-                const grid = document.createElementNS("http://www.w3.org/2000/svg","line");
-                grid.setAttribute("x1",gx);grid.setAttribute("x2",gx);
-                grid.setAttribute("y1",0);grid.setAttribute("y2",innerH);
-                grid.setAttribute("stroke","#e5e7eb");
-                g.appendChild(grid);
-
-                if (yr % 2 === 0) {
-                  const txt = document.createElementNS("http://www.w3.org/2000/svg","text");
-                  txt.setAttribute("x",gx);txt.setAttribute("y",innerH+22);
-                  txt.setAttribute("text-anchor","middle");
-                  txt.setAttribute("font-size","12");
-                  txt.textContent = yr;
-                  g.appendChild(txt);
-                }
-              }
-
-              // clamp helper for tooltip
-              const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-              const showTip = (label, start, end, clientX, clientY) => {
-                tip.textContent = `${label} (${start}–${end})`;
-                tip.classList.add("show");
-                tip.setAttribute("aria-hidden","false");
-                // position within viewport
-                const pad = 8;
-                const tw = tip.offsetWidth || 160;
-                const th = tip.offsetHeight || 30;
-                const left = clamp(clientX + 10, pad, window.innerWidth - tw - pad);
-                const top  = clamp(clientY - 28, pad, window.innerHeight - th - pad);
-                tip.style.left = left + "px";
-                tip.style.top  = top + "px";
-              };
-              const hideTip = () => { tip.classList.remove("show"); tip.setAttribute("aria-hidden","true"); };
-
-              items.forEach((d,i)=>{
-                const y = i * rowH + (rowH - barH) / 2;
-                const xs = x(d.start), xe = x(d.end);
-                const w = Math.max(8, xe - xs);
-
-                const rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
-                rect.setAttribute("class",`bar ${d.type}`);
-                rect.setAttribute("x", xs); rect.setAttribute("y", y);
-                rect.setAttribute("width", w); rect.setAttribute("height", barH);
-
-                // Pointer-friendly interactions (works on touch + mouse)
-                rect.addEventListener("pointermove", e => showTip(d.label, d.start, d.end, e.clientX, e.clientY));
-                rect.addEventListener("pointerleave", hideTip);
-                rect.addEventListener("click", e => {
-                  // tap to toggle pin on mobile
-                  if (tip.classList.contains("show")) { hideTip(); }
-                  else { showTip(d.label, d.start, d.end, e.clientX, e.clientY); }
-                });
-
-                g.appendChild(rect);
-
-                const img = document.createElementNS("http://www.w3.org/2000/svg","image");
-                img.setAttributeNS("http://www.w3.org/1999/xlink","href", d.logo);
-                img.setAttribute("x", -70); img.setAttribute("y", y - 6);
-                img.setAttribute("width","34"); img.setAttribute("height","34");
-                g.appendChild(img);
-              });
-            }
-
-            // initial + on resize (debounced)
-            let rAF = null;
-            const onResize = () => {
-              if (rAF) cancelAnimationFrame(rAF);
-              rAF = requestAnimationFrame(draw);
-            };
-            draw();
-            window.addEventListener("resize", onResize, { passive: true });
-          })();
-        </script>
-
-        <!-- ===== Skills — Connected Network ===== -->
-        <div class="cardish" id="skills-network" data-aos="fade-up" style="margin-top:10px">
-          <div class="sn-head">
-            <h4 class="mb-0">Skills</h4>
-          </div>
+        <!-- Skills (directly under Timeline) -->
+        <div class="cardish" id="skills-network">
+          <div class="sn-head"><h4 class="mb-0">Skills</h4></div>
           <p class="sn-sub">Hover/tap to highlight relationships. Drag nodes to reposition. Tap a node to lock selection.</p>
-
           <div class="sn-wrap">
-            <!-- viewBox drives the physics space; keep JS in sync -->
             <svg class="sn-svg" viewBox="0 0 580 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="sn-title">
               <title id="sn-title">Skill relationship network</title>
             </svg>
             <div class="tip" id="sn-tip"></div>
           </div>
-
           <div class="legend" id="sn-legend"></div>
+        </div>
 
-          <script>
+      </div><!-- /right-stack -->
+    </div><!-- /about-grid -->
+  </section>
+
+  <!-- Tooltip (outside cards to avoid transform issues) -->
+  <div class="tl-tip" id="tl-tip" aria-hidden="true"></div>
+
+  <!-- Timeline Script -->
+  <script>
+    (function(){
+      const items = [
+        { label:"North South University", start:2012, end:2017, type:"edu", logo:"assets/img/nsu.jpg" },
+        { label:"Research Data Analyst • NSU", start:2015, end:2016, type:"job", logo:"assets/img/nsu.jpg" },
+        { label:"Freelancer", start:2017, end:2018, type:"job", logo:"assets/img/fl.jpg" },
+        { label:"Swinburne University of Technology", start:2019, end:2020, type:"edu", logo:"assets/img/sut.jpg" },
+        { label:"Woolworths Supermarkets", start:2019, end:2022, type:"job", logo:"assets/img/ww.png" },
+        { label:"Swoop Analytics — Data Analyst", start:2021, end:2021, type:"job", logo:"assets/img/swoop.png" },
+        { label:"Melbourne Metropolitan College", start:2022, end:2022, type:"job", logo:"assets/img/mmc.png" },
+        { label:"Onemda — Reporting Analyst", start:2023, end:2023, type:"job", logo:"assets/img/onemda.png" },
+        { label:"Pepperstone — Data Analyst", start:2023, end:2025, type:"job", logo:"assets/img/pepperstone.png" }
+      ];
+
+      const YEAR_MIN=2012, YEAR_MAX=2025;
+      const svg = document.querySelector("#about .tl-svg");
+      const tip = document.getElementById("tl-tip");
+
+      function draw(){
+        svg.replaceChildren();
+        const vb = svg.viewBox.baseVal, W = vb.width, H = vb.height;
+
+        const margin = { top: 18, right: 18, bottom: 16, left: 110 };
+        const innerW = W - margin.left - margin.right;
+        const innerH = H - margin.top - margin.bottom;
+
+        const x = yr => ((yr - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * innerW;
+        const rowH = innerH / items.length;
+        const barH = Math.min(22, Math.max(14, rowH - 10));
+
+        const g = S("g",{ transform:`translate(${margin.left},${margin.top})` });
+        svg.appendChild(g);
+
+        // Grid lines + year labels
+        for (let yr = YEAR_MIN; yr <= YEAR_MAX; yr++) {
+          const gx = x(yr);
+          g.appendChild(S("line",{ x1:gx, x2:gx, y1:0, y2:innerH, stroke:"#e5e7eb" }));
+          if (yr % 2 === 0) {
+            const t = S("text",{ x:gx, y:innerH+18, "text-anchor":"middle", class:"year" });
+            t.textContent = yr; g.appendChild(t);
+          }
+        }
+
+        // Tooltip helpers
+        const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+        const showTipFor = (rect, text) => {
+          const box = rect.getBoundingClientRect();
+          const cx = box.left + box.width/2;
+          const above = box.top - 10;
+
+          tip.textContent = text;
+          tip.classList.add("show");
+          tip.setAttribute("aria-hidden","false");
+
+          const pad=8, tw=tip.offsetWidth||160, th=tip.offsetHeight||30;
+          const left = clamp(cx - tw/2, pad, window.innerWidth - tw - pad);
+          const top  = clamp(above - th, pad, window.innerHeight - th - pad);
+          tip.style.left = left + "px";
+          tip.style.top  = top  + "px";
+        };
+        const hideTip = () => { tip.classList.remove("show"); tip.setAttribute("aria-hidden","true"); };
+
+        // Bars (no static labels)
+        items.forEach((d,i)=>{
+          const y  = i * rowH + (rowH - barH) / 2;
+          const xs = x(d.start), xe = x(d.end);
+          const w  = Math.max(8, xe - xs);
+
+          const rect = S("rect",{ class:`bar ${d.type}`, x:xs, y:y, width:w, height:barH });
+          g.appendChild(rect);
+
+          // Tiny logo at left (optional; remove if not needed)
+          const img = S("image",{ href:d.logo, x:-84, y:y - 6, width:34, height:34 });
+          g.appendChild(img);
+
+          const tipText = `${d.label} (${d.start}–${d.end})`;
+          rect.addEventListener("pointerenter", ()=>showTipFor(rect, tipText));
+          rect.addEventListener("pointerleave", hideTip);
+          rect.addEventListener("pointermove",  ()=>showTipFor(rect, tipText));
+          rect.addEventListener("click", ()=>{ if(tip.classList.contains("show")) hideTip(); else showTipFor(rect, tipText); });
+        });
+      }
+
+      function S(tag, attrs={}){ const el=document.createElementNS("http://www.w3.org/2000/svg", tag); for(const k in attrs) el.setAttribute(k, attrs[k]); return el; }
+
+      let rAF=null;
+      const onResize=()=>{ if(rAF) cancelAnimationFrame(rAF); rAF=requestAnimationFrame(draw); };
+      draw();
+      window.addEventListener("resize", onResize, { passive:true });
+    })();
+  </script>
+
+  <!-- Skills Script -->
+  <script>
 (function(){
   const groups = { Viz:"#2563eb", Core:"#7c3aed", ELT:"#ef4444", Code:"#059669" };
-
   const nodes = [
     { id:"Power BI", group:"Viz",  value:5, color:"#2563eb" },
     { id:"Tableau",  group:"Viz",  value:4, color:"#f59e0b" },
     { id:"SQL",      group:"Core", value:5, color:"#7c3aed" },
     { id:"Excel",    group:"Core", value:4, color:"#4b5563" },
     { id:"dbt",      group:"ELT",  value:4, color:"#ef4444" },
-    { id:"Python",   group:"Code", value:4, color:"#059669" },
-    { id:"GitHub",   group:"Core",value:4, color:"#333333" }  // 🆕 GitHub node
+    { id:"Python",   group:"Code", value:4, color:"#059669" }
   ];
-
   const links = [
     { s:"SQL",      t:"Power BI", w:1.2 },
     { s:"SQL",      t:"Tableau",  w:1.8 },
@@ -416,158 +404,152 @@ Recognized for strong stakeholder engagement, problem-solving, and time manageme
     { s:"Python",   t:"SQL",      w:1.2 },
     { s:"Excel",    t:"Power BI", w:1.3 },
     { s:"Excel",    t:"SQL",      w:0.8 },
-    { s:"Power BI", t:"Tableau",  w:0.6 },
-    { s:"Python",   t:"GitHub",   w:1.0 },   // 🆕 connection
-    { s:"dbt",      t:"GitHub",   w:1.0 }    // 🆕 connection
+    { s:"Power BI", t:"Tableau",  w:0.6 }
   ];
 
+  const root = document.getElementById("skills-network");
+  const svg  = root.querySelector(".sn-svg");
+  const tip  = root.querySelector("#sn-tip");
+  const legendEl = root.querySelector("#sn-legend");
 
-              const root = document.getElementById("skills-network");
-              const svg  = root.querySelector(".sn-svg");
-              const tip  = root.querySelector("#sn-tip");
-              const legendEl = root.querySelector("#sn-legend");
+  Object.entries(groups).forEach(([label, col])=>{
+    const wrap = document.createElement("div");
+    const chip = document.createElement("span");
+    chip.className="chip"; chip.style.background = col;
+    wrap.appendChild(chip);
+    wrap.appendChild(document.createTextNode(label));
+    legendEl.appendChild(wrap);
+  });
 
-              Object.entries(groups).forEach(([label, col])=>{
-                const wrap = document.createElement("div");
-                const chip = document.createElement("span");
-                chip.className="chip"; chip.style.background = col;
-                wrap.appendChild(chip);
-                wrap.appendChild(document.createTextNode(label));
-                legendEl.appendChild(wrap);
-              });
+  const NS="http://www.w3.org/2000/svg";
+  const S=(tag,attrs={})=>{ const el=document.createElementNS(NS,tag); for(const k in attrs) el.setAttribute(k,attrs[k]); return el; };
+  const clamp=(v,min,max)=> Math.max(min, Math.min(max, v));
 
-              const NS="http://www.w3.org/2000/svg";
-              const S=(tag,attrs={})=>{ const el=document.createElementNS(NS,tag); for(const k in attrs) el.setAttribute(k,attrs[k]); return el; };
-              const clamp=(v,min,max)=> Math.max(min, Math.min(max, v));
+  const vb = svg.viewBox.baseVal;
+  const W = vb.width, H = vb.height, CX = W/2, CY = H/2;
 
-              // Keep physics space exactly equal to viewBox
-              const vb = svg.viewBox.baseVal;
-              const W = vb.width, H = vb.height, CX = W/2, CY = H/2;
+  const idx = Object.fromEntries(nodes.map((n,i)=>[n.id,i]));
+  const L = links.map(l=>({ i:idx[l.s], j:idx[l.t], w:l.w }));
 
-              const idx = Object.fromEntries(nodes.map((n,i)=>[n.id,i]));
-              const L = links.map(l=>({ i:idx[l.s], j:idx[l.t], w:l.w }));
+  nodes.forEach((n,i)=>{
+    n.x = CX + 180*Math.cos((i/nodes.length)*Math.PI*2);
+    n.y = CY + 100*Math.sin((i/nodes.length)*Math.PI*2);
+    n.vx = 0; n.vy = 0; n.fx = null; n.fy = null;
+    n.r = 12 + n.value*3;
+  });
 
-              nodes.forEach((n,i)=>{
-                n.x = CX + 180*Math.cos((i/nodes.length)*Math.PI*2);
-                n.y = CY + 100*Math.sin((i/nodes.length)*Math.PI*2);
-                n.vx = 0; n.vy = 0; n.fx = null; n.fy = null;
-                n.r = 12 + n.value*3;
-              });
+  const gLinks = S("g"); svg.appendChild(gLinks);
+  const gNodes = S("g"); svg.appendChild(gNodes);
 
-              const gLinks = S("g"); svg.appendChild(gLinks);
-              const gNodes = S("g"); svg.appendChild(gNodes);
+  const lineEls = L.map(l=>{ const ln=S("line",{class:"link","stroke-width":1.3}); gLinks.appendChild(ln); return ln; });
 
-              const lineEls = L.map(l=>{ const ln=S("line",{class:"link","stroke-width":1.3}); gLinks.appendChild(ln); return ln; });
+  const nodeEls = nodes.map((n,i)=>{
+    const g = S("g",{class:"node","data-i":i});
+    const c = S("circle",{r:n.r, fill:n.color || "#999"});
+    const t = S("text",{class:"label",x:n.r+6,y:5});
+    t.textContent = n.id;
+    g.appendChild(c); g.appendChild(t);
+    gNodes.appendChild(g);
+    return g;
+  });
 
-              const nodeEls = nodes.map((n,i)=>{
-                const g = S("g",{class:"node","data-i":i});
-                const c = S("circle",{r:n.r, fill:n.color || "#999"});
-                const t = S("text",{class:"label",x:n.r+6,y:5});
-                t.textContent = n.id;
-                g.appendChild(c); g.appendChild(t);
-                gNodes.appendChild(g);
-                return g;
-              });
+  // Highlighting
+  let selected = null;
+  function applyHighlight(idx){
+    nodeEls.forEach((g,i)=> g.style.opacity = (idx!==null && i!==idx) ? 0.35 : 1);
+    lineEls.forEach((ln,k)=>{
+      const {i,j} = L[k];
+      const dim = (idx!==null && i!==idx && j!==idx);
+      ln.style.opacity = dim ? 0.25 : 0.9;
+      ln.style.strokeWidth = (idx!==null && (i===idx || j===idx)) ? 2.2 : 1.3;
+    });
+  }
+  function setSelected(idx){
+    selected = (selected===idx ? null : idx);
+    applyHighlight(selected);
+  }
 
-              // Highlighting
-              let selected = null;
-              function applyHighlight(idx){
-                nodeEls.forEach((g,i)=> g.style.opacity = (idx!==null && i!==idx) ? 0.35 : 1);
-                lineEls.forEach((ln,k)=>{
-                  const {i,j} = L[k];
-                  const dim = (idx!==null && i!==idx && j!==idx);
-                  ln.style.opacity = dim ? 0.25 : 0.9;
-                  ln.style.strokeWidth = (idx!==null && (i===idx || j===idx)) ? 2.2 : 1.3;
-                });
-              }
-              function setSelected(idx){
-                selected = (selected===idx ? null : idx);
-                applyHighlight(selected);
-              }
+  // Dragging
+  let dragI = null;
+  svg.addEventListener("pointerdown", e=>{
+    const g = e.target.closest(".node"); if(!g) return;
+    dragI = +g.dataset.i;
+    nodes[dragI].fx = nodes[dragI].x;
+    nodes[dragI].fy = nodes[dragI].y;
+    setSelected(dragI);
+    g.setPointerCapture(e.pointerId);
+  });
+  svg.addEventListener("pointermove", e=>{
+    if(dragI==null) return;
+    const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+    const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+    nodes[dragI].fx = clamp(svgPt.x, 20, W-20);
+    nodes[dragI].fy = clamp(svgPt.y, 20, H-20);
+  });
+  svg.addEventListener("pointerup", ()=>{ dragI=null; });
 
-              // Dragging (pointer events = touch + mouse)
-              let dragI = null;
-              svg.addEventListener("pointerdown", e=>{
-                const g = e.target.closest(".node"); if(!g) return;
-                dragI = +g.dataset.i;
-                nodes[dragI].fx = nodes[dragI].x;
-                nodes[dragI].fy = nodes[dragI].y;
-                setSelected(dragI);
-                g.setPointerCapture(e.pointerId);
-              });
-              svg.addEventListener("pointermove", e=>{
-                if(dragI==null) return;
-                const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
-                const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
-                nodes[dragI].fx = clamp(svgPt.x, 20, W-20);
-                nodes[dragI].fy = clamp(svgPt.y, 20, H-20);
-              });
-              svg.addEventListener("pointerup", ()=>{ dragI=null; });
+  // Tooltip anchored to node center (not mouse)
+  function showTipForNode(g, n) {
+    const box = g.getBoundingClientRect();
+    const cx = box.left + box.width/2;
+    const above = box.top - 10;
 
-              // Tooltip + tap
-              function showTip(n, clientX, clientY){
-                tip.textContent = `${n.id} • ${n.group} • level ${n.value}`;
-                tip.classList.add("show");
-                const pad=8, tw=tip.offsetWidth||160, th=tip.offsetHeight||30;
-                tip.style.left = clamp(clientX, pad, window.innerWidth - tw - pad) + "px";
-                tip.style.top  = clamp(clientY - 16, pad, window.innerHeight - th - pad) + "px";
-              }
-              function hideTip(){ tip.classList.remove("show"); }
+    tip.textContent = `${n.id} • ${n.group} • level ${n.value}`;
+    tip.classList.add("show");
 
-              nodeEls.forEach((g,i)=>{
-                g.addEventListener("pointermove", e=>{ if(selected===null) showTip(nodes[i], e.clientX, e.clientY); });
-                g.addEventListener("pointerleave", hideTip);
-                g.addEventListener("click", e=>{ setSelected(i); showTip(nodes[i], e.clientX, e.clientY); });
-              });
+    const pad=8, tw=tip.offsetWidth||160, th=tip.offsetHeight||30;
+    const left = Math.max(pad, Math.min(cx - tw/2, window.innerWidth - tw - pad));
+    const top  = Math.max(pad, Math.min(above - th, window.innerHeight - th - pad));
 
-              // Tiny force layout
-              const K_REP=15000, K_SPR=0.04, LEN=200, DAMP=0.85, CTR=0.02;
-              function step(){
-                for(let a=0;a<nodes.length;a++){
-                  for(let b=a+1;b<nodes.length;b++){
-                    const na=nodes[a], nb=nodes[b];
-                    let dx=nb.x-na.x, dy=nb.y-na.y;
-                    let dist2=dx*dx+dy*dy+0.01, d=Math.sqrt(dist2);
-                    let f=K_REP/dist2; dx/=d; dy/=d;
-                    na.vx-=f*dx; na.vy-=f*dy; nb.vx+=f*dx; nb.vy+=f*dy;
-                  }
-                }
-                L.forEach(({i,j,w})=>{
-                  const na=nodes[i], nb=nodes[j];
-                  let dx=nb.x-na.x, dy=nb.y-na.y, d=Math.max(0.01,Math.hypot(dx,dy));
-                  const target = LEN - (w-1)*20, k = K_SPR*(d-target), ux=dx/d, uy=dy/d;
-                  na.vx+=k*ux; na.vy+=k*uy; nb.vx-=k*ux; nb.vy-=k*uy;
-                });
-                nodes.forEach(n=>{
-                  n.vx+=(CX-n.x)*CTR; n.vy+=(CY-n.y)*CTR;
-                  n.vx*=DAMP; n.vy*=DAMP;
-                  n.x += (n.fx!=null ? (n.fx-n.x)*0.3 : n.vx);
-                  n.y += (n.fy!=null ? (n.fy-n.y)*0.3 : n.vy);
-                  n.x = clamp(n.x, 20, W-20); n.y = clamp(n.y, 20, H-20);
-                });
-              }
-              function render(){
-                lineEls.forEach((ln,k)=>{ const {i,j}=L[k], a=nodes[i], b=nodes[j];
-                  ln.setAttribute("x1",a.x); ln.setAttribute("y1",a.y);
-                  ln.setAttribute("x2",b.x); ln.setAttribute("y2",b.y);
-                });
-                nodeEls.forEach((g,i)=> g.setAttribute("transform",`translate(${nodes[i].x},${nodes[i].y})`));
-              }
-              function tick(){ step(); render(); requestAnimationFrame(tick); }
-              render(); tick();
-              applyHighlight(null);
-            })();
-          </script>
-        </div>
-        <!-- ===== /Skills — Connected Network ===== -->
+    tip.style.left = left + "px";
+    tip.style.top  = top  + "px";
+  }
+  function hideTip(){ tip.classList.remove("show"); }
 
-      </div>
-    </div>
+  nodeEls.forEach((g,i)=>{
+    g.addEventListener("pointerenter", ()=>{ if(selected===null) showTipForNode(g, nodes[i]); });
+    g.addEventListener("pointerleave", hideTip);
+    g.addEventListener("click", ()=>{ setSelected(i); showTipForNode(g, nodes[i]); });
+  });
 
-  </div>
-</section>
-
-
+  // Tiny force layout
+  const K_REP=15000, K_SPR=0.04, LEN=200, DAMP=0.85, CTR=0.02;
+  function step(){
+    for(let a=0;a<nodes.length;a++){
+      for(let b=a+1;b<nodes.length;b++){
+        const na=nodes[a], nb=nodes[b];
+        let dx=nb.x-na.x, dy=nb.y-na.y;
+        let dist2=dx*dx+dy*dy+0.01, d=Math.sqrt(dist2);
+        let f=K_REP/dist2; dx/=d; dy/=d;
+        na.vx-=f*dx; na.vy-=f*dy; nb.vx+=f*dx; nb.vy+=f*dy;
+      }
+    }
+    L.forEach(({i,j,w})=>{
+      const na=nodes[i], nb=nodes[j];
+      let dx=nb.x-na.x, dy=nb.y-na.y, d=Math.max(0.01,Math.hypot(dx,dy));
+      const target = LEN - (w-1)*20, k = K_SPR*(d-target), ux=dx/d, uy=dy/d;
+      na.vx+=k*ux; na.vy+=k*uy; nb.vx-=k*ux; nb.vy-=k*uy;
+    });
+    nodes.forEach(n=>{
+      n.vx+=(CX-n.x)*CTR; n.vy+=(CY-n.y)*CTR;
+      n.vx*=DAMP; n.vy*=DAMP;
+      n.x += (n.fx!=null ? (n.fx-n.x)*0.3 : n.vx);
+      n.y += (n.fy!=null ? (n.fy-n.y)*0.3 : n.vy);
+      n.x = clamp(n.x, 20, W-20); n.y = clamp(n.y, 20, H-20);
+    });
+  }
+  function render(){
+    lineEls.forEach((ln,k)=>{ const {i,j}=L[k], a=nodes[i], b=nodes[j];
+      ln.setAttribute("x1",a.x); ln.setAttribute("y1",a.y);
+      ln.setAttribute("x2",b.x); ln.setAttribute("y2",b.y);
+    });
+    nodeEls.forEach((g,i)=> g.setAttribute("transform",`translate(${nodes[i].x},${nodes[i].y})`));
+  }
+  function tick(){ step(); render(); requestAnimationFrame(tick); }
+  render(); tick();
+  applyHighlight(null);
+})();
+</script>
 
  
     <!-- Experience -->
@@ -1405,7 +1387,7 @@ Recognized for strong stakeholder engagement, problem-solving, and time manageme
       <div class="cert-box">
         <div class="subheading mb-2"><b>Vendor Certifications</b></div>
         <ul class="link-list">
-           <li><b>SnowPro® Core Certification(Prepa)</b></li>
+           <li><b>SnowPro® Core Certification(Preparing)</b></li>
          
         </ul>
       </div>
