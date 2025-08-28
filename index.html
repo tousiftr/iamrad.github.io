@@ -15,19 +15,21 @@
   <link rel="icon" type="image/x-icon" href="assets/img/trp.png" />
 
   <!-- Fonts & Icons -->
-  <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
-  <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700&display=swap" rel="stylesheet" />
-  <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous" defer></script>
+  <link href="https://fonts.googleapis.com/css2?family=Saira+Extra+Condensed:wght@500;700&family=Muli:ital,wght@0,400;0,800;1,400;1,800&display=swap" rel="stylesheet" />
 
   <!-- Bootstrap + Theme -->
+  <!-- If your css/styles.css already includes Bootstrap, keep only that link -->
   <link href="css/styles.css" rel="stylesheet" />
 
   <!-- Page-specific compact styles (no floats; responsive grids) -->
   <style>
     :root{
       --card-radius:12px; --muted:#6b7280; --line:#e5e7eb; --pad:14px; --gap:16px;
-      --logo-size:42px; /* tweak this to make logos smaller/larger */
+      --logo-size:42px;
     }
+    html { -webkit-text-size-adjust: 100%; }
     body{scroll-behavior:smooth}
 
     /* NAV avatar sizing */
@@ -35,8 +37,9 @@
 
     /* Utility */
     .cardish{border:1px solid var(--line); border-radius:var(--card-radius); background:#fff;}
+    img{ max-width:100%; height:auto; }
 
-    /* EXPERIENCE */
+    /* EXPERIENCE (card list at top of file) */
     .experience-grid{ display:grid; grid-template-columns:1fr; gap:var(--gap); }
     @media (min-width:768px){ .experience-grid{ grid-template-columns:1fr 1fr; } }
     @media (min-width:1200px){ .experience-grid{ grid-template-columns:1fr 1fr 1fr; } }
@@ -45,7 +48,7 @@
     .experience-text h4{ font-size:1.05rem; margin:0; line-height:1.2 }
     .experience-text .subheading{ font-size:.92rem; color:var(--muted); margin:.125rem 0 0 }
 
-    /* SKILLS */
+    /* SKILLS (small logo tiles) */
     .skills-card{ padding:20px; }
     .skills-title{ font-size:1.25rem; margin-bottom:12px }
     .skills-content{ display:grid; grid-template-columns:1fr; gap:var(--gap) }
@@ -58,47 +61,44 @@
     .logo{ width:44px; height:44px; object-fit:contain }
     .logo-fallback{ font-size:.85rem; color:var(--muted) }
 
-    /* PROJECTS */
-    .project-card{ display:flex; gap:2px; padding:var(--pad); }
-    .project-thumb{ width:2000px; height:100px; object-fit:cover; border-radius:8px; flex-shrink:0 }
-    .project-title{ margin:0 0 6px }
-    .project-note{ color:var(--muted); margin:4px 0 0 }
+    /* Removed the old global .project-thumb that forced 2000px width */
 
-    /* COUNTER */
-    .counter-container{ position:fixed; bottom:10px; right:10px; font-family:Arial, Helvetica, sans-serif; font-size:15px; background:#f2f2f2; border:1px solid #eee; padding:10px; width:150px; text-align:center }
-    .website-counter{ background:#000; color:#fff; font-weight:700; margin-top:10px; padding:6px 6px 4px; border-radius:3px }
-
-    /* Misc cleanups */
-    section.resume-section{ scroll-margin-top:500px }
-    a.clean{ color:#545454; text-decoration:none }
-    a.clean:hover{ text-decoration:underline }
-      /* Subtle motion on cards & tiles */
+    /* Subtle motion on cards & tiles */
     .cardish{ transition: transform .25s ease, box-shadow .25s ease; }
     .cardish:hover{ transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
     .logo-grid .tile{ transition: transform .25s ease, box-shadow .25s ease; }
     .logo-grid .tile:hover{ transform: translateY(-3px) scale(1.03); box-shadow: 0 6px 16px rgba(0,0,0,.06); }
-</style>
+
+    /* Motion accessibility */
+    @media (prefers-reduced-motion: reduce){
+      * { animation: none !important; transition: none !important; scroll-behavior: auto; }
+    }
+  </style>
+
   <!-- Animate On Scroll (AOS) -->
   <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
 </head>
 
 <body id="page-top">
   <!-- Splash / Welcome (kept as-is) -->
-  <div class="welcome">
+  <div class="welcome" aria-hidden="true">
     <span id="splash-overlay" class="splash"></span>
     <span id="welcome" class="z-depth-4"></span>
   </div>
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
-    <a class="navbar-brand js-scroll-trigger" href="#page-top">
+    <a class="navbar-brand js-scroll-trigger" href="#page-top" aria-label="Back to top">
       <span class="d-block d-lg-none">#data</span>
       <span class="d-none d-lg-block">
         <img class="img-fluid rounded-circle mx-auto mb-3" src="assets/img/imrad.gif" alt="Profile" width="150" height="150" loading="lazy" />
       </span>
     </a>
 
-    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav">
@@ -114,7 +114,7 @@
     </div>
 
     <!-- Minimal loader SVG retained -->
-    <svg version="1.1" id="L6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" xml:space="preserve" aria-hidden="true">
+    <svg version="1.1" id="L6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" aria-hidden="true">
       <rect fill="none" stroke="#fff" stroke-width="4" x="25" y="25" width="50" height="50">
         <animateTransform attributeName="transform" dur="0.5s" from="0 50 50" to="180 50 50" type="rotate" id="strokeBox" attributeType="XML" begin="rectBox.end"/>
       </rect>
@@ -127,423 +127,383 @@
   <!-- Page Content -->
   <main>
     <!-- About -->
-          <section class="resume-section" id="about">
-  <div class="resume-section-content">
+    <section class="resume-section" id="about">
+      <div class="resume-section-content">
 
-    <style>
-      /* -------- Layout -------- */
-      .about-grid {
-        display: grid;
-        gap: 12px;
-        align-items: start;
-        grid-template-columns: 1fr;
-      }
-      @media (min-width: 1320px) {
-        .about-grid { grid-template-columns: 1fr 1.1fr; } /* bio : timeline */
-      }
+        <style>
+          /* -------- Layout -------- */
+          .about-grid { display: grid; gap: 12px; align-items: start; grid-template-columns: 1fr; }
+          @media (min-width: 1320px) { .about-grid { grid-template-columns: 1fr 1.1fr; } }
 
-      .cardish {
-        border: 1px solid var(--line, #e5e7eb);
-        border-radius: 12px;
-        background: #fff;
-        padding: 20px;
-      }
-      @media (max-width: 640px) {
-        .cardish { padding: 16px; }
-      }
+          .cardish { border: 1px solid var(--line, #e5e7eb); border-radius: 12px; background: #fff; padding: 20px; }
+          @media (max-width: 640px) { .cardish { padding: 16px; } }
 
-      /* -------- Timeline -------- */
-      .timeline-head {
-        display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px;
-      }
-      .timeline-title { font-size: 1.1rem; margin: 0 }
-      .timeline-legend {
-        display: flex; gap: 6px; color: var(--muted, #6b7280); font-size: .85rem; flex-wrap: wrap;
-      }
-      .chip { width: 12px; height: 12px; border-radius: 3px; display: inline-block }
-      .chip.edu { background: #7c3aed }
-      .chip.job { background: #2563eb }
+          /* -------- Timeline -------- */
+          .timeline-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px; }
+          .timeline-title { font-size: 1.1rem; margin: 0 }
+          .timeline-legend { display: flex; gap: 6px; color: var(--muted, #6b7280); font-size: .85rem; flex-wrap: wrap; }
+          .chip { width: 12px; height: 12px; border-radius: 3px; display: inline-block }
+          .chip.edu { background: #7c3aed }
+          .chip.job { background: #2563eb }
 
-      .tl-stage { position: relative }
-      /* Make height responsive but bounded */
-      .tl-svg {
-        width: 100%;
-        height: clamp(260px, 48vw, 420px);
-        display: block;
-        overflow: visible;
-      }
-      .bar { rx: 6; ry: 6; cursor: pointer }
-      .bar.edu { fill: #7c3aed33; stroke: #7c3aed; stroke-width: 1.5 }
-      .bar.job { fill: #2563eb26; stroke: #2563eb; stroke-width: 1.5 }
+          .tl-stage { position: relative }
+          .tl-svg { width: 100%; height: clamp(260px, 48vw, 420px); display: block; overflow: visible; }
+          .bar { rx: 6; ry: 6; cursor: pointer }
+          .bar.edu { fill: #7c3aed33; stroke: #7c3aed; stroke-width: 1.5 }
+          .bar.job { fill: #2563eb26; stroke: #2563eb; stroke-width: 1.5 }
 
-      .tl-tip {
-        position: fixed; /* fixed so it doesn’t get clipped in scrolling parents */
-        padding: 6px 10px; background: #111827; color: #fff;
-        font-size: .8rem; border-radius: 6px; white-space: nowrap;
-        pointer-events: none; opacity: 0; transition: .15s;
-        z-index: 30;
-      }
-      .tl-tip.show { opacity: 1 }
+          .tl-tip {
+            position: fixed; padding: 6px 10px; background: #111827; color: #fff;
+            font-size: .8rem; border-radius: 6px; white-space: nowrap; pointer-events: none;
+            opacity: 0; transition: .15s; z-index: 30;
+          }
+          .tl-tip.show { opacity: 1 }
 
-      /* -------- Skills Network -------- */
-      #skills-network .sn-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-      #skills-network .sn-sub{color:var(--muted,#6b7280);margin:0 0 12px}
-      #skills-network .sn-wrap{position:relative}
-      #skills-network .sn-svg{width:100%;height: clamp(220px, 42vw, 320px);display:block}
-      #skills-network .link{stroke:#9ca3af;stroke-opacity:.7}
-      #skills-network .node{cursor:grab;transition:opacity .15s, transform .15s}
-      #skills-network .node:active{cursor:grabbing}
-      #skills-network .label{font-size:20px;font-weight:700;fill:#111827;pointer-events:none}
-      #skills-network .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:14px}
-      #skills-network .chip{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px}
-      #skills-network .tip{
-        position: fixed; padding:6px 10px; background:#111827; color:#fff; font-size:.95rem;
-        border-radius:6px; white-space:nowrap; pointer-events:none; opacity:0; transform:translate(-50%,-120%);
-        transition:.12s opacity; z-index:30
-      }
-      #skills-network .tip.show{opacity:1}
+          /* -------- Skills Network -------- */
+          #skills-network .sn-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+          #skills-network .sn-sub{color:var(--muted,#6b7280);margin:0 0 12px}
+          #skills-network .sn-wrap{position:relative}
+          #skills-network .sn-svg{width:100%;height: clamp(220px, 42vw, 320px);display:block}
+          #skills-network .link{stroke:#9ca3af;stroke-opacity:.7}
+          #skills-network .node{cursor:grab;transition:opacity .15s, transform .15s}
+          #skills-network .node:active{cursor:grabbing}
+          #skills-network .label{font-size:20px;font-weight:700;fill:#111827;pointer-events:none}
+          #skills-network .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:14px}
+          #skills-network .chip{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px}
+          #skills-network .tip{
+            position: fixed; padding:6px 10px; background:#111827; color:#fff; font-size:.95rem;
+            border-radius:6px; white-space:nowrap; pointer-events:none; opacity:0; transform:translate(-50%,-120%);
+            transition:.12s opacity; z-index:30
+          }
+          #skills-network .tip.show{opacity:1}
 
-      /* Mobile tweaks */
-      @media (max-width: 640px) {
-        .timeline-legend { font-size: .8rem }
-        #skills-network .label { font-size: 14px; }
-      }
-    </style>
+          /* Mobile tweaks */
+          @media (max-width: 640px) {
+            .timeline-legend { font-size: .8rem }
+            #skills-network .label { font-size: 14px; }
+          }
+        </style>
 
-    <div class="about-grid">
-      <!-- LEFT: Bio -->
-      <div class="about-left cardish" data-aos="fade-up">
-        <h3 id="greeting"></h3>
-        <br>
-        <h3 class="mb-0">Rad <span class="text-primary">Tousif Alam</span></h3>
-        <div>Dhaka,Bangladesh · <a href="mailto:rad.tousif@gmail.com">rad.tousif@gmail.com</a></div>
+        <div class="about-grid">
+          <!-- LEFT: Bio -->
+          <div class="about-left cardish" data-aos="fade-up">
+            <h3 id="greeting"></h3>
+            <br>
+            <h3 class="mb-0">Rad <span class="text-primary">Tousif Alam</span></h3>
+            <div>Dhaka, Bangladesh · <a href="mailto:rad.tousif@gmail.com">rad.tousif@gmail.com</a></div>
 
-        <p class="lead mb-5">
-          Data & Reporting Analyst with 4+ years of experience in Australia, delivering data-driven insights across FinTech, SaaS, Education, Retail, and Not-for-Profit sectors. Hold a Master’s in Data Analytics from Swinburne University of Technology (Australia) and a B.Sc. in Computer Science & Engineering.
+            <p class="lead mb-5">
+              Data & Reporting Analyst with 4+ years of experience in Australia, delivering data-driven insights across FinTech, SaaS, Education, Retail, and Not-for-Profit sectors. Hold a Master’s in Data Analytics from Swinburne University of Technology (Australia) and a B.Sc. in Computer Science & Engineering.
+              <br><br>
+              Proficient in SQL, Snowflake, Tableau, DBT, Power BI (DAX, Power Query), Excel, and Python, with strong expertise in data modelling, ETL pipeline design, and interactive dashboard development. Adept at automating reporting solutions and building end-to-end analytics workflows that improve efficiency and enable business decision-making.
+              <br><br>
+              Recognized for strong stakeholder engagement, problem-solving, and time management skills, with a proven track record of delivering results in fast-paced environments. Highly self-motivated with the ability to manage competing priorities while driving analytical solutions that create measurable impact.
+              <br><br>
+              <b>I am open to new opportunities and look forward to leveraging my expertise in data analysis to drive meaningful insights and business success.</b>
+            </p>
 
-Proficient in SQL, Snowflake, Tableau, DBT, Power BI (DAX, Power Query), Excel, and Python, with strong expertise in data modelling, ETL pipeline design, and interactive dashboard development. Adept at automating reporting solutions and building end-to-end analytics workflows that improve efficiency and enable business decision-making.
-
-Recognized for strong stakeholder engagement, problem-solving, and time management skills, with a proven track record of delivering results in fast-paced environments. Highly self-motivated with the ability to manage competing priorities while driving analytical solutions that create measurable impact.
-          <br><br>
-          <b>I am open to new opportunities and look forward to leveraging my expertise in data analysis to drive meaningful insights and business success.</b>
-        </p>
-
-        <div class="social-icons">
-          <a class="social-icon" href="https://www.linkedin.com/in/radtousif/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
-          <a class="social-icon" href="mailto:rad.tousif@gmail.com"><i class="far fa-envelope-open"></i></a>
-          <a class="social-icon" href="tel:+8801793"><i class="fas fa-phone"></i></a>
-          <a class="social-icon" href="https://github.com/tousiftr" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
-        </div>
-      </div>
-
-      <!-- RIGHT: Timeline -->
-      <div class="about-right">
-        <div class="timeline-box cardish" data-aos="fade-up">
-          <div class="timeline-head">
-            <h3 class="timeline-title">Timeline (2012–2025)</h3>
-            <div class="timeline-legend">
-              <span><span class="chip edu"></span> Education</span>
-              <span><span class="chip job"></span> Job</span>
+            <div class="social-icons" aria-label="Social links">
+              <a class="social-icon" href="https://www.linkedin.com/in/radtousif/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in" aria-hidden="true"></i><span class="sr-only">LinkedIn</span></a>
+              <a class="social-icon" href="mailto:rad.tousif@gmail.com"><i class="far fa-envelope-open" aria-hidden="true"></i><span class="sr-only">Email</span></a>
+              <a class="social-icon" href="tel:+8801793"><i class="fas fa-phone" aria-hidden="true"></i><span class="sr-only">Phone</span></a>
+              <a class="social-icon" href="https://github.com/tousiftr" target="_blank" rel="noopener"><i class="fab fa-github" aria-hidden="true"></i><span class="sr-only">GitHub</span></a>
             </div>
           </div>
-          <div class="tl-stage">
-            <!-- Use viewBox to scale nicely on mobile -->
-            <svg class="tl-svg" viewBox="0 0 800 420" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="tl-title"></svg>
-            <div class="tl-tip" id="tl-tip" aria-hidden="true"></div>
-          </div>
-        </div>
 
-        <script>
-          (function(){
-            const items = [
-              { label:"North South University", start:2012, end:2017, type:"edu", logo:"assets/img/nsu.jpg" },
-              { label:"Research Data Analyst • NSU", start:2015, end:2016, type:"job", logo:"assets/img/nsu.jpg" },
-              { label:"Swinburne University of Technology", start:2019, end:2020, type:"edu", logo:"assets/img/sut.jpg"},
-              { label:"Woolworths Supermarkets", start:2019, end:2022, type:"job", logo:"assets/img/ww.png" },
-              { label:"Swoop Analytics — Data Analyst", start:2021, end:2021, type:"job", logo:"assets/img/swoop.png" },
-              { label:"Melbourne Metropolitan College", start:2022, end:2022, type:"job", logo:"assets/img/mmc.png" },
-              { label:"Onemda — Reporting Analyst", start:2023, end:2023, type:"job", logo:"assets/img/onemda.png" },
-              { label:"Pepperstone — Data Analyst", start:2023, end:2025, type:"job", logo:"assets/img/pepperstone.png" }
-            ];
-            const YEAR_MIN=2012, YEAR_MAX=2026;
+          <!-- RIGHT: Timeline -->
+          <div class="about-right">
+            <div class="timeline-box cardish" data-aos="fade-up">
+              <div class="timeline-head">
+                <h3 class="timeline-title">Timeline (2012–2025)</h3>
+                <div class="timeline-legend">
+                  <span><span class="chip edu"></span> Education</span>
+                  <span><span class="chip job"></span> Job</span>
+                </div>
+              </div>
+              <div class="tl-stage">
+                <svg class="tl-svg" viewBox="0 0 800 420" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="tl-title"><title id="tl-title">Education and work timeline</title></svg>
+                <div class="tl-tip" id="tl-tip" aria-hidden="true"></div>
+              </div>
+            </div>
 
-            const svg = document.querySelector("#about .tl-svg");
-            const tip = document.getElementById("tl-tip");
+            <script>
+              (function(){
+                const items = [
+                  { label:"North South University", start:2012, end:2017, type:"edu", logo:"assets/img/nsu.jpg" },
+                  { label:"Research Data Analyst • NSU", start:2015, end:2016, type:"job", logo:"assets/img/nsu.jpg" },
+                  { label:"Swinburne University of Technology", start:2019, end:2020, type:"edu", logo:"assets/img/sut.jpg"},
+                  { label:"Woolworths Supermarkets", start:2019, end:2022, type:"job", logo:"assets/img/ww.png" },
+                  { label:"Swoop Analytics — Data Analyst", start:2021, end:2021, type:"job", logo:"assets/img/swoop.png" },
+                  { label:"Melbourne Metropolitan College", start:2022, end:2022, type:"job", logo:"assets/img/mmc.png" },
+                  { label:"Onemda — Reporting Analyst", start:2023, end:2023, type:"job", logo:"assets/img/onemda.png" },
+                  { label:"Pepperstone — Data Analyst", start:2023, end:2025, type:"job", logo:"assets/img/pepperstone.png" }
+                ];
+                const YEAR_MIN=2012, YEAR_MAX=2026;
 
-            function draw() {
-              svg.replaceChildren(); // clear
-              const vb = svg.viewBox.baseVal;
-              const W = vb.width, H = vb.height;
-              const margin = { top: 30, right: 20, bottom: 40, left: 95 };
-              const innerW = W - margin.left - margin.right;
-              const innerH = H - margin.top - margin.bottom;
+                const svg = document.querySelector("#about .tl-svg");
+                const tip = document.getElementById("tl-tip");
 
-              const x = yr => ((yr - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * innerW;
-              const rowH = innerH / items.length, barH = Math.min(22, Math.max(14, rowH - 10));
+                function draw() {
+                  svg.replaceChildren();
+                  const vb = svg.viewBox.baseVal;
+                  const W = vb.width, H = vb.height;
+                  const margin = { top: 30, right: 20, bottom: 40, left: 95 };
+                  const innerW = W - margin.left - margin.right;
+                  const innerH = H - margin.top - margin.bottom;
 
-              const g = document.createElementNS("http://www.w3.org/2000/svg","g");
-              g.setAttribute("transform",`translate(${margin.left},${margin.top})`);
-              svg.appendChild(g);
+                  const x = yr => ((yr - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * innerW;
+                  const rowH = innerH / items.length, barH = Math.min(22, Math.max(14, rowH - 10));
 
-              // grid + labels
-              for (let yr = YEAR_MIN; yr <= YEAR_MAX; yr++) {
-                const gx = x(yr);
-                const grid = document.createElementNS("http://www.w3.org/2000/svg","line");
-                grid.setAttribute("x1",gx);grid.setAttribute("x2",gx);
-                grid.setAttribute("y1",0);grid.setAttribute("y2",innerH);
-                grid.setAttribute("stroke","#e5e7eb");
-                g.appendChild(grid);
+                  const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+                  g.setAttribute("transform",`translate(${margin.left},${margin.top})`);
+                  svg.appendChild(g);
 
-                if (yr % 2 === 0) {
-                  const txt = document.createElementNS("http://www.w3.org/2000/svg","text");
-                  txt.setAttribute("x",gx);txt.setAttribute("y",innerH+22);
-                  txt.setAttribute("text-anchor","middle");
-                  txt.setAttribute("font-size","12");
-                  txt.textContent = yr;
-                  g.appendChild(txt);
-                }
-              }
+                  for (let yr = YEAR_MIN; yr <= YEAR_MAX; yr++) {
+                    const gx = x(yr);
+                    const grid = document.createElementNS("http://www.w3.org/2000/svg","line");
+                    grid.setAttribute("x1",gx);grid.setAttribute("x2",gx);
+                    grid.setAttribute("y1",0);grid.setAttribute("y2",innerH);
+                    grid.setAttribute("stroke","#e5e7eb");
+                    g.appendChild(grid);
 
-              // clamp helper for tooltip
-              const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
-              const showTip = (label, start, end, clientX, clientY) => {
-                tip.textContent = `${label} (${start}–${end})`;
-                tip.classList.add("show");
-                tip.setAttribute("aria-hidden","false");
-                // position within viewport
-                const pad = 8;
-                const tw = tip.offsetWidth || 160;
-                const th = tip.offsetHeight || 30;
-                const left = clamp(clientX + 10, pad, window.innerWidth - tw - pad);
-                const top  = clamp(clientY - 28, pad, window.innerHeight - th - pad);
-                tip.style.left = left + "px";
-                tip.style.top  = top + "px";
-              };
-              const hideTip = () => { tip.classList.remove("show"); tip.setAttribute("aria-hidden","true"); };
-
-              items.forEach((d,i)=>{
-                const y = i * rowH + (rowH - barH) / 2;
-                const xs = x(d.start), xe = x(d.end);
-                const w = Math.max(8, xe - xs);
-
-                const rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
-                rect.setAttribute("class",`bar ${d.type}`);
-                rect.setAttribute("x", xs); rect.setAttribute("y", y);
-                rect.setAttribute("width", w); rect.setAttribute("height", barH);
-
-                // Pointer-friendly interactions (works on touch + mouse)
-                rect.addEventListener("pointermove", e => showTip(d.label, d.start, d.end, e.clientX, e.clientY));
-                rect.addEventListener("pointerleave", hideTip);
-                rect.addEventListener("click", e => {
-                  // tap to toggle pin on mobile
-                  if (tip.classList.contains("show")) { hideTip(); }
-                  else { showTip(d.label, d.start, d.end, e.clientX, e.clientY); }
-                });
-
-                g.appendChild(rect);
-
-                const img = document.createElementNS("http://www.w3.org/2000/svg","image");
-                img.setAttributeNS("http://www.w3.org/1999/xlink","href", d.logo);
-                img.setAttribute("x", -70); img.setAttribute("y", y - 6);
-                img.setAttribute("width","34"); img.setAttribute("height","34");
-                g.appendChild(img);
-              });
-            }
-
-            // initial + on resize (debounced)
-            let rAF = null;
-            const onResize = () => {
-              if (rAF) cancelAnimationFrame(rAF);
-              rAF = requestAnimationFrame(draw);
-            };
-            draw();
-            window.addEventListener("resize", onResize, { passive: true });
-          })();
-        </script>
-
-        <!-- ===== Skills — Connected Network ===== -->
-        <div class="cardish" id="skills-network" data-aos="fade-up" style="margin-top:10px">
-          <div class="sn-head">
-            <h4 class="mb-0">Skills</h4>
-          </div>
-          <p class="sn-sub">Hover/tap to highlight relationships. Drag nodes to reposition. Tap a node to lock selection.</p>
-
-          <div class="sn-wrap">
-            <!-- viewBox drives the physics space; keep JS in sync -->
-            <svg class="sn-svg" viewBox="0 0 580 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="sn-title">
-              <title id="sn-title">Skill relationship network</title>
-            </svg>
-            <div class="tip" id="sn-tip"></div>
-          </div>
-
-          <div class="legend" id="sn-legend"></div>
-
-          <script>
-            (function(){
-              const groups = { Viz:"#2563eb", Core:"#7c3aed", ELT:"#ef4444", Code:"#059669" };
-              const nodes = [
-                { id:"Power BI", group:"Viz",  value:5, color:"#2563eb" },
-                { id:"Tableau",  group:"Viz",  value:4, color:"#f59e0b" },
-                { id:"SQL",      group:"Core", value:5, color:"#7c3aed" },
-                { id:"Excel",    group:"Core", value:4, color:"#4b5563" },
-                { id:"dbt",      group:"ELT",  value:4, color:"#ef4444" },
-                { id:"Python",   group:"Code", value:4, color:"#059669" }
-              ];
-              const links = [
-                { s:"SQL",      t:"Power BI", w:1.2 },
-                { s:"SQL",      t:"Tableau",  w:1.8 },
-                { s:"SQL",      t:"dbt",      w:1.4 },
-                { s:"Python",   t:"dbt",      w:1.2 },
-                { s:"Python",   t:"SQL",      w:1.2 },
-                { s:"Excel",    t:"Power BI", w:1.3 },
-                { s:"Excel",    t:"SQL",      w:0.8 },
-                { s:"Power BI", t:"Tableau",  w:0.6 }
-              ];
-
-              const root = document.getElementById("skills-network");
-              const svg  = root.querySelector(".sn-svg");
-              const tip  = root.querySelector("#sn-tip");
-              const legendEl = root.querySelector("#sn-legend");
-
-              Object.entries(groups).forEach(([label, col])=>{
-                const wrap = document.createElement("div");
-                const chip = document.createElement("span");
-                chip.className="chip"; chip.style.background = col;
-                wrap.appendChild(chip);
-                wrap.appendChild(document.createTextNode(label));
-                legendEl.appendChild(wrap);
-              });
-
-              const NS="http://www.w3.org/2000/svg";
-              const S=(tag,attrs={})=>{ const el=document.createElementNS(NS,tag); for(const k in attrs) el.setAttribute(k,attrs[k]); return el; };
-              const clamp=(v,min,max)=> Math.max(min, Math.min(max, v));
-
-              // Keep physics space exactly equal to viewBox
-              const vb = svg.viewBox.baseVal;
-              const W = vb.width, H = vb.height, CX = W/2, CY = H/2;
-
-              const idx = Object.fromEntries(nodes.map((n,i)=>[n.id,i]));
-              const L = links.map(l=>({ i:idx[l.s], j:idx[l.t], w:l.w }));
-
-              nodes.forEach((n,i)=>{
-                n.x = CX + 180*Math.cos((i/nodes.length)*Math.PI*2);
-                n.y = CY + 100*Math.sin((i/nodes.length)*Math.PI*2);
-                n.vx = 0; n.vy = 0; n.fx = null; n.fy = null;
-                n.r = 12 + n.value*3;
-              });
-
-              const gLinks = S("g"); svg.appendChild(gLinks);
-              const gNodes = S("g"); svg.appendChild(gNodes);
-
-              const lineEls = L.map(l=>{ const ln=S("line",{class:"link","stroke-width":1.3}); gLinks.appendChild(ln); return ln; });
-
-              const nodeEls = nodes.map((n,i)=>{
-                const g = S("g",{class:"node","data-i":i});
-                const c = S("circle",{r:n.r, fill:n.color || "#999"});
-                const t = S("text",{class:"label",x:n.r+6,y:5});
-                t.textContent = n.id;
-                g.appendChild(c); g.appendChild(t);
-                gNodes.appendChild(g);
-                return g;
-              });
-
-              // Highlighting
-              let selected = null;
-              function applyHighlight(idx){
-                nodeEls.forEach((g,i)=> g.style.opacity = (idx!==null && i!==idx) ? 0.35 : 1);
-                lineEls.forEach((ln,k)=>{
-                  const {i,j} = L[k];
-                  const dim = (idx!==null && i!==idx && j!==idx);
-                  ln.style.opacity = dim ? 0.25 : 0.9;
-                  ln.style.strokeWidth = (idx!==null && (i===idx || j===idx)) ? 2.2 : 1.3;
-                });
-              }
-              function setSelected(idx){
-                selected = (selected===idx ? null : idx);
-                applyHighlight(selected);
-              }
-
-              // Dragging (pointer events = touch + mouse)
-              let dragI = null;
-              svg.addEventListener("pointerdown", e=>{
-                const g = e.target.closest(".node"); if(!g) return;
-                dragI = +g.dataset.i;
-                nodes[dragI].fx = nodes[dragI].x;
-                nodes[dragI].fy = nodes[dragI].y;
-                setSelected(dragI);
-                g.setPointerCapture(e.pointerId);
-              });
-              svg.addEventListener("pointermove", e=>{
-                if(dragI==null) return;
-                const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
-                const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
-                nodes[dragI].fx = clamp(svgPt.x, 20, W-20);
-                nodes[dragI].fy = clamp(svgPt.y, 20, H-20);
-              });
-              svg.addEventListener("pointerup", ()=>{ dragI=null; });
-
-              // Tooltip + tap
-              function showTip(n, clientX, clientY){
-                tip.textContent = `${n.id} • ${n.group} • level ${n.value}`;
-                tip.classList.add("show");
-                const pad=8, tw=tip.offsetWidth||160, th=tip.offsetHeight||30;
-                tip.style.left = clamp(clientX, pad, window.innerWidth - tw - pad) + "px";
-                tip.style.top  = clamp(clientY - 16, pad, window.innerHeight - th - pad) + "px";
-              }
-              function hideTip(){ tip.classList.remove("show"); }
-
-              nodeEls.forEach((g,i)=>{
-                g.addEventListener("pointermove", e=>{ if(selected===null) showTip(nodes[i], e.clientX, e.clientY); });
-                g.addEventListener("pointerleave", hideTip);
-                g.addEventListener("click", e=>{ setSelected(i); showTip(nodes[i], e.clientX, e.clientY); });
-              });
-
-              // Tiny force layout
-              const K_REP=15000, K_SPR=0.04, LEN=200, DAMP=0.85, CTR=0.02;
-              function step(){
-                for(let a=0;a<nodes.length;a++){
-                  for(let b=a+1;b<nodes.length;b++){
-                    const na=nodes[a], nb=nodes[b];
-                    let dx=nb.x-na.x, dy=nb.y-na.y;
-                    let dist2=dx*dx+dy*dy+0.01, d=Math.sqrt(dist2);
-                    let f=K_REP/dist2; dx/=d; dy/=d;
-                    na.vx-=f*dx; na.vy-=f*dy; nb.vx+=f*dx; nb.vy+=f*dy;
+                    if (yr % 2 === 0) {
+                      const txt = document.createElementNS("http://www.w3.org/2000/svg","text");
+                      txt.setAttribute("x",gx);txt.setAttribute("y",innerH+22);
+                      txt.setAttribute("text-anchor","middle");
+                      txt.setAttribute("font-size","12");
+                      txt.textContent = yr;
+                      g.appendChild(txt);
+                    }
                   }
+
+                  const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+                  const showTip = (label, start, end, clientX, clientY) => {
+                    tip.textContent = `${label} (${start}–${end})`;
+                    tip.classList.add("show");
+                    tip.setAttribute("aria-hidden","false");
+                    const pad = 8;
+                    const tw = tip.offsetWidth || 160;
+                    const th = tip.offsetHeight || 30;
+                    const left = clamp(clientX + 10, pad, window.innerWidth - tw - pad);
+                    const top  = clamp(clientY - 28, pad, window.innerHeight - th - pad);
+                    tip.style.left = left + "px";
+                    tip.style.top  = top + "px";
+                  };
+                  const hideTip = () => { tip.classList.remove("show"); tip.setAttribute("aria-hidden","true"); };
+
+                  items.forEach((d,i)=>{
+                    const y = i * rowH + (rowH - barH) / 2;
+                    const xs = x(d.start), xe = x(d.end);
+                    const w = Math.max(8, xe - xs);
+
+                    const rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
+                    rect.setAttribute("class",`bar ${d.type}`);
+                    rect.setAttribute("x", xs); rect.setAttribute("y", y);
+                    rect.setAttribute("width", w); rect.setAttribute("height", barH);
+                    rect.addEventListener("pointermove", e => showTip(d.label, d.start, d.end, e.clientX, e.clientY));
+                    rect.addEventListener("pointerleave", hideTip);
+                    rect.addEventListener("click", e => {
+                      if (tip.classList.contains("show")) { hideTip(); }
+                      else { showTip(d.label, d.start, d.end, e.clientX, e.clientY); }
+                    });
+                    g.appendChild(rect);
+
+                    const img = document.createElementNS("http://www.w3.org/2000/svg","image");
+                    img.setAttributeNS("http://www.w3.org/1999/xlink","href", d.logo);
+                    img.setAttribute("x", -70); img.setAttribute("y", y - 6);
+                    img.setAttribute("width","34"); img.setAttribute("height","34");
+                    g.appendChild(img);
+                  });
                 }
-                L.forEach(({i,j,w})=>{
-                  const na=nodes[i], nb=nodes[j];
-                  let dx=nb.x-na.x, dy=nb.y-na.y, d=Math.max(0.01,Math.hypot(dx,dy));
-                  const target = LEN - (w-1)*20, k = K_SPR*(d-target), ux=dx/d, uy=dy/d;
-                  na.vx+=k*ux; na.vy+=k*uy; nb.vx-=k*ux; nb.vy-=k*uy;
-                });
-                nodes.forEach(n=>{
-                  n.vx+=(CX-n.x)*CTR; n.vy+=(CY-n.y)*CTR;
-                  n.vx*=DAMP; n.vy*=DAMP;
-                  n.x += (n.fx!=null ? (n.fx-n.x)*0.3 : n.vx);
-                  n.y += (n.fy!=null ? (n.fy-n.y)*0.3 : n.vy);
-                  n.x = clamp(n.x, 20, W-20); n.y = clamp(n.y, 20, H-20);
-                });
-              }
-              function render(){
-                lineEls.forEach((ln,k)=>{ const {i,j}=L[k], a=nodes[i], b=nodes[j];
-                  ln.setAttribute("x1",a.x); ln.setAttribute("y1",a.y);
-                  ln.setAttribute("x2",b.x); ln.setAttribute("y2",b.y);
-                });
-                nodeEls.forEach((g,i)=> g.setAttribute("transform",`translate(${nodes[i].x},${nodes[i].y})`));
-              }
-              function tick(){ step(); render(); requestAnimationFrame(tick); }
-              render(); tick();
-              applyHighlight(null);
-            })();
-          </script>
+
+                let rAF = null;
+                const onResize = () => {
+                  if (rAF) cancelAnimationFrame(rAF);
+                  rAF = requestAnimationFrame(draw);
+                };
+                draw();
+                window.addEventListener("resize", onResize, { passive: true });
+              })();
+            </script>
+
+            <!-- ===== Skills — Connected Network ===== -->
+            <div class="cardish" id="skills-network" data-aos="fade-up" style="margin-top:10px">
+              <div class="sn-head">
+                <h4 class="mb-0">Skills</h4>
+              </div>
+              <p class="sn-sub">Hover/tap to highlight relationships. Drag nodes to reposition. Tap a node to lock selection.</p>
+
+              <div class="sn-wrap">
+                <svg class="sn-svg" viewBox="0 0 580 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="sn-title">
+                  <title id="sn-title">Skill relationship network</title>
+                </svg>
+                <div class="tip" id="sn-tip" aria-live="polite"></div>
+              </div>
+
+              <div class="legend" id="sn-legend"></div>
+
+              <script>
+                (function(){
+                  const groups = { Viz:"#2563eb", Core:"#7c3aed", ELT:"#ef4444", Code:"#059669" };
+                  const nodes = [
+                    { id:"Power BI", group:"Viz",  value:5, color:"#2563eb" },
+                    { id:"Tableau",  group:"Viz",  value:4, color:"#f59e0b" },
+                    { id:"SQL",      group:"Core", value:5, color:"#7c3aed" },
+                    { id:"Excel",    group:"Core", value:4, color:"#4b5563" },
+                    { id:"dbt",      group:"ELT",  value:4, color:"#ef4444" },
+                    { id:"Python",   group:"Code", value:4, color:"#059669" }
+                  ];
+                  const links = [
+                    { s:"SQL",      t:"Power BI", w:1.2 },
+                    { s:"SQL",      t:"Tableau",  w:1.8 },
+                    { s:"SQL",      t:"dbt",      w:1.4 },
+                    { s:"Python",   t:"dbt",      w:1.2 },
+                    { s:"Python",   t:"SQL",      w:1.2 },
+                    { s:"Excel",    t:"Power BI", w:1.3 },
+                    { s:"Excel",    t:"SQL",      w:0.8 },
+                    { s:"Power BI", t:"Tableau",  w:0.6 }
+                  ];
+
+                  const root = document.getElementById("skills-network");
+                  const svg  = root.querySelector(".sn-svg");
+                  const tip  = root.querySelector("#sn-tip");
+                  const legendEl = root.querySelector("#sn-legend");
+
+                  Object.entries(groups).forEach(([label, col])=>{
+                    const wrap = document.createElement("div");
+                    const chip = document.createElement("span");
+                    chip.className="chip"; chip.style.background = col;
+                    wrap.appendChild(chip);
+                    wrap.appendChild(document.createTextNode(label));
+                    legendEl.appendChild(wrap);
+                  });
+
+                  const NS="http://www.w3.org/2000/svg";
+                  const S=(tag,attrs={})=>{ const el=document.createElementNS(NS,tag); for(const k in attrs) el.setAttribute(k,attrs[k]); return el; };
+                  const clamp=(v,min,max)=> Math.max(min, Math.min(max, v));
+
+                  const vb = svg.viewBox.baseVal;
+                  const W = vb.width, H = vb.height, CX = W/2, CY = H/2;
+
+                  const idx = Object.fromEntries(nodes.map((n,i)=>[n.id,i]));
+                  const L = links.map(l=>({ i:idx[l.s], j:idx[l.t], w:l.w }));
+
+                  nodes.forEach((n,i)=>{
+                    n.x = CX + 180*Math.cos((i/nodes.length)*Math.PI*2);
+                    n.y = CY + 100*Math.sin((i/nodes.length)*Math.PI*2);
+                    n.vx = 0; n.vy = 0; n.fx = null; n.fy = null;
+                    n.r = 12 + n.value*3;
+                  });
+
+                  const gLinks = S("g"); svg.appendChild(gLinks);
+                  const gNodes = S("g"); svg.appendChild(gNodes);
+
+                  const lineEls = L.map(l=>{ const ln=S("line",{class:"link","stroke-width":1.3}); gLinks.appendChild(ln); return ln; });
+
+                  const nodeEls = nodes.map((n,i)=>{
+                    const g = S("g",{class:"node","data-i":i, tabindex:"0"});
+                    const c = S("circle",{r:n.r, fill:n.color || "#999"});
+                    const t = S("text",{class:"label",x:n.r+6,y:5});
+                    t.textContent = n.id;
+                    g.appendChild(c); g.appendChild(t);
+                    gNodes.appendChild(g);
+                    return g;
+                  });
+
+                  let selected = null;
+                  function applyHighlight(idx){
+                    nodeEls.forEach((g,i)=> g.style.opacity = (idx!==null && i!==idx) ? 0.35 : 1);
+                    lineEls.forEach((ln,k)=>{
+                      const {i,j} = L[k];
+                      const dim = (idx!==null && i!==idx && j!==idx);
+                      ln.style.opacity = dim ? 0.25 : 0.9;
+                      ln.style.strokeWidth = (idx!==null && (i===idx || j===idx)) ? 2.2 : 1.3;
+                    });
+                  }
+                  function setSelected(idx){
+                    selected = (selected===idx ? null : idx);
+                    applyHighlight(selected);
+                  }
+
+                  let dragI = null;
+                  svg.addEventListener("pointerdown", e=>{
+                    const g = e.target.closest(".node"); if(!g) return;
+                    dragI = +g.dataset.i;
+                    nodes[dragI].fx = nodes[dragI].x;
+                    nodes[dragI].fy = nodes[dragI].y;
+                    setSelected(dragI);
+                    g.setPointerCapture?.(e.pointerId);
+                  });
+                  svg.addEventListener("pointermove", e=>{
+                    if(dragI==null) return;
+                    const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+                    const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+                    nodes[dragI].fx = clamp(svgPt.x, 20, W-20);
+                    nodes[dragI].fy = clamp(svgPt.y, 20, H-20);
+                  });
+                  svg.addEventListener("pointerup", ()=>{ dragI=null; });
+
+                  function showTip(n, clientX, clientY){
+                    tip.textContent = `${n.id} • ${n.group} • level ${n.value}`;
+                    tip.classList.add("show");
+                    const pad=8, tw=tip.offsetWidth||160, th=tip.offsetHeight||30;
+                    tip.style.left = clamp(clientX, pad, window.innerWidth - tw - pad) + "px";
+                    tip.style.top  = clamp(clientY - 16, pad, window.innerHeight - th - pad) + "px";
+                  }
+                  function hideTip(){ tip.classList.remove("show"); }
+
+                  nodeEls.forEach((g,i)=>{
+                    g.addEventListener("pointermove", e=>{ if(selected===null) showTip(nodes[i], e.clientX, e.clientY); });
+                    g.addEventListener("pointerleave", hideTip);
+                    g.addEventListener("click", e=>{ setSelected(i); showTip(nodes[i], e.clientX, e.clientY); });
+                    g.addEventListener("keyup", e=>{ if(e.key==='Enter' || e.key===' '){ setSelected(i); } });
+                  });
+
+                  const K_REP=15000, K_SPR=0.04, LEN=200, DAMP=0.85, CTR=0.02;
+                  function step(){
+                    for(let a=0;a<nodes.length;a++){
+                      for(let b=a+1;b<nodes.length;b++){
+                        const na=nodes[a], nb=nodes[b];
+                        let dx=nb.x-na.x, dy=nb.y-na.y;
+                        let dist2=dx*dx+dy*dy+0.01, d=Math.sqrt(dist2);
+                        let f=K_REP/dist2; dx/=d; dy/=d;
+                        na.vx-=f*dx; na.vy-=f*dy; nb.vx+=f*dx; nb.vy+=f*dy;
+                      }
+                    }
+                    L.forEach(({i,j,w})=>{
+                      const na=nodes[i], nb=nodes[j];
+                      let dx=nb.x-na.x, dy=nb.y-na.y, d=Math.max(0.01,Math.hypot(dx,dy));
+                      const target = LEN - (w-1)*20, k = K_SPR*(d-target), ux=dx/d, uy=dy/d;
+                      na.vx+=k*ux; na.vy+=k*uy; nb.vx-=k*ux; nb.vy-=k*uy;
+                    });
+                    nodes.forEach(n=>{
+                      n.vx+=(CX-n.x)*CTR; n.vy+=(CY-n.y)*CTR;
+                      n.vx*=DAMP; n.vy*=DAMP;
+                      n.x += (n.fx!=null ? (n.fx-n.x)*0.3 : n.vx);
+                      n.y += (n.fy!=null ? (n.fy-n.y)*0.3 : n.vy);
+                      n.x = clamp(n.x, 20, W-20); n.y = clamp(n.y, 20, H-20);
+                    });
+                  }
+                  function render(){
+                    lineEls.forEach((ln,k)=>{ const {i,j}=L[k], a=nodes[i], b=nodes[j];
+                      ln.setAttribute("x1",a.x); ln.setAttribute("y1",a.y);
+                      ln.setAttribute("x2",b.x); ln.setAttribute("y2",b.y);
+                    });
+                    nodeEls.forEach((g,i)=> g.setAttribute("transform",`translate(${nodes[i].x},${nodes[i].y})`));
+                  }
+                  function tick(){ step(); render(); requestAnimationFrame(tick); }
+                  render(); tick();
+                  applyHighlight(null);
+                })();
+              </script>
+            </div>
+            <!-- ===== /Skills — Connected Network ===== -->
+
+          </div>
         </div>
-        <!-- ===== /Skills — Connected Network ===== -->
 
       </div>
-    </div>
-
-  </div>
-</section>
+    </section>
 
 
 
@@ -906,111 +866,102 @@ Recognized for strong stakeholder engagement, problem-solving, and time manageme
               })();
             </script>
 
+ <!-- Skills -->
+    <section class="resume-section" id="skills">
+      <div class="resume-section-content">
+        <h2 class="mb-4">Skills</h2>
 
-<!-- Skills -->
-                  <section class="resume-section" id="skills">
-          <div class="resume-section-content">
-            <h2 class="mb-4">Skills</h2>
-
-            <div class="skills-visual">
-              <!-- Category 1 -->
-              <div class="skill-category">
-                <h3>Data Analytics & BI</h3>
-                <div class="skill-items">
-                  <span><img src="assets/img/sql.svg" alt="SQL">SQL</span>
-                  <span><img src="assets/img/dbt.png" alt="dbt">dbt</span>
-                  <span><img src="https://cdn.simpleicons.org/snowflake/29B5E8" alt="Snowflake">Snowflake</span>
-                  <span><img src="assets/img/Powerbi.logo.png" alt="Power BI">Power BI</span>
-                  <span><img src="assets/img/Tableau.png" alt="Tableau">Tableau</span>
-                  <span><img src="assets/img/excel.png" alt="Excel">Excel</span>
-                  <span><img src="https://cdn.simpleicons.org/googleanalytics/E37400" alt="Google Analytics">GA4</span>
-                  <span><img src="assets/img/python.jpg" alt="Python">Python</span>
-                </div>
-              </div>
-
-              <!-- Category 2 -->
-              <div class="skill-category">
-                <h3>Data Management</h3>
-                <div class="skill-items">
-                  <span>ETL/ELT Pipeline Design</span>
-                  <span>Data Modelling</span>
-                  <span>Data Visualization</span>
-                  <span>Analytics Engineering</span>
-                  <span>Data Cleansing</span>
-                  <span>Data Quality Assurance</span>
-                  <span>Data Warehousing</span>
-                  <span>Data Governance</span>
-
-                </div>
-              </div>
-
-              <!-- Category 3 -->
-              <div class="skill-category">
-                <h3>Applications & Platforms</h3>
-                <div class="skill-items">
-                  <span><img src="https://cdn.simpleicons.org/salesforce/00A1E0" alt="Salesforce">Salesforce</span>
-                  <span>Penelope CRM</span>
-                  <span><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="MySQL">SQL</span>
-                  <span><img src="https://cdn.simpleicons.org/jira/0052CC" alt="Jira">JIRA</span>
-                  <span>SharePoint</span>
-                  <span>Power Apps</span>
-                </div>
-              </div>
+        <div class="skills-visual">
+          <!-- Category 1 -->
+          <div class="skill-category">
+            <h3>Data Analytics & BI</h3>
+            <div class="skill-items">
+              <span><img src="assets/img/sql.svg" alt="SQL">SQL</span>
+              <span><img src="assets/img/dbt.png" alt="dbt">dbt</span>
+              <span><img src="https://cdn.simpleicons.org/snowflake/29B5E8" alt="Snowflake">Snowflake</span>
+              <span><img src="assets/img/Powerbi.logo.png" alt="Power BI">Power BI</span>
+              <span><img src="assets/img/Tableau.png" alt="Tableau">Tableau</span>
+              <span><img src="assets/img/excel.png" alt="Excel">Excel</span>
+              <span><img src="https://cdn.simpleicons.org/googleanalytics/E37400" alt="Google Analytics">GA4</span>
+              <span><img src="assets/img/python.jpg" alt="Python">Python</span>
             </div>
           </div>
-        </section>
 
-        <style>
-        .skills-visual {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-          gap: 1.5rem;
-        }
-        .skill-category {
-          background: #f9f9f9;
-          border-radius: 1rem;
-          padding: 1.2rem;
-          box-shadow: 0 3px 8px rgba(0,0,0,0.05);
-        }
-        .skill-category h3 {
-          margin-bottom: 1rem;
-          font-size: 1.2rem;
-          color: #333;
-        }
-        .skill-items {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.6rem;
-        }
-        .skill-items span {
-          background: #fff;
-          border: 1px solid #eee;
-          border-radius: 0.6rem;
-          padding: 0.4rem 0.8rem;
-          font-size: 0.9rem;
-          display: flex;
-          align-items: center;
-          gap: 0.4rem;
-        }
-        .skill-items img {
-          width: 50px;
-          height: 50px;
-        }/* Make only the skills section text smaller */
-          #skills .resume-section-content {
-            font-size: 0.9rem; /* smaller overall */
-          }
+          <!-- Category 2 -->
+          <div class="skill-category">
+            <h3>Data Management</h3>
+            <div class="skill-items">
+              <span>ETL/ELT Pipeline Design</span>
+              <span>Data Modelling</span>
+              <span>Data Visualization</span>
+              <span>Analytics Engineering</span>
+              <span>Data Cleansing</span>
+              <span>Data Quality Assurance</span>
+              <span>Data Warehousing</span>
+              <span>Data Governance</span>
+            </div>
+          </div>
 
-          #skills h4 {
-            font-size: 1.5rem; /* smaller section title */
-          }
+          <!-- Category 3 -->
+          <div class="skill-category">
+            <h3>Applications & Platforms</h3>
+            <div class="skill-items">
+              <span><img src="https://cdn.simpleicons.org/salesforce/00A1E0" alt="Salesforce">Salesforce</span>
+              <span>Penelope CRM</span>
+              <span><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="MySQL">SQL</span>
+              <span><img src="https://cdn.simpleicons.org/jira/0052CC" alt="Jira">JIRA</span>
+              <span>SharePoint</span>
+              <span>Power Apps</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-          #skills h4 3rem; /* smaller category titles */
-          }
-
-          #skills .skill-items span {
-            font-size: 0.8rem; /* compact skill tags */
-}
-        </style>
+    <style>
+      .skills-visual {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+      }
+      .skill-category {
+        background: #f9f9f9;
+        border-radius: 1rem;
+        padding: 1.2rem;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+      }
+      .skill-category h3 {
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        color: #333;
+      }
+      .skill-items {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+      }
+      .skill-items span {
+        background: #fff;
+        border: 1px solid #eee;
+        border-radius: 0.6rem;
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        max-width: 100%;
+      }
+      .skill-items img {
+        width: 28px;
+        height: 28px;
+        object-fit: contain;
+      }
+      /* Make only the skills section text smaller */
+      #skills .resume-section-content { font-size: 0.95rem; }
+      #skills h4 { font-size: 1.5rem; }
+      /* FIXED broken rule that was `#skills h4 3rem;` */
+      /* end */
+    </style>
 
 
  
@@ -1122,7 +1073,7 @@ Recognized for strong stakeholder engagement, problem-solving, and time manageme
       }
     }
   </style>
-
+  
   <div class="resume-section-content">
     <h2>Projects</h2>
 
@@ -1624,48 +1575,36 @@ Recognized for strong stakeholder engagement, problem-solving, and time manageme
   }
 </style>
 
-<!-- GA Visitors (7 days) -->
-<script>
-(function(){
-  var GA_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyESvdUhdKwWmk_UnLvIAXfhReQG6ehqQp5F56uLr3ippQo5ih4v6OXerkt59k6mnPT/exec?days=7';
-  var out = document.getElementById('gaVisitorsValue');
-  var nf = new Intl.NumberFormat();
-  if (!out) return;
 
-  out.textContent = '...';
-
-  fetch(GA_ENDPOINT, { cache: 'no-store' })
-    .then(function(r){
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    })
-    .then(function(d){
-      if (!d.ok) throw new Error(d.error || 'Unknown GA error');
-      out.textContent = nf.format(d.total || 0);
-    })
-    .catch(function(err){
-      console.error('GA fetch failed:', err);
-      out.textContent = 'N/A';
-      out.title = 'GA error: ' + (err && err.message ? err.message : err);
-    });
-})();
-</script>
-
-
+  <!-- GA Visitors (7 days) -->
+  <script>
+  (function(){
+    var GA_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyESvdUhdKwWmk_UnLvIAXfhReQG6ehqQp5F56uLr3ippQo5ih4v6OXerkt59k6mnPT/exec?days=7';
+    var out = document.getElementById('gaVisitorsValue');
+    var nf = new Intl.NumberFormat();
+    if (!out) return;
+    out.textContent = '...';
+    fetch(GA_ENDPOINT, { cache: 'no-store' })
+      .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function(d){ if (!d.ok) throw new Error(d.error || 'Unknown GA error'); out.textContent = nf.format(d.total || 0); })
+      .catch(function(err){ console.error('GA fetch failed:', err); out.textContent = 'N/A'; out.title = 'GA error: ' + (err && err.message ? err.message : err); });
+  })();
+  </script>
 
   <!-- AOS JS -->
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
   <!-- Scripts -->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/jquery.easing.min.js"></script>
-  <script src="js/scripts.js"></script>
-  <script src="js/cap.js"></script>
+  <script src="js/jquery.min.js" defer></script>
+  <script src="js/bootstrap.bundle.min.js" defer></script>
+  <script src="js/jquery.easing.min.js" defer></script>
+  <script src="js/scripts.js" defer></script>
+  <script src="js/cap.js" defer></script>
   <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
-  
 
-  <script>document.addEventListener('DOMContentLoaded',function(){ AOS.init({ duration:700, easing:'ease-out-quart', once:true, offset:80 }); });</script>
-
-
+  <script>
+    document.addEventListener('DOMContentLoaded',function(){
+      if (window.AOS) AOS.init({ duration:700, easing:'ease-out-quart', once:true, offset:80 });
+    });
+  </script>
 </body>
 </html>
