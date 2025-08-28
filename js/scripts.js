@@ -111,37 +111,3 @@ balls.forEach((el, i, ra) => {
 
  
 
-.social-icons {
-  margin-top: 15px;
-  text-align: center; /* centers on mobile */
-}
-
-.social-icons-inner {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.social-icons-inner a {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  font-size: 20px;
-  color: #fff;
-  transition: all 0.25s ease;
-}
-
-.social-icons-inner a.linkedin { background: #0A66C2; }
-.social-icons-inner a.email    { background: #EA4335; }
-.social-icons-inner a.phone    { background: #10B981; }
-.social-icons-inner a.github   { background: #111827; }
-
-.social-icons-inner a:hover {
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 6px 15px rgba(0,0,0,0.15);
-}
