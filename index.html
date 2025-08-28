@@ -59,8 +59,8 @@
     .logo-fallback{ font-size:.85rem; color:var(--muted) }
 
     /* PROJECTS */
-    .project-card{ display:flex; gap:14px; padding:var(--pad); }
-    .project-thumb{ width:140px; height:100px; object-fit:cover; border-radius:8px; flex-shrink:0 }
+    .project-card{ display:flex; gap:2px; padding:var(--pad); }
+    .project-thumb{ width:2000px; height:100px; object-fit:cover; border-radius:8px; flex-shrink:0 }
     .project-title{ margin:0 0 6px }
     .project-note{ color:var(--muted); margin:4px 0 0 }
 
@@ -69,7 +69,7 @@
     .website-counter{ background:#000; color:#fff; font-weight:700; margin-top:10px; padding:6px 6px 4px; border-radius:3px }
 
     /* Misc cleanups */
-    section.resume-section{ scroll-margin-top:80px }
+    section.resume-section{ scroll-margin-top:500px }
     a.clean{ color:#545454; text-decoration:none }
     a.clean:hover{ text-decoration:underline }
       /* Subtle motion on cards & tiles */
@@ -127,56 +127,87 @@
   <!-- Page Content -->
   <main>
     <!-- About -->
-         <section class="resume-section" id="about">
+          <section class="resume-section" id="about">
   <div class="resume-section-content">
 
     <style>
-      /* Grid layout */
+      /* -------- Layout -------- */
       .about-grid {
         display: grid;
-        gap: 10px;
+        gap: 12px;
         align-items: start;
         grid-template-columns: 1fr;
       }
       @media (min-width: 1320px) {
-        .about-grid {
-          grid-template-columns: 1fr 1.1fr; /* bio : timeline */
-        }
+        .about-grid { grid-template-columns: 1fr 1.1fr; } /* bio : timeline */
       }
+
       .cardish {
         border: 1px solid var(--line, #e5e7eb);
         border-radius: 12px;
         background: #fff;
         padding: 20px;
       }
+      @media (max-width: 640px) {
+        .cardish { padding: 16px; }
+      }
 
-      /* Timeline visuals */
+      /* -------- Timeline -------- */
       .timeline-head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 10px;
+        display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 10px;
       }
       .timeline-title { font-size: 1.1rem; margin: 0 }
       .timeline-legend {
-        display: flex; gap: 6px; color: var(--muted, #6b7280);
-        font-size: .85rem; flex-wrap: wrap;
+        display: flex; gap: 6px; color: var(--muted, #6b7280); font-size: .85rem; flex-wrap: wrap;
       }
       .chip { width: 12px; height: 12px; border-radius: 3px; display: inline-block }
       .chip.edu { background: #7c3aed }
       .chip.job { background: #2563eb }
 
       .tl-stage { position: relative }
-      .tl-svg { width: 100%; height: 360px; overflow: visible }
+      /* Make height responsive but bounded */
+      .tl-svg {
+        width: 100%;
+        height: clamp(260px, 48vw, 420px);
+        display: block;
+        overflow: visible;
+      }
       .bar { rx: 6; ry: 6; cursor: pointer }
       .bar.edu { fill: #7c3aed33; stroke: #7c3aed; stroke-width: 1.5 }
       .bar.job { fill: #2563eb26; stroke: #2563eb; stroke-width: 1.5 }
+
       .tl-tip {
-        position: absolute; padding: 6px 10px; background: #111827; color: #fff;
+        position: fixed; /* fixed so it doesn’t get clipped in scrolling parents */
+        padding: 6px 10px; background: #111827; color: #fff;
         font-size: .8rem; border-radius: 6px; white-space: nowrap;
         pointer-events: none; opacity: 0; transition: .15s;
+        z-index: 30;
       }
       .tl-tip.show { opacity: 1 }
+
+      /* -------- Skills Network -------- */
+      #skills-network .sn-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
+      #skills-network .sn-sub{color:var(--muted,#6b7280);margin:0 0 12px}
+      #skills-network .sn-wrap{position:relative}
+      #skills-network .sn-svg{width:100%;height: clamp(220px, 42vw, 320px);display:block}
+      #skills-network .link{stroke:#9ca3af;stroke-opacity:.7}
+      #skills-network .node{cursor:grab;transition:opacity .15s, transform .15s}
+      #skills-network .node:active{cursor:grabbing}
+      #skills-network .label{font-size:20px;font-weight:700;fill:#111827;pointer-events:none}
+      #skills-network .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:14px}
+      #skills-network .chip{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px}
+      #skills-network .tip{
+        position: fixed; padding:6px 10px; background:#111827; color:#fff; font-size:.95rem;
+        border-radius:6px; white-space:nowrap; pointer-events:none; opacity:0; transform:translate(-50%,-120%);
+        transition:.12s opacity; z-index:30
+      }
+      #skills-network .tip.show{opacity:1}
+
+      /* Mobile tweaks */
+      @media (max-width: 640px) {
+        .timeline-legend { font-size: .8rem }
+        #skills-network .label { font-size: 16px; }
+      }
     </style>
 
     <div class="about-grid">
@@ -185,27 +216,24 @@
         <h3 id="greeting"></h3>
         <br>
         <h3 class="mb-0">Rad <span class="text-primary">Tousif A.</span></h3>
-        <div>Dhaka, Bangladesh· <a href="mailto:rad.tousif@gmail.com">rad.tousif@gmail.com</a></div>
+        <div>Dhaka, Bangladesh · <a href="mailto:rad.tousif@gmail.com">rad.tousif@gmail.com</a></div>
 
         <p class="lead mb-5">
           I have over 4 years of hands-on experience working as a Data/Reporting Analyst with expertise in diverse industries, including fintech, retail, disability services and support organization, SaaS, and the education sector. Additionally, I hold a Master of Science degree from Swinburne University of Technology in Data Analytics, as well as a B.Sc. in Computer Science and Engineering. Technically I have been working with Microsoft PowerBI, SQL, Excel, and Python. I am self-motivated with a strong work ethic and proven ability to deliver on set goals and objectives. I build rapport quickly with external and internal stakeholders, creating empathy and ensuring positive outcomes. I have strong analytical, planning, organisational and time management skills that contribute to successfully managing competing deadlines and excelling in challenging and fast-paced environments.
-          
-          <br>
-          <br>
+          <br><br>
           <b>I am open to new opportunities and look forward to leveraging my expertise in data analysis to drive meaningful insights and business success.</b>
         </p>
 
         <div class="social-icons">
-          <a class="social-icon" href="https://www.linkedin.com/in/rad.tousif/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+          <a class="social-icon" href="https://www.linkedin.com/in/rad.tousif/" target="_blank" rel="noopener"><i class="fab fa-linkedin-in"></i></a>
           <a class="social-icon" href="mailto:rad.tousif@gmail.com"><i class="far fa-envelope-open"></i></a>
           <a class="social-icon" href="tel:+8801793"><i class="fas fa-phone"></i></a>
-          <a class="social-icon" href="https://github.com/tousiftr" target="_blank"><i class="fab fa-github"></i></a>
+          <a class="social-icon" href="https://github.com/tousiftr" target="_blank" rel="noopener"><i class="fab fa-github"></i></a>
         </div>
       </div>
 
       <!-- RIGHT: Timeline -->
       <div class="about-right">
-        <!-- ===== Timeline (unchanged) ===== -->
         <div class="timeline-box cardish" data-aos="fade-up">
           <div class="timeline-head">
             <h3 class="timeline-title">Timeline (2012–2025)</h3>
@@ -215,8 +243,9 @@
             </div>
           </div>
           <div class="tl-stage">
-            <svg class="tl-svg"></svg>
-            <div class="tl-tip" id="tl-tip"></div>
+            <!-- Use viewBox to scale nicely on mobile -->
+            <svg class="tl-svg" viewBox="0 0 800 420" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="tl-title"></svg>
+            <div class="tl-tip" id="tl-tip" aria-hidden="true"></div>
           </div>
         </div>
 
@@ -234,751 +263,943 @@
             ];
             const YEAR_MIN=2012, YEAR_MAX=2026;
 
-            const svg=document.querySelector("#about .tl-svg");
-            const tip=document.getElementById("tl-tip");
-            const W=svg.clientWidth||240, H=svg.clientHeight||240;
-            const margin={top:30,right:20,bottom:30,left:85};
-            const innerW=W-margin.left-margin.right, innerH=H-margin.top-margin.bottom;
-            const x=yr=>((yr-YEAR_MIN)/(YEAR_MAX-YEAR_MIN))*innerW;
-            const rowH=innerH/items.length, barH=18;
-            const g=document.createElementNS("http://www.w3.org/2000/svg","g");
-            g.setAttribute("transform",`translate(${margin.left},${margin.top})`);
-            svg.appendChild(g);
+            const svg = document.querySelector("#about .tl-svg");
+            const tip = document.getElementById("tl-tip");
 
-            for(let yr=YEAR_MIN;yr<=YEAR_MAX;yr++){
-              const gx=x(yr);
-              const grid=document.createElementNS("http://www.w3.org/2000/svg","line");
-              grid.setAttribute("x1",gx);grid.setAttribute("x2",gx);
-              grid.setAttribute("y1",0);grid.setAttribute("y2",innerH);
-              grid.setAttribute("stroke","#e5e7eb");
-              g.appendChild(grid);
-              if(yr%2===0){
-                const txt=document.createElementNS("http://www.w3.org/2000/svg","text");
-                txt.setAttribute("x",gx);txt.setAttribute("y",innerH+18);
-                txt.setAttribute("text-anchor","middle");
-                txt.textContent=yr;
-                g.appendChild(txt);
+            function draw() {
+              svg.replaceChildren(); // clear
+              const vb = svg.viewBox.baseVal;
+              const W = vb.width, H = vb.height;
+              const margin = { top: 30, right: 20, bottom: 40, left: 95 };
+              const innerW = W - margin.left - margin.right;
+              const innerH = H - margin.top - margin.bottom;
+
+              const x = yr => ((yr - YEAR_MIN) / (YEAR_MAX - YEAR_MIN)) * innerW;
+              const rowH = innerH / items.length, barH = Math.min(22, Math.max(14, rowH - 10));
+
+              const g = document.createElementNS("http://www.w3.org/2000/svg","g");
+              g.setAttribute("transform",`translate(${margin.left},${margin.top})`);
+              svg.appendChild(g);
+
+              // grid + labels
+              for (let yr = YEAR_MIN; yr <= YEAR_MAX; yr++) {
+                const gx = x(yr);
+                const grid = document.createElementNS("http://www.w3.org/2000/svg","line");
+                grid.setAttribute("x1",gx);grid.setAttribute("x2",gx);
+                grid.setAttribute("y1",0);grid.setAttribute("y2",innerH);
+                grid.setAttribute("stroke","#e5e7eb");
+                g.appendChild(grid);
+
+                if (yr % 2 === 0) {
+                  const txt = document.createElementNS("http://www.w3.org/2000/svg","text");
+                  txt.setAttribute("x",gx);txt.setAttribute("y",innerH+22);
+                  txt.setAttribute("text-anchor","middle");
+                  txt.setAttribute("font-size","12");
+                  txt.textContent = yr;
+                  g.appendChild(txt);
+                }
               }
+
+              // clamp helper for tooltip
+              const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+              const showTip = (label, start, end, clientX, clientY) => {
+                tip.textContent = `${label} (${start}–${end})`;
+                tip.classList.add("show");
+                tip.setAttribute("aria-hidden","false");
+                // position within viewport
+                const pad = 8;
+                const tw = tip.offsetWidth || 160;
+                const th = tip.offsetHeight || 30;
+                const left = clamp(clientX + 10, pad, window.innerWidth - tw - pad);
+                const top  = clamp(clientY - 28, pad, window.innerHeight - th - pad);
+                tip.style.left = left + "px";
+                tip.style.top  = top + "px";
+              };
+              const hideTip = () => { tip.classList.remove("show"); tip.setAttribute("aria-hidden","true"); };
+
+              items.forEach((d,i)=>{
+                const y = i * rowH + (rowH - barH) / 2;
+                const xs = x(d.start), xe = x(d.end);
+                const w = Math.max(8, xe - xs);
+
+                const rect = document.createElementNS("http://www.w3.org/2000/svg","rect");
+                rect.setAttribute("class",`bar ${d.type}`);
+                rect.setAttribute("x", xs); rect.setAttribute("y", y);
+                rect.setAttribute("width", w); rect.setAttribute("height", barH);
+
+                // Pointer-friendly interactions (works on touch + mouse)
+                rect.addEventListener("pointermove", e => showTip(d.label, d.start, d.end, e.clientX, e.clientY));
+                rect.addEventListener("pointerleave", hideTip);
+                rect.addEventListener("click", e => {
+                  // tap to toggle pin on mobile
+                  if (tip.classList.contains("show")) { hideTip(); }
+                  else { showTip(d.label, d.start, d.end, e.clientX, e.clientY); }
+                });
+
+                g.appendChild(rect);
+
+                const img = document.createElementNS("http://www.w3.org/2000/svg","image");
+                img.setAttributeNS("http://www.w3.org/1999/xlink","href", d.logo);
+                img.setAttribute("x", -70); img.setAttribute("y", y - 6);
+                img.setAttribute("width","34"); img.setAttribute("height","34");
+                g.appendChild(img);
+              });
             }
 
-            items.forEach((d,i)=>{
-              const y=i*rowH+6, xs=x(d.start), xe=x(d.end), w=Math.max(8,xe-xs);
-
-              const rect=document.createElementNS("http://www.w3.org/2000/svg","rect");
-              rect.setAttribute("class",`bar ${d.type}`);
-              rect.setAttribute("x",xs);rect.setAttribute("y",y);
-              rect.setAttribute("width",w);rect.setAttribute("height",barH);
-              rect.addEventListener("mousemove",e=>{
-                tip.textContent=`${d.label} (${d.start}–${d.end})`;
-                tip.classList.add("show");
-                tip.style.left=(e.pageX+10)+"px"; tip.style.top=(e.pageY-28)+"px";
-              });
-              rect.addEventListener("mouseleave",()=>tip.classList.remove("show"));
-              g.appendChild(rect);
-
-              const img=document.createElementNS("http://www.w3.org/2000/svg","image");
-              img.setAttributeNS("http://www.w3.org/1999/xlink","href",d.logo);
-              img.setAttribute("x",-60);img.setAttribute("y",y-8);
-              img.setAttribute("width","34");img.setAttribute("height","34");
-              g.appendChild(img);
-            });
+            // initial + on resize (debounced)
+            let rAF = null;
+            const onResize = () => {
+              if (rAF) cancelAnimationFrame(rAF);
+              rAF = requestAnimationFrame(draw);
+            };
+            draw();
+            window.addEventListener("resize", onResize, { passive: true });
           })();
         </script>
 
-        <!-- ===== Skills — Connected Network (buttons removed, bold labels) ===== -->
-<div class="cardish" id="skills-network" data-aos="fade-up" style="margin-top:10px">
-  <style>
-    /* Scoped to #skills-network */
-    #skills-network .sn-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}
-    #skills-network .sn-sub{color:var(--muted,#6b7280);margin:0 0 12px}
-    #skills-network .sn-wrap{position:relative}
-    /* smaller box height */
-    #skills-network .sn-svg{width:100%;height:190px;display:block}
-    #skills-network .link{stroke:#9ca3af;stroke-opacity:.7}
-    #skills-network .node{cursor:grab;transition:opacity .15s, transform .15s}
-    #skills-network .node:active{cursor:grabbing}
-    /* bigger + bold skill label text */
-    #skills-network .label{font-size:20px;font-weight:700;fill:#111827;pointer-events:none}
-    #skills-network .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:14px}
-    #skills-network .chip{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px}
-    /* tooltip */
-    #skills-network .tip{
-      position:absolute;padding:6px 10px;background:#111827;color:#fff;font-size:.95rem;border-radius:6px;
-      white-space:nowrap;pointer-events:none;opacity:0;transform:translate(-50%,-120%);transition:.12s opacity
-    }
-    #skills-network .tip.show{opacity:1}
-  </style>
+        <!-- ===== Skills — Connected Network ===== -->
+        <div class="cardish" id="skills-network" data-aos="fade-up" style="margin-top:10px">
+          <div class="sn-head">
+            <h5 class="mb-0">Skills</h5>
+          </div>
+          <p class="sn-sub">Hover/tap to highlight relationships. Drag nodes to reposition. Tap a node to lock selection.</p>
 
-  <div class="sn-head">
-    <h5 class="mb-0">Skills</h5>
-    <!-- buttons removed -->
-  </div>
-  <p class="sn-sub">Hover to highlight relationships. Drag nodes to reposition. Click a node to lock selection.</p>
+          <div class="sn-wrap">
+            <!-- viewBox drives the physics space; keep JS in sync -->
+            <svg class="sn-svg" viewBox="0 0 580 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="sn-title">
+              <title id="sn-title">Skill relationship network</title>
+            </svg>
+            <div class="tip" id="sn-tip"></div>
+          </div>
 
-  <div class="sn-wrap">
-    <svg class="sn-svg" viewBox="0 0 580 260" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="sn-title">
-      <title id="sn-title">Skill relationship network</title>
-    </svg>
-    <div class="tip" id="sn-tip"></div>
-  </div>
+          <div class="legend" id="sn-legend"></div>
 
-  <div class="legend" id="sn-legend"></div>
+          <script>
+            (function(){
+              const groups = { Viz:"#2563eb", Core:"#7c3aed", ELT:"#ef4444", Code:"#059669" };
+              const nodes = [
+                { id:"Power BI", group:"Viz",  value:5, color:"#2563eb" },
+                { id:"Tableau",  group:"Viz",  value:4, color:"#f59e0b" },
+                { id:"SQL",      group:"Core", value:5, color:"#7c3aed" },
+                { id:"Excel",    group:"Core", value:4, color:"#4b5563" },
+                { id:"dbt",      group:"ELT",  value:4, color:"#ef4444" },
+                { id:"Python",   group:"Code", value:4, color:"#059669" }
+              ];
+              const links = [
+                { s:"SQL",      t:"Power BI", w:1.2 },
+                { s:"SQL",      t:"Tableau",  w:1.8 },
+                { s:"SQL",      t:"dbt",      w:1.4 },
+                { s:"Python",   t:"dbt",      w:1.2 },
+                { s:"Python",   t:"SQL",      w:1.2 },
+                { s:"Excel",    t:"Power BI", w:1.3 },
+                { s:"Excel",    t:"SQL",      w:0.8 },
+                { s:"Power BI", t:"Tableau",  w:0.6 }
+              ];
 
-  <script>
-    (function(){
-      // ===== DATA =====
-      const groups = {
-        Viz:   "#2563eb", // Power BI / Tableau
-        Core:  "#7c3aed", // SQL / Excel
-        ELT:   "#ef4444", // dbt
-        Code:  "#059669"  // Python
-      };
+              const root = document.getElementById("skills-network");
+              const svg  = root.querySelector(".sn-svg");
+              const tip  = root.querySelector("#sn-tip");
+              const legendEl = root.querySelector("#sn-legend");
 
-      const nodes = [
-        { id:"Power BI", group:"Viz",  value:5, color:"#2563eb" },
-        { id:"Tableau",  group:"Viz",  value:4, color:"#f59e0b" },
-        { id:"SQL",      group:"Core", value:5, color:"#7c3aed" },
-        { id:"Excel",    group:"Core", value:4, color:"#4b5563" },
-        { id:"dbt",      group:"ELT",  value:4, color:"#ef4444" },
-        { id:"Python",   group:"Code", value:4, color:"#059669" }
-      ];
+              Object.entries(groups).forEach(([label, col])=>{
+                const wrap = document.createElement("div");
+                const chip = document.createElement("span");
+                chip.className="chip"; chip.style.background = col;
+                wrap.appendChild(chip);
+                wrap.appendChild(document.createTextNode(label));
+                legendEl.appendChild(wrap);
+              });
 
-      const links = [
-        { s:"SQL",      t:"Power BI", w:1.2 },
-        { s:"SQL",      t:"Tableau",  w:1.8 },
-        { s:"SQL",      t:"dbt",      w:1.4 },
-        { s:"Python",   t:"dbt",      w:1.2 },
-        { s:"Python",   t:"SQL",      w:1.2 },
-        { s:"Excel",    t:"Power BI", w:1.3 },
-        { s:"Excel",    t:"SQL",      w:0.8 },
-        { s:"Power BI", t:"Tableau",  w:0.6 }
-      ];
+              const NS="http://www.w3.org/2000/svg";
+              const S=(tag,attrs={})=>{ const el=document.createElementNS(NS,tag); for(const k in attrs) el.setAttribute(k,attrs[k]); return el; };
+              const clamp=(v,min,max)=> Math.max(min, Math.min(max, v));
 
-      // ===== DOM/geometry =====
-      const root = document.getElementById("skills-network");
-      const svg  = root.querySelector(".sn-svg");
-      const tip  = root.querySelector("#sn-tip");
-      const legendEl   = root.querySelector("#sn-legend");
+              // Keep physics space exactly equal to viewBox
+              const vb = svg.viewBox.baseVal;
+              const W = vb.width, H = vb.height, CX = W/2, CY = H/2;
 
-      // match the viewBox height
-      const W = 680, H = 260, CX = W/2, CY = H/2;
+              const idx = Object.fromEntries(nodes.map((n,i)=>[n.id,i]));
+              const L = links.map(l=>({ i:idx[l.s], j:idx[l.t], w:l.w }));
 
-      // Legend
-      Object.entries(groups).forEach(([label, col])=>{
-        const wrap = document.createElement("div");
-        const chip = document.createElement("span");
-        chip.className="chip"; chip.style.background = col;
-        wrap.appendChild(chip);
-        wrap.appendChild(document.createTextNode(label));
-        legendEl.appendChild(wrap);
-      });
+              nodes.forEach((n,i)=>{
+                n.x = CX + 180*Math.cos((i/nodes.length)*Math.PI*2);
+                n.y = CY + 100*Math.sin((i/nodes.length)*Math.PI*2);
+                n.vx = 0; n.vy = 0; n.fx = null; n.fy = null;
+                n.r = 12 + n.value*3;
+              });
 
-      // Helpers
-      const NS="http://www.w3.org/2000/svg";
-      const S=(tag,attrs={})=>{ const el=document.createElementNS(NS,tag); for(const k in attrs) el.setAttribute(k,attrs[k]); return el; };
-      const clamp=(v,min,max)=> Math.max(min, Math.min(max, v));
+              const gLinks = S("g"); svg.appendChild(gLinks);
+              const gNodes = S("g"); svg.appendChild(gNodes);
 
-      const idx = Object.fromEntries(nodes.map((n,i)=>[n.id,i]));
-      const L = links.map(l=>({ i:idx[l.s], j:idx[l.t], w:l.w }));
+              const lineEls = L.map(l=>{ const ln=S("line",{class:"link","stroke-width":1.3}); gLinks.appendChild(ln); return ln; });
 
-      // Init positions
-      nodes.forEach((n,i)=>{
-        n.x = CX + 180*Math.cos((i/nodes.length)*Math.PI*2);
-        n.y = CY + 100*Math.sin((i/nodes.length)*Math.PI*2);
-        n.vx = 0; n.vy = 0; n.fx = null; n.fy = null;
-        n.r = 12 + n.value*3;
-      });
+              const nodeEls = nodes.map((n,i)=>{
+                const g = S("g",{class:"node","data-i":i});
+                const c = S("circle",{r:n.r, fill:n.color || "#999"});
+                const t = S("text",{class:"label",x:n.r+6,y:5});
+                t.textContent = n.id;
+                g.appendChild(c); g.appendChild(t);
+                gNodes.appendChild(g);
+                return g;
+              });
 
-      // Elements
-      const gLinks = S("g"); svg.appendChild(gLinks);
-      const gNodes = S("g"); svg.appendChild(gNodes);
+              // Highlighting
+              let selected = null;
+              function applyHighlight(idx){
+                nodeEls.forEach((g,i)=> g.style.opacity = (idx!==null && i!==idx) ? 0.35 : 1);
+                lineEls.forEach((ln,k)=>{
+                  const {i,j} = L[k];
+                  const dim = (idx!==null && i!==idx && j!==idx);
+                  ln.style.opacity = dim ? 0.25 : 0.9;
+                  ln.style.strokeWidth = (idx!==null && (i===idx || j===idx)) ? 2.2 : 1.3;
+                });
+              }
+              function setSelected(idx){
+                selected = (selected===idx ? null : idx);
+                applyHighlight(selected);
+              }
 
-      const lineEls = L.map(l=>{
-        const ln = S("line",{class:"link","stroke-width":1.3});
-        gLinks.appendChild(ln); return ln;
-      });
+              // Dragging (pointer events = touch + mouse)
+              let dragI = null;
+              svg.addEventListener("pointerdown", e=>{
+                const g = e.target.closest(".node"); if(!g) return;
+                dragI = +g.dataset.i;
+                nodes[dragI].fx = nodes[dragI].x;
+                nodes[dragI].fy = nodes[dragI].y;
+                setSelected(dragI);
+                g.setPointerCapture(e.pointerId);
+              });
+              svg.addEventListener("pointermove", e=>{
+                if(dragI==null) return;
+                const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
+                const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
+                nodes[dragI].fx = clamp(svgPt.x, 20, W-20);
+                nodes[dragI].fy = clamp(svgPt.y, 20, H-20);
+              });
+              svg.addEventListener("pointerup", ()=>{ dragI=null; });
 
-      const nodeEls = nodes.map((n,i)=>{
-        const g = S("g",{class:"node","data-i":i});
-        const c = S("circle",{r:n.r, fill:n.color || "#999"});
-        const t = S("text",{class:"label",x:n.r+6,y:5});
-        t.textContent = n.id;
-        g.appendChild(c); g.appendChild(t);
-        gNodes.appendChild(g);
-        return g;
-      });
+              // Tooltip + tap
+              function showTip(n, clientX, clientY){
+                tip.textContent = `${n.id} • ${n.group} • level ${n.value}`;
+                tip.classList.add("show");
+                const pad=8, tw=tip.offsetWidth||160, th=tip.offsetHeight||30;
+                tip.style.left = clamp(clientX, pad, window.innerWidth - tw - pad) + "px";
+                tip.style.top  = clamp(clientY - 16, pad, window.innerHeight - th - pad) + "px";
+              }
+              function hideTip(){ tip.classList.remove("show"); }
 
-      // Highlighting
-      let selected = null;
-      function applyHighlight(idx){
-        nodeEls.forEach((g,i)=> g.classList.toggle("dim", idx!==null && i!==idx));
-        lineEls.forEach((ln,k)=>{
-          const {i,j} = L[k];
-          const dim = (idx!==null && i!==idx && j!==idx);
-          ln.style.opacity = dim ? 0.25 : 0.9;
-          ln.style.strokeWidth = (idx!==null && (i===idx || j===idx)) ? 2.2 : 1.3;
-        });
-      }
-      function setSelected(idx){
-        selected = (selected===idx ? null : idx);
-        applyHighlight(selected);
-      }
+              nodeEls.forEach((g,i)=>{
+                g.addEventListener("pointermove", e=>{ if(selected===null) showTip(nodes[i], e.clientX, e.clientY); });
+                g.addEventListener("pointerleave", hideTip);
+                g.addEventListener("click", e=>{ setSelected(i); showTip(nodes[i], e.clientX, e.clientY); });
+              });
 
-      // Dragging
-      let dragI = null;
-      svg.addEventListener("pointerdown", e=>{
-        const g = e.target.closest(".node"); if(!g) return;
-        dragI = +g.dataset.i;
-        nodes[dragI].fx = nodes[dragI].x;
-        nodes[dragI].fy = nodes[dragI].y;
-        setSelected(dragI);
-        g.setPointerCapture(e.pointerId);
-      });
-      svg.addEventListener("pointermove", e=>{
-        if(dragI==null) return;
-        const pt = svg.createSVGPoint(); pt.x = e.clientX; pt.y = e.clientY;
-        const svgPt = pt.matrixTransform(svg.getScreenCTM().inverse());
-        nodes[dragI].fx = clamp(svgPt.x, 20, W-20);
-        nodes[dragI].fy = clamp(svgPt.y, 20, H-20);
-      });
-      svg.addEventListener("pointerup", ()=>{ dragI=null; });
+              // Tiny force layout
+              const K_REP=15000, K_SPR=0.04, LEN=200, DAMP=0.85, CTR=0.02;
+              function step(){
+                for(let a=0;a<nodes.length;a++){
+                  for(let b=a+1;b<nodes.length;b++){
+                    const na=nodes[a], nb=nodes[b];
+                    let dx=nb.x-na.x, dy=nb.y-na.y;
+                    let dist2=dx*dx+dy*dy+0.01, d=Math.sqrt(dist2);
+                    let f=K_REP/dist2; dx/=d; dy/=d;
+                    na.vx-=f*dx; na.vy-=f*dy; nb.vx+=f*dx; nb.vy+=f*dy;
+                  }
+                }
+                L.forEach(({i,j,w})=>{
+                  const na=nodes[i], nb=nodes[j];
+                  let dx=nb.x-na.x, dy=nb.y-na.y, d=Math.max(0.01,Math.hypot(dx,dy));
+                  const target = LEN - (w-1)*20, k = K_SPR*(d-target), ux=dx/d, uy=dy/d;
+                  na.vx+=k*ux; na.vy+=k*uy; nb.vx-=k*ux; nb.vy-=k*uy;
+                });
+                nodes.forEach(n=>{
+                  n.vx+=(CX-n.x)*CTR; n.vy+=(CY-n.y)*CTR;
+                  n.vx*=DAMP; n.vy*=DAMP;
+                  n.x += (n.fx!=null ? (n.fx-n.x)*0.3 : n.vx);
+                  n.y += (n.fy!=null ? (n.fy-n.y)*0.3 : n.vy);
+                  n.x = clamp(n.x, 20, W-20); n.y = clamp(n.y, 20, H-20);
+                });
+              }
+              function render(){
+                lineEls.forEach((ln,k)=>{ const {i,j}=L[k], a=nodes[i], b=nodes[j];
+                  ln.setAttribute("x1",a.x); ln.setAttribute("y1",a.y);
+                  ln.setAttribute("x2",b.x); ln.setAttribute("y2",b.y);
+                });
+                nodeEls.forEach((g,i)=> g.setAttribute("transform",`translate(${nodes[i].x},${nodes[i].y})`));
+              }
+              function tick(){ step(); render(); requestAnimationFrame(tick); }
+              render(); tick();
+              applyHighlight(null);
+            })();
+          </script>
+        </div>
+        <!-- ===== /Skills — Connected Network ===== -->
 
-      // Tooltip + click
-      nodeEls.forEach((g,i)=>{
-        g.addEventListener("mousemove", e=>{
-          const n = nodes[i];
-          tip.textContent = `${n.id} • ${n.group} • level ${n.value}`;
-          tip.classList.add("show");
-          tip.style.left = e.pageX + "px";
-          tip.style.top  = (e.pageY - 16) + "px";
-          if(selected===null) applyHighlight(i);
-        });
-        g.addEventListener("mouseleave", ()=>{ tip.classList.remove("show"); if(selected===null) applyHighlight(null); });
-        g.addEventListener("click", ()=> setSelected(i));
-      });
-
-      // Tiny force layout
-    const K_REP=15000, K_SPR=0.04, LEN=200, DAMP=0.85, CTR=0.02;
-      function step(){
-        // repulsion
-        for(let a=0;a<nodes.length;a++){
-          for(let b=a+1;b<nodes.length;b++){
-            const na=nodes[a], nb=nodes[b];
-            let dx=nb.x-na.x, dy=nb.y-na.y;
-            let dist2=dx*dx+dy*dy+0.01, d=Math.sqrt(dist2);
-            let f=K_REP/dist2; dx/=d; dy/=d;
-            na.vx-=f*dx; na.vy-=f*dy; nb.vx+=f*dx; nb.vy+=f*dy;
-          }
-        }
-        // springs
-        L.forEach(({i,j,w})=>{
-          const na=nodes[i], nb=nodes[j];
-          let dx=nb.x-na.x, dy=nb.y-na.y, d=Math.max(0.01,Math.hypot(dx,dy));
-          const target = LEN - (w-1)*20, k = K_SPR*(d-target), ux=dx/d, uy=dy/d;
-          na.vx+=k*ux; na.vy+=k*uy; nb.vx-=k*ux; nb.vy-=k*uy;
-        });
-        // center + integrate
-        nodes.forEach(n=>{
-          n.vx+=(CX-n.x)*CTR; n.vy+=(CY-n.y)*CTR;
-          n.vx*=DAMP; n.vy*=DAMP;
-          n.x += (n.fx!=null ? (n.fx-n.x)*0.3 : n.vx);
-          n.y += (n.fy!=null ? (n.fy-n.y)*0.3 : n.vy);
-          n.x = clamp(n.x, 20, W-20); n.y = clamp(n.y, 20, H-20);
-        });
-      }
-      function render(){
-        lineEls.forEach((ln,k)=>{
-          const {i,j}=L[k], a=nodes[i], b=nodes[j];
-          ln.setAttribute("x1",a.x); ln.setAttribute("y1",a.y);
-          ln.setAttribute("x2",b.x); ln.setAttribute("y2",b.y);
-        });
-        nodeEls.forEach((g,i)=> g.setAttribute("transform",`translate(${nodes[i].x},${nodes[i].y})`));
-      }
-      function tick(){ step(); render(); requestAnimationFrame(tick); }
-      render(); tick();
-      applyHighlight(null);
-    })();
-  </script>
-</div>
-<!-- ===== /Skills — Connected Network ===== -->
-
+      </div>
     </div>
 
   </div>
-    </section>
+</section>
+
 
 
  
     <!-- Experience -->
               <!-- ==== Experience Subway Timeline (aligned nodes) ==== -->
-            <section class="xp-subway force-light" aria-label="Experience timeline"  id="experience">
-              <h2 class="xp-title">Experience</h2>
+                        <section class="xp-subway force-light" aria-label="Experience timeline"  id="experience">
+                          <h2 class="xp-title">Experience</h2>
 
-              <ol class="xp-stations">
-                <!-- Pepperstone -->
-                <li class="xp-stop">
-                  <a class="xp-card" href="https://pepperstone.com/en/" target="_blank" rel="noopener" aria-label="Pepperstone — Data Analyst">
-                    <img src="assets/img/pepperstone.png" alt="Pepperstone logo" class="xp-logo" loading="lazy">
-                    <div class="xp-text">
-                      <span class="xp-role">Data Analyst</span>
-                      <span class="xp-company">Pepperstone</span>
-                    </div>
-                  </a>
-                </li>
+                          <ol class="xp-stations">
+                            <!-- Pepperstone -->
+                            <li class="xp-stop">
+                              <a class="xp-card" href="https://pepperstone.com/en/" target="_blank" rel="noopener" aria-label="Pepperstone — Data Analyst">
+                                <img src="assets/img/pepperstone.png" alt="Pepperstone logo" class="xp-logo" loading="lazy">
+                                <div class="xp-text">
+                                  <span class="xp-role">Data Analyst</span>
+                                  <span class="xp-company">Pepperstone</span>
+                                </div>
+                              </a>
+                            </li>
 
-                <!-- Onemda -->
-                <li class="xp-stop">
-                  <a class="xp-card" href="https://www.onemda.com.au/" target="_blank" rel="noopener" aria-label="The Onemda Association Inc — Reporting and Business Analyst">
-                    <img src="assets/img/onemda.png" alt="Onemda logo" class="xp-logo" loading="lazy">
-                    <div class="xp-text">
-                      <span class="xp-role">Reporting &amp; Business Analyst</span>
-                      <span class="xp-company">The Onemda Association Inc</span>
-                    </div>
-                  </a>
-                </li>
+                            <!-- Onemda -->
+                            <li class="xp-stop">
+                              <a class="xp-card" href="https://www.onemda.com.au/" target="_blank" rel="noopener" aria-label="The Onemda Association Inc — Reporting and Business Analyst">
+                                <img src="assets/img/onemda.png" alt="Onemda logo" class="xp-logo" loading="lazy">
+                                <div class="xp-text">
+                                  <span class="xp-role">Reporting &amp; Business Analyst</span>
+                                  <span class="xp-company">The Onemda Association Inc</span>
+                                </div>
+                              </a>
+                            </li>
 
-                <!-- Melbourne Metropolitan College -->
-                <li class="xp-stop">
-                  <a class="xp-card" href="https://mmc.edu.au/" target="_blank" rel="noopener" aria-label="Melbourne Metropolitan College — Digital Records Analyst">
-                    <img src="assets/img/mmc.png" alt="Melbourne Metropolitan College logo" class="xp-logo" loading="lazy">
-                    <div class="xp-text">
-                      <span class="xp-role">Digital Records Analyst</span>
-                      <span class="xp-company">Melbourne Metropolitan College</span>
-                    </div>
-                  </a>
-                </li>
+                            <!-- Melbourne Metropolitan College -->
+                            <li class="xp-stop">
+                              <a class="xp-card" href="https://mmc.edu.au/" target="_blank" rel="noopener" aria-label="Melbourne Metropolitan College — Digital Records Analyst">
+                                <img src="assets/img/mmc.png" alt="Melbourne Metropolitan College logo" class="xp-logo" loading="lazy">
+                                <div class="xp-text">
+                                  <span class="xp-role">Digital Records Analyst</span>
+                                  <span class="xp-company">Melbourne Metropolitan College</span>
+                                </div>
+                              </a>
+                            </li>
 
-                <!-- Woolworths -->
-                <li class="xp-stop">
-                  <a class="xp-card" href="https://www.woolworthsgroup.com.au/" target="_blank" rel="noopener" aria-label="Woolworths Supermarkets — Customer Service Supervisor">
-                    <img src="assets/img/ww.png" alt="Woolworths logo" class="xp-logo" loading="lazy">
-                    <div class="xp-text">
-                      <span class="xp-role">Customer Service Supervisor</span>
-                      <span class="xp-company">Woolworths Supermarkets</span>
-                    </div>
-                  </a>
-                </li>
+                            <!-- Woolworths -->
+                            <li class="xp-stop">
+                              <a class="xp-card" href="https://www.woolworthsgroup.com.au/" target="_blank" rel="noopener" aria-label="Woolworths Supermarkets — Customer Service Supervisor">
+                                <img src="assets/img/ww.png" alt="Woolworths logo" class="xp-logo" loading="lazy">
+                                <div class="xp-text">
+                                  <span class="xp-role">Customer Service Supervisor</span>
+                                  <span class="xp-company">Woolworths Supermarkets</span>
+                                </div>
+                              </a>
+                            </li>
 
-                <!-- Swoop Analytics -->
-                <li class="xp-stop">
-                  <a class="xp-card" href="https://www.swoopanalytics.com/" target="_blank" rel="noopener" aria-label="Swoop Analytics — Data Analyst">
-                    <img src="assets/img/swoop.png" alt="Swoop Analytics logo" class="xp-logo" loading="lazy">
-                    <div class="xp-text">
-                      <span class="xp-role">Data Analyst</span>
-                      <span class="xp-company">Swoop Analytics</span>
-                    </div>
-                  </a>
-                </li>
+                            <!-- Swoop Analytics -->
+                            <li class="xp-stop">
+                              <a class="xp-card" href="https://www.swoopanalytics.com/" target="_blank" rel="noopener" aria-label="Swoop Analytics — Data Analyst">
+                                <img src="assets/img/swoop.png" alt="Swoop Analytics logo" class="xp-logo" loading="lazy">
+                                <div class="xp-text">
+                                  <span class="xp-role">Data Analyst</span>
+                                  <span class="xp-company">Swoop Analytics</span>
+                                </div>
+                              </a>
+                            </li>
 
-                <!-- Swinburne University of Technology -->
-                <li class="xp-stop">
-                  <a class="xp-card" href="https://www.swinburne.edu.au/" target="_blank" rel="noopener" aria-label="Swinburne University of Technology — Data Analyst">
-                    <img src="assets/img/sut.jpg" alt="Swinburne University of Technology logo" class="xp-logo" loading="lazy">
-                    <div class="xp-text">
-                      <span class="xp-role">Data Analyst</span>
-                      <span class="xp-company">Swinburne University of Technology</span>
-                    </div>
-                  </a>
-                </li>
+                            <!-- Swinburne University of Technology -->
+                            <li class="xp-stop">
+                              <a class="xp-card" href="https://www.swinburne.edu.au/" target="_blank" rel="noopener" aria-label="Swinburne University of Technology — Data Analyst">
+                                <img src="assets/img/sut.jpg" alt="Swinburne University of Technology logo" class="xp-logo" loading="lazy">
+                                <div class="xp-text">
+                                  <span class="xp-role">Data Analyst</span>
+                                  <span class="xp-company">Swinburne University of Technology</span>
+                                </div>
+                              </a>
+                            </li>
 
-                <!-- North South University -->
-                <li class="xp-stop">
-                  <a class="xp-card" href="http://www.northsouth.edu/" target="_blank" rel="noopener" aria-label="North South University — Research Data Analyst">
-                    <img src="assets/img/nsu.jpg" alt="North South University logo" class="xp-logo" loading="lazy">
-                    <div class="xp-text">
-                      <span class="xp-role">Research Data Analyst</span>
-                      <span class="xp-company">North South University</span>
-                    </div>
-                  </a>
-                </li>
-              </ol>
-            </section>
+                            <!-- North South University -->
+                            <li class="xp-stop">
+                              <a class="xp-card" href="http://www.northsouth.edu/" target="_blank" rel="noopener" aria-label="North South University — Research Data Analyst">
+                                <img src="assets/img/nsu.jpg" alt="North South University logo" class="xp-logo" loading="lazy">
+                                <div class="xp-text">
+                                  <span class="xp-role">Research Data Analyst</span>
+                                  <span class="xp-company">North South University</span>
+                                </div>
+                              </a>
+                            </li>
+                          </ol>
+                        </section>
 
-   <style>
-  /* ================= Base styles ================= */
-  .xp-subway{
-    --track: hsl(215 20% 70%);
-    --track-fill: hsl(215 85% 54%);
-    --stop-bg: #fff;
-    --stop-ring: hsl(215 25% 88%);
-    --text: hsl(215 20% 18%);
-    --muted: hsl(215 10% 45%);
-    --shadow: 0 6px 18px rgba(0,0,0,.08);
-    --radius: 12px;
-    --logo: 64px;
+               <style>
+              /* ================= Base styles ================= */
+              .xp-subway{
+                --track: hsl(215 20% 70%);
+                --track-fill: hsl(215 85% 54%);
+                --stop-bg: #fff;
+                --stop-ring: hsl(215 25% 88%);
+                --text: hsl(215 20% 18%);
+                --muted: hsl(215 10% 45%);
+                --shadow: 0 6px 18px rgba(0,0,0,.08);
+                --radius: 12px;
+                --logo: 64px;
 
-    /* geometry (wider line, shifted up a bit, bigger nodes) */
-    --track-thickness: 10px;     /* wider line */
-    --track-top: 14px;           /* not centered—closer to top */
-    --track-left-mobile: 36px;   /* push vertical track right */
-    --node-size: 46px;           /* bigger station circles */
-    --node-ring: 3px;
-  }
-  .xp-subway.force-light{
-  max-width: 1600px;        /* make the container wider */
-  margin-left: 65;           /* align flush to the left */
-  margin-right: auto;       /* keep right side flexible */
-  padding: 2rem 2rem 3rem;  /* more breathing space */
-}
+                /* geometry (wider line, shifted up a bit, bigger nodes) */
+                --track-thickness: 10px;     /* wider line */
+                --track-top: 14px;           /* not centered—closer to top */
+                --track-left-mobile: 36px;   /* push vertical track right */
+                --node-size: 46px;           /* bigger station circles */
+                --node-ring: 3px;
+              }
+              .xp-subway.force-light{
+              max-width: 1600px;        /* make the container wider */
+              margin-left: 65;           /* align flush to the left */
+              margin-right: auto;       /* keep right side flexible */
+              padding: 2rem 2rem 3rem;  /* more breathing space */
+            }
 
-/* Widen spacing between stops */
-.xp-subway.force-light .xp-stations{
-  gap: 2rem;                /* bigger gaps between nodes/cards */
-}
+            /* Widen spacing between stops */
+            .xp-subway.force-light .xp-stations{
+              gap: 2rem;                /* bigger gaps between nodes/cards */
+            }
 
-/* Make cards themselves bigger */
-.xp-subway.force-light .xp-card{
-  min-height: 170px;        /* taller cards */
-  padding-left: 7rem;       /* more left gutter for the bigger circles */
-  padding-right: 2rem;      /* extra right padding */
-}
+            /* Make cards themselves bigger */
+            .xp-subway.force-light .xp-card{
+              min-height: 170px;        /* taller cards */
+              padding-left: 7rem;       /* more left gutter for the bigger circles */
+              padding-right: 2rem;      /* extra right padding */
+            }
 
-  @media (prefers-color-scheme: dark){
-    .xp-subway{
-      --track: hsl(220 10% 30%);
-      --track-fill: hsl(210 90% 60%);
-      --stop-bg: hsl(222 18% 14%);
-      --stop-ring: hsl(220 14% 22%);
-      --text: hsl(210 15% 92%);
-      --muted: hsl(215 12% 70%);
-      --shadow: 0 6px 18px rgba(0,0,0,.35);
-    }
-  }
+              @media (prefers-color-scheme: dark){
+                .xp-subway{
+                  --track: hsl(220 10% 30%);
+                  --track-fill: hsl(210 90% 60%);
+                  --stop-bg: hsl(222 18% 14%);
+                  --stop-ring: hsl(220 14% 22%);
+                  --text: hsl(210 15% 92%);
+                  --muted: hsl(215 12% 70%);
+                  --shadow: 0 6px 18px rgba(0,0,0,.35);
+                }
+              }
 
-  .xp-title{ margin:0 0 1rem; font-size:clamp(1.4rem,1.1rem + 1.1vw,2rem); letter-spacing:.2px; }
+              .xp-title{ margin:0 0 1rem; font-size:clamp(1.4rem,1.1rem + 1.1vw,2rem); letter-spacing:.2px; }
 
-  .xp-stations{
-    list-style:none;
-    padding:1.5rem 0 0;
-    margin:0;
-    display:grid;
-    gap:1.2rem;
-    position:relative;
-    --progress:1; --fill-x:1; --fill-y:1;
-  }
+              .xp-stations{
+                list-style:none;
+                padding:1.5rem 0 0;
+                margin:0;
+                display:grid;
+                gap:1.2rem;
+                position:relative;
+                --progress:1; --fill-x:1; --fill-y:1;
+              }
 
-  /* ===== Track line ===== */
-  .xp-stations::before,
-  .xp-stations::after{
-    content:"";
-    position:absolute;
-    inset:0 auto 0 var(--track-left-mobile);
-    width:var(--track-thickness);
-    border-radius:4px;
-    background:var(--track);
-    z-index:0;
-  }
-  .xp-stations::after{
-    transform-origin:top left;
-    background:var(--track-fill);
-    scale:var(--fill-x) var(--fill-y);
-    animation:fillTrack 600ms ease-out forwards;
-  }
-  @keyframes fillTrack{ to{ scale:1 1; } }
+              /* ===== Track line ===== */
+              .xp-stations::before,
+              .xp-stations::after{
+                content:"";
+                position:absolute;
+                inset:0 auto 0 var(--track-left-mobile);
+                width:var(--track-thickness);
+                border-radius:4px;
+                background:var(--track);
+                z-index:0;
+              }
+              .xp-stations::after{
+                transform-origin:top left;
+                background:var(--track-fill);
+                scale:var(--fill-x) var(--fill-y);
+                animation:fillTrack 600ms ease-out forwards;
+              }
+              @keyframes fillTrack{ to{ scale:1 1; } }
 
-  /* ===== Stop nodes ===== */
-  .xp-stop{ position:relative; }
+              /* ===== Stop nodes ===== */
+              .xp-stop{ position:relative; }
 
-  /* masking disc (erases track behind circle so ring overlaps line) */
-  .xp-stop::after{
-    content:"";
-    position:absolute;
-    width:calc(var(--node-size) + var(--track-thickness));
-    height:calc(var(--node-size) + var(--track-thickness));
-    background:var(--stop-bg);
-    border-radius:999px;
-    z-index:1;
-  }
+              /* masking disc (erases track behind circle so ring overlaps line) */
+              .xp-stop::after{
+                content:"";
+                position:absolute;
+                width:calc(var(--node-size) + var(--track-thickness));
+                height:calc(var(--node-size) + var(--track-thickness));
+                background:var(--stop-bg);
+                border-radius:999px;
+                z-index:1;
+              }
 
-  /* the visible circle (ring + fill) */
-  .xp-stop::before{
-    content:"";
-    position:absolute;
-    width:var(--node-size);
-    height:var(--node-size);
-    background:var(--stop-bg);
-    border:var(--node-ring) solid var(--stop-ring);
-    border-radius:999px;
-    box-shadow:var(--shadow);
-    z-index:2;
-    transition:border-color .2s ease, box-shadow .2s ease;
-  }
+              /* the visible circle (ring + fill) */
+              .xp-stop::before{
+                content:"";
+                position:absolute;
+                width:var(--node-size);
+                height:var(--node-size);
+                background:var(--stop-bg);
+                border:var(--node-ring) solid var(--stop-ring);
+                border-radius:999px;
+                box-shadow:var(--shadow);
+                z-index:2;
+                transition:border-color .2s ease, box-shadow .2s ease;
+              }
 
-  /* ===== Cards (bigger) ===== */
-  .xp-card{
-    display:grid;
-    grid-template-columns:var(--logo) 1fr;
-    align-items:center;
-    gap:1.1rem;
-    padding:1rem 1.25rem 1rem 6rem; /* more inner space & left gutter */
-    text-decoration:none;
-    color:inherit;
-    background:var(--stop-bg);
-    border:6px solid var(--stop-ring);
-    border-radius:var(--radius);
-    box-shadow:var(--shadow);
-    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-    outline:none;
-    min-height:132px;             /* taller cards */
-  }
-  .xp-card:hover,
-  .xp-card:focus-visible{
-    transform:translateY(-2px);
-    box-shadow:0 10px 28px rgba(0,0,0,.12);
-    border-color:var(--track-fill);
-  }
+              /* ===== Cards (bigger) ===== */
+              .xp-card{
+                display:grid;
+                grid-template-columns:var(--logo) 1fr;
+                align-items:center;
+                gap:1.1rem;
+                padding:1rem 1.25rem 1rem 6rem; /* more inner space & left gutter */
+                text-decoration:none;
+                color:inherit;
+                background:var(--stop-bg);
+                border:6px solid var(--stop-ring);
+                border-radius:var(--radius);
+                box-shadow:var(--shadow);
+                transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+                outline:none;
+                min-height:132px;             /* taller cards */
+              }
+              .xp-card:hover,
+              .xp-card:focus-visible{
+                transform:translateY(-2px);
+                box-shadow:0 10px 28px rgba(0,0,0,.12);
+                border-color:var(--track-fill);
+              }
 
-  .xp-logo{ width:var(--logo); height:var(--logo); object-fit:cover; border-radius:14px; display:block; transition:transform .2s ease; }
-  .xp-text{ display:grid; gap:.2rem; }
-  .xp-role{ font-weight:700; font-size:1.1rem; line-height:1.25; }
-  .xp-company{ font-size:.95rem; color:var(--muted); }
+              .xp-logo{ width:var(--logo); height:var(--logo); object-fit:cover; border-radius:14px; display:block; transition:transform .2s ease; }
+              .xp-text{ display:grid; gap:.2rem; }
+              .xp-role{ font-weight:700; font-size:1.1rem; line-height:1.25; }
+              .xp-company{ font-size:.95rem; color:var(--muted); }
 
-  /* ===== Desktop (horizontal) ===== */
-  @media (min-width:860px){
-    .xp-stations{
-      grid-auto-flow:column;
-      grid-auto-columns:1fr;
-      align-items:start;
-      gap:1.6rem;
-      padding-top:3.6rem;
-      --fill-x:var(--progress); --fill-y:1;
-    }
-    .xp-stations::before,
-    .xp-stations::after{
-      inset:var(--track-top) 0 auto 0;
-      height:var(--track-thickness); width:100%;
-    }
+              /* ===== Desktop (horizontal) ===== */
+              @media (min-width:860px){
+                .xp-stations{
+                  grid-auto-flow:column;
+                  grid-auto-columns:1fr;
+                  align-items:start;
+                  gap:1.6rem;
+                  padding-top:3.6rem;
+                  --fill-x:var(--progress); --fill-y:1;
+                }
+                .xp-stations::before,
+                .xp-stations::after{
+                  inset:var(--track-top) 0 auto 0;
+                  height:var(--track-thickness); width:100%;
+                }
 
-    /* position circle + mask relative to the (now shifted) line */
-    .xp-stop::before,
-    .xp-stop::after{
-      top:calc(var(--track-top) + (var(--track-thickness)/2));
-      left:50%;
-      /* keep your working offset; feels a touch higher than center */
-      transform:translate(-80%, -100%);
-    }
+                /* position circle + mask relative to the (now shifted) line */
+                .xp-stop::before,
+                .xp-stop::after{
+                  top:calc(var(--track-top) + (var(--track-thickness)/2));
+                  left:50%;
+                  /* keep your working offset; feels a touch higher than center */
+                  transform:translate(-80%, -100%);
+                }
 
-    .xp-card{
-      grid-template-columns:1fr;
-      text-align:center;
-      padding:calc(2.4rem + var(--track-top)) 1.1rem 1.1rem; /* more space above for the higher line + bigger node */
-    }
-    .xp-logo{ justify-self:center; }
-  }
+                .xp-card{
+                  grid-template-columns:1fr;
+                  text-align:center;
+                  padding:calc(2.4rem + var(--track-top)) 1.1rem 1.1rem; /* more space above for the higher line + bigger node */
+                }
+                .xp-logo{ justify-self:center; }
+              }
 
-  /* ===== Mobile (vertical) ===== */
-  @media (max-width:1400px){
-    .xp-stop::before,
-    .xp-stop::after{
-      top:calc(var(--track-top, 6px) + (var(--track-thickness)/2));
-      left:calc(var(--track-left-mobile) + (var(--track-thickness)/2));
-      transform:translate(-50%, -50%);
-    }
-  }
+              /* ===== Mobile (vertical) ===== */
+              @media (max-width:1400px){
+                .xp-stop::before,
+                .xp-stop::after{
+                  top:calc(var(--track-top, 6px) + (var(--track-thickness)/2));
+                  left:calc(var(--track-left-mobile) + (var(--track-thickness)/2));
+                  transform:translate(-50%, -50%);
+                }
+              }
 
-  /* ===== Force light variant ===== */
-  .xp-subway.force-light{
-    --track:#E5ECF6; --track-fill:#4F9CF9;
-    --stop-bg:rgba(255,255,255,.92); --stop-ring:#E9EEF7;
-    --text:#0F172A; --muted:#5B6B7A;
-    --shadow:0 6px 22px rgba(15,23,42,.10);
-    --radius:18px; --logo:72px;
+              /* ===== Force light variant ===== */
+              .xp-subway.force-light{
+                --track:#E5ECF6; --track-fill:#4F9CF9;
+                --stop-bg:rgba(255,255,255,.92); --stop-ring:#E9EEF7;
+                --text:#0F172A; --muted:#5B6B7A;
+                --shadow:0 6px 22px rgba(15,23,42,.10);
+                --radius:18px; --logo:72px;
 
-    /* keep proportions larger in light theme too */
-    --node-size:52px;
-    --node-ring:2px;
-    --track-thickness:12px;
-    --track-top:12px;
+                /* keep proportions larger in light theme too */
+                --node-size:52px;
+                --node-ring:2px;
+                --track-thickness:12px;
+                --track-top:12px;
 
-    padding:12px 16px 20px;
-    border:1px solid #EEF1F6; border-radius:22px;
-    background:
-      radial-gradient(800px 200px at 20% -80px,#F5F9FF,transparent 60%),
-      radial-gradient(600px 180px at 80% -60px,#EEF6FF,transparent 60%),
-      #fff;
-  }
-  .xp-subway.force-light .xp-title{ font-size:clamp(1.2rem,1rem + .9vw,1.7rem); }
-  .xp-subway.force-light .xp-stations{ max-width:1200px; margin:0 auto; gap:1.3rem; padding-top:1.2rem; }
-  .xp-subway.force-light .xp-stations::before{ background:linear-gradient(90deg,#DBE5F3,#E8EEF8); }
-  .xp-subway.force-light .xp-stations::after{
-    background:linear-gradient(90deg,var(--track-fill),#8EC5FF);
-    box-shadow:0 0 0 1px rgba(79,156,249,.08) inset;
-  }
-  .xp-subway.force-light .xp-card{
-    gap:.75rem; padding:.8rem 1rem .9rem 6.5rem;
-    border:1px solid #E9EEF7; background:rgba(255,255,255,.92);
-    backdrop-filter:saturate(140%) blur(2px);
-    min-height:140px;
-  }
-  @media (min-width:860px){ .xp-subway.force-light .xp-card{ padding:calc(2.6rem + var(--track-top)) 1.2rem 1.1rem; } }
-  .xp-subway.force-light .xp-card:hover,
-  .xp-subway.force-light .xp-card:focus-visible{
-    border-color:#B9D5FF; box-shadow:0 12px 30px rgba(79,156,249,.16); transform:translateY(-3px);
-  }
-  .xp-subway.force-light .xp-role{ font-size:1.05rem; }
-  .xp-subway.force-light .xp-company{ font-size:.92rem; color:#5B6B7A; }
-
-
-
-  /* ===== Hover niceties ===== */
-  .xp-subway .xp-stop:hover::before,
-  .xp-subway .xp-stop:focus-within::before{
-    border-color:var(--track-fill);
-    box-shadow:0 0 0 10px rgba(79,156,249,.10),0 6px 18px rgba(79,156,249,.12);
-  }
-  .xp-subway .xp-card:hover .xp-logo{ transform:translateY(-1px) scale(1.02); }
-</style>
-
-<script>
-  // Reveal cards smoothly
-  (function () {
-    const list = document.querySelector('.xp-subway .xp-stations');
-    if (!list || !('IntersectionObserver' in window)) return;
-    const cards = Array.from(list.querySelectorAll('.xp-card'));
-    cards.forEach(el => { el.style.opacity = 0; el.style.transform = 'translateY(6px)'; });
-    const io = new IntersectionObserver(entries => {
-      if (!entries[0].isIntersecting) return;
-      cards.forEach((el, i) => {
-        el.style.transition = 'opacity .45s ease ' + (i * 60) + 'ms, transform .45s ease ' + (i * 60) + 'ms';
-        el.style.opacity = 1; el.style.transform = 'translateY(0)';
-      });
-      io.disconnect();
-    }, { threshold: .2 });
-    io.observe(list);
-  })();
-
-  // Fill the line up to hovered stop
-  (function () {
-    const list = document.querySelector('.xp-subway .xp-stations');
-    if (!list) return;
-    const stops = Array.from(list.querySelectorAll('.xp-stop'));
-    const set = i => list.style.setProperty('--progress', stops.length < 2 ? 1 : i / (stops.length - 1));
-    stops.forEach((stop, i) => {
-      stop.addEventListener('mouseenter', () => set(i));
-      stop.addEventListener('focusin', () => set(i));
-    });
-    list.addEventListener('mouseleave', () => set(stops.length - 1));
-    set(stops.length - 1);
-  })();
-</script>
+                padding:12px 16px 20px;
+                border:1px solid #EEF1F6; border-radius:22px;
+                background:
+                  radial-gradient(800px 200px at 20% -80px,#F5F9FF,transparent 60%),
+                  radial-gradient(600px 180px at 80% -60px,#EEF6FF,transparent 60%),
+                  #fff;
+              }
+              .xp-subway.force-light .xp-title{ font-size:clamp(1.2rem,1rem + .9vw,1.7rem); }
+              .xp-subway.force-light .xp-stations{ max-width:1200px; margin:0 auto; gap:1.3rem; padding-top:1.2rem; }
+              .xp-subway.force-light .xp-stations::before{ background:linear-gradient(90deg,#DBE5F3,#E8EEF8); }
+              .xp-subway.force-light .xp-stations::after{
+                background:linear-gradient(90deg,var(--track-fill),#8EC5FF);
+                box-shadow:0 0 0 1px rgba(79,156,249,.08) inset;
+              }
+              .xp-subway.force-light .xp-card{
+                gap:.75rem; padding:.8rem 1rem .9rem 6.5rem;
+                border:1px solid #E9EEF7; background:rgba(255,255,255,.92);
+                backdrop-filter:saturate(140%) blur(2px);
+                min-height:140px;
+              }
+              @media (min-width:860px){ .xp-subway.force-light .xp-card{ padding:calc(2.6rem + var(--track-top)) 1.2rem 1.1rem; } }
+              .xp-subway.force-light .xp-card:hover,
+              .xp-subway.force-light .xp-card:focus-visible{
+                border-color:#B9D5FF; box-shadow:0 12px 30px rgba(79,156,249,.16); transform:translateY(-3px);
+              }
+              .xp-subway.force-light .xp-role{ font-size:1.05rem; }
+              .xp-subway.force-light .xp-company{ font-size:.92rem; color:#5B6B7A; }
 
 
-    <!-- Skills -->
-    <section class="resume-section" id="skills">
-      <div class="resume-section-content">
-        <h2 class="mb-4">Skills</h2>
 
-        <div class="cardish skills-card">
-          <h3 class="skills-title">Data Analytics &amp; Business Intelligence</h3>
-          <div class="skills-content">
-            <div class="skills-left">
-              <div class="subheading mb-2">Data Analytics &amp; BI Tools</div>
-              <p class="skill-inline">• SQL • DBT • Snowflake • Redshift • Power BI (DAX, Power Query) • Tableau Cloud • Excel (Advanced: PivotTables, Power Query) • Google Analytics • Python (Pandas, NumPy, Matplotlib, Seaborn)</p>
+              /* ===== Hover niceties ===== */
+              .xp-subway .xp-stop:hover::before,
+              .xp-subway .xp-stop:focus-within::before{
+                border-color:var(--track-fill);
+                box-shadow:0 0 0 10px rgba(79,156,249,.10),0 6px 18px rgba(79,156,249,.12);
+              }
+              .xp-subway .xp-card:hover .xp-logo{ transform:translateY(-1px) scale(1.02); }
+            </style>
 
-              <div class="subheading mb-2 mt-3">Data Management</div>
-              <p class="skill-inline">• ETL Pipeline Design • Data Modelling • Data Cleansing &amp; Transformation • Data Quality Assurance</p>
+            <script>
+              // Reveal cards smoothly
+              (function () {
+                const list = document.querySelector('.xp-subway .xp-stations');
+                if (!list || !('IntersectionObserver' in window)) return;
+                const cards = Array.from(list.querySelectorAll('.xp-card'));
+                cards.forEach(el => { el.style.opacity = 0; el.style.transform = 'translateY(6px)'; });
+                const io = new IntersectionObserver(entries => {
+                  if (!entries[0].isIntersecting) return;
+                  cards.forEach((el, i) => {
+                    el.style.transition = 'opacity .45s ease ' + (i * 60) + 'ms, transform .45s ease ' + (i * 60) + 'ms';
+                    el.style.opacity = 1; el.style.transform = 'translateY(0)';
+                  });
+                  io.disconnect();
+                }, { threshold: .2 });
+                io.observe(list);
+              })();
 
-              <div class="subheading mb-2 mt-3">Applications &amp; Platforms</div>
-              <p class="skill-inline">• Salesforce • Penelope CRM • MySQL Workbench • Oracle • SharePoint • JIRA • Power Apps</p>
+              // Fill the line up to hovered stop
+              (function () {
+                const list = document.querySelector('.xp-subway .xp-stations');
+                if (!list) return;
+                const stops = Array.from(list.querySelectorAll('.xp-stop'));
+                const set = i => list.style.setProperty('--progress', stops.length < 2 ? 1 : i / (stops.length - 1));
+                stops.forEach((stop, i) => {
+                  stop.addEventListener('mouseenter', () => set(i));
+                  stop.addEventListener('focusin', () => set(i));
+                });
+                list.addEventListener('mouseleave', () => set(stops.length - 1));
+                set(stops.length - 1);
+              })();
+            </script>
+
+
+<!-- Skills -->
+                  <section class="resume-section" id="skills">
+          <div class="resume-section-content">
+            <h2 class="mb-4">Skills</h2>
+
+            <div class="skills-visual">
+              <!-- Category 1 -->
+              <div class="skill-category">
+                <h3>Data Analytics & BI</h3>
+                <div class="skill-items">
+                  <span><img src="assets/img/sql.svg" alt="SQL">SQL</span>
+                  <span><img src="assets/img/dbt.png" alt="dbt">dbt</span>
+                  <span><img src="https://cdn.simpleicons.org/snowflake/29B5E8" alt="Snowflake">Snowflake</span>
+                  <span><img src="assets/img/Powerbi.logo.png" alt="Power BI">Power BI</span>
+                  <span><img src="assets/img/Tableau.png" alt="Tableau">Tableau</span>
+                  <span><img src="assets/img/excel.png" alt="Excel">Excel</span>
+                  <span><img src="https://cdn.simpleicons.org/googleanalytics/E37400" alt="Google Analytics">GA4</span>
+                  <span><img src="assets/img/python.jpg" alt="Python">Python</span>
+                </div>
+              </div>
+
+              <!-- Category 2 -->
+              <div class="skill-category">
+                <h3>Data Management</h3>
+                <div class="skill-items">
+                  <span>ETL/ELT Pipeline Design</span>
+                  <span>Data Modelling</span>
+                  <span>Data Visualization</span>
+                  <span>Analytics Engineering</span>
+                  <span>Data Cleansing</span>
+                  <span>Data Quality Assurance</span>
+                  <span>Data Warehousing</span>
+                  <span>Data Governance</span>
+
+                </div>
+              </div>
+
+              <!-- Category 3 -->
+              <div class="skill-category">
+                <h3>Applications & Platforms</h3>
+                <div class="skill-items">
+                  <span><img src="https://cdn.simpleicons.org/salesforce/00A1E0" alt="Salesforce">Salesforce</span>
+                  <span>Penelope CRM</span>
+                  <span><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="MySQL">SQL</span>
+                  <span><img src="https://cdn.simpleicons.org/jira/0052CC" alt="Jira">JIRA</span>
+                  <span>SharePoint</span>
+                  <span>Power Apps</span>
+                </div>
+              </div>
             </div>
-
-            <ul class="logo-grid" aria-label="Tool logos">
-              <li><div class="tile"><img class="logo" loading="lazy" src="https://cdn.simpleicons.org/snowflake/29B5E8" alt="Snowflake" title="Snowflake" data-label="Snowflake" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
-              <li><div class="tile"><img class="logo" loading="lazy" src="assets/img/Powerbi.logo.png" alt="Power BI" title="Power BI" data-label="Power BI" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
-              <li><div class="tile"><img class="logo" loading="lazy" src="assets/img/Tableau.png" alt="Tableau" title="Tableau" data-label="Tableau" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
-              <li><div class="tile"><img class="logo" loading="lazy" src="assets/img/excel.png" alt="Excel" title="Microsoft Excel" data-label="Excel" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
-              <li><div class="tile"><img class="logo" loading="lazy" src="https://cdn.simpleicons.org/googleanalytics/E37400" alt="Google Analytics" title="Google Analytics 4" data-label="GA4" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||'GA4'}))"></div></li>
-              <li><div class="tile"><img class="logo" loading="lazy" src="https://cdn.simpleicons.org/mysql/4479A1" alt="MySQL" title="MySQL Workbench" data-label="MySQL" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
-              <li><div class="tile"><img class="logo" loading="lazy" src="https://cdn.simpleicons.org/jira/0052CC" alt="JIRA" title="JIRA" data-label="JIRA" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
-              <li><div class="tile"><img class="logo" loading="lazy" src="assets/img/dbt.png" alt="dbt" title="dbt" data-label="dbt" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
-              <li><div class="tile"><img class="logo" loading="lazy" src="assets/img/python.jpg" alt="Python" title="Python" data-label="Python" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'logo-fallback',textContent:this.dataset.label||this.alt}))"></div></li>
-            </ul>
           </div>
+        </section>
+
+        <style>
+        .skills-visual {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          gap: 1.5rem;
+        }
+        .skill-category {
+          background: #f9f9f9;
+          border-radius: 1rem;
+          padding: 1.2rem;
+          box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+        }
+        .skill-category h3 {
+          margin-bottom: 1rem;
+          font-size: 1.2rem;
+          color: #333;
+        }
+        .skill-items {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.6rem;
+        }
+        .skill-items span {
+          background: #fff;
+          border: 1px solid #eee;
+          border-radius: 0.6rem;
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+        }
+        .skill-items img {
+          width: 50px;
+          height: 50px;
+        }/* Make only the skills section text smaller */
+          #skills .resume-section-content {
+            font-size: 0.9rem; /* smaller overall */
+          }
+
+          #skills h4 {
+            font-size: 1.5rem; /* smaller section title */
+          }
+
+          #skills h4 3rem; /* smaller category titles */
+          }
+
+          #skills .skill-items span {
+            font-size: 0.8rem; /* compact skill tags */
+}
+        </style>
+
+
+ 
+   <!-- Projects -->
+<section class="resume-section" id="projects">
+  <style>
+    /* Scope everything only to #projects */
+    #projects {
+      padding: 60px 20px;
+      background: #f9f9f9;
+    }
+
+    #projects .resume-section-content {
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+
+    #projects h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #222;
+    }
+
+    #projects h3 {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    #projects .projects-subtext {
+      text-align: center;
+      font-size: 1rem;
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    /* Grid layout */
+    #projects .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    /* Cards */
+    #projects .projects-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      min-height: 450px;
+    }
+
+    #projects .projects-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    /* GIF / Image */
+    #projects .projects-thumb {
+      width: 100%;
+      height: 320px;
+      object-fit: contain;
+      display: block;
+      background: #f7f7f7;
+      border-radius: 6px 6px 0 0;
+    }
+
+    /* Info */
+    #projects .projects-info {
+      flex-grow: 1;
+      padding: 20px;
+      text-align: center;
+    }
+
+    #projects .projects-title {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #0077cc;
+    }
+
+    #projects .projects-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    #projects .projects-title a:hover {
+      text-decoration: underline;
+    }
+
+    #projects .projects-note {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    /* Responsive tweak */
+    @media (max-width: 480px) {
+      #projects .projects-thumb {
+        height: 240px;
+      }
+    }
+  </style>
+
+  <div class="resume-section-content">
+    <h2>Projects</h2>
+
+    <!-- Interactive Dashboards -->
+    <h3>Interactive Dashboards</h3>
+    <p class="projects-subtext">Click the thumbnails below to view the live dashboards.</p>
+
+    <div class="projects-grid">
+      <!-- Project 1 -->
+      <article class="projects-card" data-aos="fade-up">
+        <a href="https://app.powerbi.com/view?r=..." target="_blank" rel="noopener">
+          <img class="projects-thumb" src="assets/img/CustomerNPS.gif" alt="Customer NPS dashboard preview" loading="lazy" />
+        </a>
+        <div class="projects-info">
+          <h5 class="projects-title"><a href="https://app.powerbi.com/view?r=..." target="_blank">Customer Net Promoter Score Dashboard</a></h5>
+          <p class="projects-note">Background may take 30–60s • Live connected dashboard • Power BI</p>
         </div>
-      </div>
-    </section>
+      </article>
 
-    <!-- Projects (trimmed structure; keep your existing links) -->
-    <section class="resume-section" id="projects">
-      <div class="resume-section-content">
-        <h2 class="mb-4">Projects</h2>
+      <!-- Project 2 -->
+      <article class="projects-card" data-aos="fade-up">
+        <a href="https://app.powerbi.com/view?r=..." target="_blank" rel="noopener">
+          <img class="projects-thumb" src="assets/img/HRanalytics.gif" alt="HR Analytics dashboard preview" loading="lazy" />
+        </a>
+        <div class="projects-info">
+          <h5 class="projects-title"><a href="https://app.powerbi.com/view?r=..." target="_blank">HR Analytics Dashboard</a></h5>
+          <p class="projects-note">Background may take 30–60s • Data prep: SQL • Power BI</p>
+        </div>
+      </article>
 
-        <h4 class="mb-3">Interactive Dashboards</h4>
+      <!-- Project 3 -->
+      <article class="projects-card" data-aos="fade-up">
+        <a href="https://app.powerbi.com/view?r=..." target="_blank" rel="noopener">
+          <img class="projects-thumb" src="assets/img/SalesDashboardKPI.gif" alt="Sales KPI Dashboard preview" loading="lazy" />
+        </a>
+        <div class="projects-info">
+          <h5 class="projects-title"><a href="https://app.powerbi.com/view?r=..." target="_blank">Monthly Sales KPI Dashboard</a></h5>
+          <p class="projects-note">Background may take 30–60s • Data prep: Power Query • Power BI</p>
+        </div>
+      </article>
+    </div>
 
-        <article data-aos="fade-up" class="cardish project-card mb-3">
-          <a href="https://app.powerbi.com/view?r=eyJrIjoiMDVlOTI2ODktNTIyZS00ZjMzLWJkYzMtZGZmZDU0MjI1ZmZhIiwidCI6IjE3NTFjZGNhLWVmNmItNGJkZS05ZmVlLTE2ZDMwYjdiMjdkMSJ9" class="thumb-link" target="_blank" rel="noopener">
-            <img class="project-thumb" src="assets/img/CustomerNPS.gif" alt="Customer NPS dashboard preview" loading="lazy" />
-          </a>
-          <div>
-            <h5 class="project-title"><a class="clean" href="https://app.powerbi.com/view?r=eyJrIjoiMDVlOTI2ODktNTIyZS00ZjMzLWJkYzMtZGZmZDU0MjI1ZmZhIiwidCI6IjE3NTFjZGNhLWVmNmItNGJkZS05ZmVlLTE2ZDMwYjdiMjdkMSJ9" target="_blank" rel="noopener">Customer Net Promoter Score Dashboard</a></h5>
-            <p class="project-note">Background may take 30–60s to load • Live connected dashboard • Tool: Power BI</p>
-          </div>
-        </article>
+    <!-- Reports / Other Projects -->
+    <h3>Reports & Analytics Projects</h3>
+ 
 
-        <article data-aos="fade-up" class="cardish project-card mb-3">
-          <a href="https://app.powerbi.com/view?r=eyJrIjoiYTg1MTUxMzAtOTFiZi00MDU3LWI1MWQtZTUxNGM1MGRiOTI2IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" class="thumb-link" target="_blank" rel="noopener">
-            <img class="project-thumb" src="assets/img/HRanalytics.gif" alt="HR Analytics dashboard preview" loading="lazy" />
-          </a>
-          <div>
-            <h5 class="project-title"><a class="clean" href="https://app.powerbi.com/view?r=eyJrIjoiYTg1MTUxMzAtOTFiZi00MDU3LWI1MWQtZTUxNGM1MGRiOTI2IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" target="_blank" rel="noopener">HR Analytics Dashboard</a></h5>
-            <p class="project-note">Background may take 30–60s • Data prep: SQL • Tool: Power BI</p>
-          </div>
-        </article>
+    <div class="projects-grid">
+      <!-- Project 4 -->
+      <article class="projects-card" data-aos="fade-up">
+        <a href="https://drive.google.com/file/d/10Dorgkb_2JtmMTCP3eRFxbTpJvFUQmxD/view?usp=sharing" target="_blank">
+          <img class="projects-thumb" src="assets/img/SprocketCentralPtyLty.gif" alt="Customer Segmentation preview" loading="lazy" />
+        </a>
+        <div class="projects-info">
+          <h5 class="projects-title"><a href="https://github.com/tousifrad/Sprocket-Central-Pty-Ltd/blob/main/Dashboard.pdf" target="_blank">Customer Segmentation Analysis (Sprocket Central Pty Ltd)</a></h5>
+          <p class="projects-note">Final report • RFM analysis • Tableau dashboard</p>
+        </div>
+      </article>
 
-        <article data-aos="fade-up" class="cardish project-card mb-4">
-          <a href="https://app.powerbi.com/view?r=eyJrIjoiN2UzNWVhY2EtMzY5Yy00ZTE3LThjNzEtNmEzODQ1NjU4OGU1IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" class="thumb-link" target="_blank" rel="noopener">
-            <img class="project-thumb" src="assets/img/SalesDashboardKPI.gif" alt="Monthly Sales KPI dashboard preview" loading="lazy" />
-          </a>
-          <div>
-            <h5 class="project-title"><a class="clean" href="https://app.powerbi.com/view?r=eyJrIjoiN2UzNWVhY2EtMzY5Yy00ZTE3LThjNzEtNmEzODQ1NjU4OGU1IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" target="_blank" rel="noopener">Monthly Sales KPI Dashboard</a></h5>
-            <p class="project-note">Background may take 30–60s • Data prep: Power Query • Tool: Power BI</p>
-          </div>
-        </article>
+      <!-- Project 5 -->
+      <article class="projects-card" data-aos="fade-up">
+        <a href="https://drive.google.com/file/d/10Dorgkb_2JtmMTCP3eRFxbTpJvFUQmxD/view?usp=sharing" target="_blank">
+          <img class="projects-thumb" src="assets/img/BankingMarketDataAnalysis.gif" alt="Bank marketing preview" loading="lazy" />
+        </a>
+        <div class="projects-info">
+          <h5 class="projects-title"><a href="https://github.com/tousifrad/Bank-Marketing-Analysis/blob/main/Report.pdf" target="_blank">Marketing Campaign (Portuguese Banking Institution)</a></h5>
+          <p class="projects-note">EDA • Predictive models (regression, decision trees) • Python</p>
+        </div>
+      </article>
 
-        <h4 class="mb-3">Dashboards</h4>
-        <article data-aos="fade-up" class="cardish project-card mb-3">
-          <a href="https://drive.google.com/file/d/10Dorgkb_2JtmMTCP3eRFxbTpJvFUQmxD/view?usp=sharing" target="_blank" rel="noopener">
-            <img class="project-thumb" src="assets/img/SprocketCentralPtyLty.gif" alt="Customer Segmentation preview" loading="lazy" />
-          </a>
-          <div>
-            <h5 class="project-title"><a class="clean" href="https://github.com/tousifrad/Sprocket-Central-Pty-Ltd/blob/main/Dashboard.pdf" target="_blank" rel="noopener">Customer Segmentation Analysis (Sprocket Central Pty Ltd)</a></h5>
-            <p class="project-note">Final report • RFM analysis • Tableau dashboard</p>
-          </div>
-        </article>
+      <!-- Project 6 -->
+      <article class="projects-card" data-aos="fade-up">
+        <a href="https://drive.google.com/file/d/1W62jfwiM1sfGWdINhmGZwk8wMcOptjVe/view?usp=sharing" target="_blank">
+          <img class="projects-thumb" src="assets/img/AdultSalaryDataset.gif" alt="Census income preview" loading="lazy" />
+        </a>
+        <div class="projects-info">
+          <h5 class="projects-title"><a href="https://github.com/tousifrad/Adult-Data-Set/blob/main/Report.pdf" target="_blank">Salary Analysis (Census Income)</a></h5>
+          <p class="projects-note">Exploratory analysis • Large dataset • Python</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
 
-        <article data-aos="fade-up" class="cardish project-card mb-3">
-          <a href="https://drive.google.com/file/d/10Dorgkb_2JtmMTCP3eRFxbTpJvFUQmxD/view?usp=sharing" target="_blank" rel="noopener">
-            <img class="project-thumb" src="assets/img/BankingMarketDataAnalysis.gif" alt="Bank marketing preview" loading="lazy" />
-          </a>
-          <div>
-            <h5 class="project-title"><a class="clean" href="https://github.com/tousifrad/Bank-Marketing-Analysis/blob/main/Report.pdf" target="_blank" rel="noopener">Marketing Campaign (Portuguese Banking Institution)</a></h5>
-            <p class="project-note">EDA • Predictive models (regression, decision trees) • Python</p>
-          </div>
-        </article>
 
-        <article data-aos="fade-up" class="cardish project-card mb-4">
-          <a href="https://drive.google.com/file/d/1W62jfwiM1sfGWdINhmGZwk8wMcOptjVe/view?usp=sharing" target="_blank" rel="noopener">
-            <img class="project-thumb" src="assets/img/AdultSalaryDataset.gif" alt="Census income preview" loading="lazy" />
-          </a>
-          <div>
-            <h5 class="project-title"><a class="clean" href="https://github.com/tousifrad/Adult-Data-Set/blob/main/Report.pdf" target="_blank" rel="noopener">Salary Analysis (Census Income)</a></h5>
-            <p class="project-note">Exploratory analysis • Large dataset • Python</p>
-          </div>
-        </article>
-
-        <h4 class="mb-3">Data Analytics Projects</h4>
-        <article data-aos="fade-up" class="cardish project-card">
-          <div>
-            <h5 class="project-title"><a class="clean" href="https://github.com/tousifrad/Adult-Data-Set/blob/main/Report.pdf" target="_blank" rel="noopener">Melbourne Housing Market</a></h5>
-            <p class="project-note">Predicting Melbourne house prices • EDA incl. choropleth over 15 years • Tools: Python, Tableau</p>
-          </div>
-        </article>
-      </div>
-    </section>
-    <hr class="m-0" />
-
-    <!-- Education -->
-    <section class="resume-section" id="education">
+<!-- Education -->
+    <<section class="resume-section" id="education">
   <style>
     .education-grid {
       display: grid;
@@ -993,6 +1214,9 @@
       padding: 1.5rem;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       transition: transform 0.2s ease, box-shadow 0.2s ease;
+      display: flex; /* flexbox for logo + info */
+      align-items: flex-start;
+      gap: 1.5rem; /* space between logo and info */
     }
 
     .project-card:hover {
@@ -1001,9 +1225,10 @@
     }
 
     .project-thumb {
-      max-width: 80px;
-      margin-bottom: 1rem;
+      max-width: 100px;
+      margin: 0; /* no bottom margin since flex handles spacing */
       display: block;
+      flex-shrink: 0; /* prevent logo from shrinking */
     }
 
     .project-card h3 {
@@ -1027,6 +1252,14 @@
     @media (max-width: 768px) {
       .education-grid {
         grid-template-columns: 1fr; /* Stack on small screens */
+      }
+      .project-card {
+        flex-direction: column; /* stack logo above text on mobile */
+        align-items: center;
+        text-align: center;
+      }
+      .project-card ul {
+        text-align: left; /* keep bullet points aligned */
       }
     }
   </style>
@@ -1082,7 +1315,8 @@
   </div>
 </section>
 
-    <!-- Certification -->
+
+<!-- Certification -->
     <section class="resume-section" id="certification">
       <div class="resume-section-content">
         <h2 class="mb-4">Certification</h2>
@@ -1190,16 +1424,46 @@
     </section>
   </main>
 
-  <!-- Visitor Counter -->
-  <div class="counter-container" aria-live="polite">
-    <div>Visitor hits</div>
-    <div class="website-counter">0</div>
+>
+<!-- GA Visitors Only -->
+<div id="gaVisitorsWidget" style="max-width:420px;margin:2rem auto;text-align:center">
+  <div style="color:#8891a1;text-transform:uppercase;font-weight:600;letter-spacing:.02em;font-size:.85rem;">
+    Visitors (last 7 days)
   </div>
+  <div id="gaVisitorsValue" style="font-variant-numeric:tabular-nums;font-weight:800;font-size:clamp(2rem,6vw,3rem);line-height:1.1;" aria-live="polite">
+    —
+  </div>
+</div>
 
-  <footer id="footer" role="contentinfo" class="clearfix text-center py-3">
-    <p><span style="font-size:14px">©tousifalam v270725a.00</span></p>
-  </footer>
+<script>
+(function(){
+  // Your Apps Script Web App URL
+  var GA_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyESvdUhdKwWmk_UnLvIAXfhReQG6ehqQp5F56uLr3ippQo5ih4v6OXerkt59k6mnPT/exec?days=7';
+  var out = document.getElementById('gaVisitorsValue');
+  var nf = new Intl.NumberFormat();
 
+  fetch(GA_ENDPOINT, { cache: 'no-store' })
+    .then(function(r){
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(d){
+      if (!d.ok) throw new Error(d.error || 'Unknown GA error');
+      out.textContent = nf.format(d.total || 0);
+    })
+    .catch(function(err){
+      console.error('GA fetch failed:', err);
+      out.textContent = 'N/A';
+      out.title = 'GA error: ' + (err && err.message ? err.message : err);
+    });
+})();
+</script>
+
+
+
+
+  <!-- AOS JS -->
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <!-- Scripts -->
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
@@ -1207,33 +1471,8 @@
   <script src="js/scripts.js"></script>
   <script src="js/cap.js"></script>
   <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+  
 
-  <!-- Counter logic with smooth count-up -->
-  <script>
-    (function(){
-      var el = document.querySelector('.website-counter');
-      var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var prev = 0;
-      try { prev = Number(localStorage.getItem('page_view') || '0'); } catch(e) {}
-      var next = prev + 1;
-      try { localStorage.setItem('page_view', String(next)); } catch(e) {}
-
-      if (!el) return;
-      if (prefersReduced) { el.textContent = next; return; }
-
-      var start = null, duration = 600;
-      function tick(ts){
-        if (!start) start = ts;
-        var p = Math.min(1, (ts - start) / duration);
-        var val = Math.floor(prev + (next - prev) * p);
-        el.textContent = val;
-        if (p < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    })();
-  </script>
-  <!-- AOS JS -->
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script>document.addEventListener('DOMContentLoaded',function(){ AOS.init({ duration:700, easing:'ease-out-quart', once:true, offset:80 }); });</script>
 
 
