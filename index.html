@@ -273,6 +273,7 @@ Recognized for strong stakeholder engagement, problem-solving, and time manageme
             const items = [
               { label:"North South University", start:2012, end:2017, type:"edu", logo:"assets/img/nsu.jpg" },
               { label:"Research Data Analyst • NSU", start:2015, end:2016, type:"job", logo:"assets/img/nsu.jpg" },
+              { label:"Freelancer", start:2017, end:2018, type:"job", logo:"assets/img/fl.jpg" },
               { label:"Swinburne University of Technology", start:2019, end:2020, type:"edu", logo:"assets/img/sut.jpg"},
               { label:"Woolworths Supermarkets", start:2019, end:2022, type:"job", logo:"assets/img/ww.png" },
               { label:"Swoop Analytics — Data Analyst", start:2021, end:2021, type:"job", logo:"assets/img/swoop.png" },
@@ -394,26 +395,32 @@ Recognized for strong stakeholder engagement, problem-solving, and time manageme
           <div class="legend" id="sn-legend"></div>
 
           <script>
-            (function(){
-              const groups = { Viz:"#2563eb", Core:"#7c3aed", ELT:"#ef4444", Code:"#059669" };
-              const nodes = [
-                { id:"Power BI", group:"Viz",  value:5, color:"#2563eb" },
-                { id:"Tableau",  group:"Viz",  value:4, color:"#f59e0b" },
-                { id:"SQL",      group:"Core", value:5, color:"#7c3aed" },
-                { id:"Excel",    group:"Core", value:4, color:"#4b5563" },
-                { id:"dbt",      group:"ELT",  value:4, color:"#ef4444" },
-                { id:"Python",   group:"Code", value:4, color:"#059669" }
-              ];
-              const links = [
-                { s:"SQL",      t:"Power BI", w:1.2 },
-                { s:"SQL",      t:"Tableau",  w:1.8 },
-                { s:"SQL",      t:"dbt",      w:1.4 },
-                { s:"Python",   t:"dbt",      w:1.2 },
-                { s:"Python",   t:"SQL",      w:1.2 },
-                { s:"Excel",    t:"Power BI", w:1.3 },
-                { s:"Excel",    t:"SQL",      w:0.8 },
-                { s:"Power BI", t:"Tableau",  w:0.6 }
-              ];
+(function(){
+  const groups = { Viz:"#2563eb", Core:"#7c3aed", ELT:"#ef4444", Code:"#059669" };
+
+  const nodes = [
+    { id:"Power BI", group:"Viz",  value:5, color:"#2563eb" },
+    { id:"Tableau",  group:"Viz",  value:4, color:"#f59e0b" },
+    { id:"SQL",      group:"Core", value:5, color:"#7c3aed" },
+    { id:"Excel",    group:"Core", value:4, color:"#4b5563" },
+    { id:"dbt",      group:"ELT",  value:4, color:"#ef4444" },
+    { id:"Python",   group:"Code", value:4, color:"#059669" },
+    { id:"GitHub",   group:"Core",value:4, color:"#333333" }  // 🆕 GitHub node
+  ];
+
+  const links = [
+    { s:"SQL",      t:"Power BI", w:1.2 },
+    { s:"SQL",      t:"Tableau",  w:1.8 },
+    { s:"SQL",      t:"dbt",      w:1.4 },
+    { s:"Python",   t:"dbt",      w:1.2 },
+    { s:"Python",   t:"SQL",      w:1.2 },
+    { s:"Excel",    t:"Power BI", w:1.3 },
+    { s:"Excel",    t:"SQL",      w:0.8 },
+    { s:"Power BI", t:"Tableau",  w:0.6 },
+    { s:"Python",   t:"GitHub",   w:1.0 },   // 🆕 connection
+    { s:"dbt",      t:"GitHub",   w:1.0 }    // 🆕 connection
+  ];
+
 
               const root = document.getElementById("skills-network");
               const svg  = root.querySelector(".sn-svg");
@@ -965,6 +972,7 @@ Recognized for strong stakeholder engagement, problem-solving, and time manageme
               <span>Penelope CRM</span>
               <span><img src="https://cdn.simpleicons.org/mysql/4479A1" alt="MySQL">SQL</span>
               <span><img src="https://cdn.simpleicons.org/jira/0052CC" alt="Jira">JIRA</span>
+              <span><img src="assets/img/GitHub.png" alt="Jira">Github</span>
               <span>SharePoint</span>
               <span>Power Apps</span>
             </div>

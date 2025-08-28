@@ -11157,14 +11157,12 @@ body.welcome {
   border-radius: 100%;
   opacity: 0.6;
 }
-
- 
  svg {
-   width: 150px;
-   height: 150px;
- 
-   display: inline-block;
+  width: 150px;
+  height: 150px;
+  display: inline-block;
 }
+
 /* Card */
 .skills-card{
   background:#fff;border:1px solid #e5e7eb;border-radius:20px;
@@ -11174,10 +11172,12 @@ body.welcome {
   text-align:center;font-size:1.2rem;font-weight:700;letter-spacing:.25px;
   color:#1f2937;margin:0 0 18px;
 }
+
 /* Two-column */
 .skills-content{
   display:grid;grid-template-columns:1.5fr 1fr;gap:28px;align-items:start;
 }
+
 /* Left lists */
 .subheading{font-weight:650;color:#374151;margin:14px 0 8px;}
 .skill-list{margin:0 0 12px;padding-left:1.15rem;}
@@ -11216,7 +11216,6 @@ body.welcome {
 }
 
 /* ---------- About: Bio | Timeline layout ---------- */
-/* Mobile */
 .about-grid{
   display: grid;
   gap: 15px;
@@ -11227,7 +11226,7 @@ body.welcome {
 /* Tablet and up */
 @media (min-width: 992px){
   .about-grid{
-    grid-template-columns: 2fr 1.1fr; /* bio : timeline (timeline slightly wider) */
+    grid-template-columns: 2fr 1.1fr; /* bio : timeline */
   }
 }
 
@@ -11253,49 +11252,42 @@ body.welcome {
   grid-template-columns: 1fr;
 }
 
-
-/* Compact box + bigger text for Skills network */
-#skills-network { padding: 9px; } /* was ~20px via .cardish */
-#skills-network .sn-svg { height: 900px; } /* was 200px */
-#skills-network h5 { font-size: 1.25rem; } /* bigger section title */
-#skills-network .sn-sub { font-size: 0.95rem; }
-#skills-network .sn-ctrls button { font-size: 0.95rem; padding: 8px 12px; }
-#skills-network .label { font-size: 1000px; } /* node labels (was 12px) */
+/* ---------- Skills Network (consistent, de-duped) ---------- */
+#skills-network { padding: 12px; }
+#skills-network .sn-svg { width:100%; height: 280px; display:block; } /* pick one height */
 #skills-network .legend { font-size: 0.95rem; }
-#skills-network .tip { font-size: 0.9rem; }
+#skills-network .tip { font-size: .9rem; }
 
+/* Base label size */
+#skills-network .label{ font-size:16px; fill:#111827; pointer-events:none; }
 
+/* Emphasize key nodes slightly */
 #skills-network .label.is-key{
-  font-size: 800px;      /* bigger than the default 12–14px */
-  font-weight: 700;     /* bolder so they pop */
-  letter-spacing: 6px;
+  font-size:18px;
+  font-weight:700;
+  letter-spacing:.2px;
 }
 
-/* Make ALL labels bigger by default */
-#skills-network .label{ font-size:16px; }
-
-/* Keep SQL & Python at a smaller size */
+/* Keep SQL & Python a bit smaller if you want them de-emphasized */
 #skills-network .label.is-excluded{
   font-size:14px;
-  font-weight:700; /* optional: keeps them readable while smaller */
+  font-weight:600;
 }
- 
-skills-network .sn-svg{width:100%;height:160px;display:block}  /* was 200px */
-#skills-network .label{font-size:18px;fill:#111827;pointer-events:none} /* was 12px */
-#skills-network .tip{font-size:.95rem} /* optional: tooltip a bit bigger */
 
+/* ✅ Fixed typo: add missing # */
+#skills-network .sn-svg { width:100%; height: 280px; display:block; }
+
+/* ---------- Social icons ---------- */
 .social-icons {
   margin-top: 15px;
   text-align: center; /* centers on mobile */
 }
-
 .social-icons-inner {
   display: flex;
   gap: 14px;
   flex-wrap: wrap;
   justify-content: center;
 }
-
 .social-icons-inner a {
   width: 48px;
   height: 48px;
@@ -11308,12 +11300,10 @@ skills-network .sn-svg{width:100%;height:160px;display:block}  /* was 200px */
   color: #fff;
   transition: all 0.25s ease;
 }
-
 .social-icons-inner a.linkedin { background: #0A66C2; }
 .social-icons-inner a.email    { background: #EA4335; }
 .social-icons-inner a.phone    { background: #10B981; }
 .social-icons-inner a.github   { background: #111827; }
-
 .social-icons-inner a:hover {
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 6px 15px rgba(0,0,0,0.15);
