@@ -1336,7 +1336,7 @@
 
 
 <!-- Certification -->
- <section class="resume-section" id="certification">
+ <section class="resume-section" id="certification" >
   <div class="resume-section-content">
     <h2 class="mb-4">Certifications</h2>
 
@@ -1515,45 +1515,44 @@
 
 
 <!-- Contact Me -->
-<section class="resume-section bg-light py-5" id="contactme">
-  <div class="resume-section-content" style="max-width: 1100px; margin: auto;">
+ <section class="resume-section" id="contactme" style="padding: 2rem 0;">
+  <div class="resume-section-content container">
 
     <div class="row g-4 align-items-stretch">
       <!-- Left Column: Intro + CTAs -->
       <div class="col-lg-5">
-        <h2 style="font-size: 2rem; margin-bottom: 1rem;">💬 Get in Touch with Me</h2>
-        <p style="font-size: 1.1rem; margin-bottom: 1.5rem; line-height: 1.6;">
+        <h2 class="mb-3 fw-bold">💬 Get in Touch with Me</h2>
+        <p class="lead mb-4">
           I’m always open to exciting opportunities where I can apply my expertise in data to drive 
           meaningful insights and impactful decisions. My areas of interest include:
         </p>
 
-        <ul style="list-style: none; padding-left: 0; margin-bottom: 1.5rem; font-size: 1.05rem; line-height: 1.6;">
-          <li>📊 <strong>Data Analysis</strong> — uncovering insights and patterns from raw information</li>
-          <li>📈 <strong>Data Visualization</strong> — transforming complex datasets into clear, compelling visuals</li>
-          <li>📑 <strong>Data Reporting</strong> — designing reports and dashboards for informed decision-making</li>
-          <li>⚙️ <strong>Analytics Engineering</strong> — building efficient data pipelines and workflows</li>
+        <ul class="list-unstyled mb-4">
+          <li class="mb-2">📊 <strong>Data Analysis</strong> — uncovering insights and patterns from raw information</li>
+          <li class="mb-2">📈 <strong>Data Visualization</strong> — transforming complex datasets into clear, compelling visuals</li>
+          <li class="mb-2">📑 <strong>Data Reporting</strong> — designing reports and dashboards for informed decision-making</li>
+          <li class="mb-2">⚙️ <strong>Analytics Engineering</strong> — building efficient data pipelines and workflows</li>
         </ul>
 
-        <p style="font-size: 1.1rem; margin-bottom: 2rem; line-height: 1.6;">
+        <p class="mb-4">
           Whether you’re looking for collaboration, consultancy, or simply want to discuss the latest trends in 
           data and analytics, I’d be delighted to connect. Let’s explore how we can turn data into actionable knowledge together!
         </p>
 
         <!-- Contact Buttons -->
-        <div style="margin-top: 1rem;">
-          <a href="mailto:rad.tousif@gmail.com" class="btn btn-gradient shadow-sm rounded-pill"
-             style="display:inline-block; margin:0.5rem; padding:0.75rem 1.5rem; text-decoration:none; font-weight:600;">
+        <div class="d-flex flex-wrap gap-2 cta-buttons">
+          <a href="mailto:rad.tousif@gmail.com" class="btn btn-gradient shadow-sm rounded-pill px-4 py-2 fw-semibold">
             📧 Email Me
           </a>
           <a href="https://www.linkedin.com/in/radtousif/" target="_blank" rel="noopener"
-             class="shadow-sm rounded-pill"
-             style="display:inline-block; margin:0.5rem; padding:0.75rem 1.5rem; background:#0a66c2; color:#fff; text-decoration:none; font-weight:600;">
-            🔗 Connect on LinkedIn
+             class="btn shadow-sm rounded-pill px-4 py-2 fw-semibold"
+             style="background:#0a66c2; color:#fff;">
+            🔗 LinkedIn
           </a>
           <a href="https://github.com/tousiftr" target="_blank" rel="noopener"
-             class="shadow-sm rounded-pill"
-             style="display:inline-block; margin:0.5rem; padding:0.75rem 1.5rem; background:#24292e; color:#fff; text-decoration:none; font-weight:600;">
-            💻 View GitHub
+             class="btn shadow-sm rounded-pill px-4 py-2 fw-semibold"
+             style="background:#24292e; color:#fff;">
+            💻 GitHub
           </a>
         </div>
       </div>
@@ -1562,17 +1561,17 @@
       <div class="col-lg-7">
         <div class="card shadow-lg border-0 rounded-4 p-4 h-100">
           <div class="card-body">
-            <h4 class="mb-3 text-success">📨 Send me a message</h4>
+            <h4 class="mb-3 text-success fw-bold">📨 Send me a message</h4>
 
             <form action="https://formspree.io/f/mjvdnaoj" id="contact_form" name="contact_form" method="POST" novalidate>
               <div class="mb-3">
                 <label for="first_name" class="form-label fw-semibold">Name</label>
-                <input type="text" required maxlength="50" class="form-control rounded-pill" id="first_name" name="first_name" aria-required="true">
+                <input type="text" required maxlength="50" class="form-control rounded-pill" id="first_name" name="first_name">
               </div>
 
               <div class="mb-3">
                 <label for="email_addr" class="form-label fw-semibold">Email</label>
-                <input type="email" required maxlength="50" class="form-control rounded-pill" id="email_addr" name="email" placeholder="name@example.com" aria-required="true">
+                <input type="email" required maxlength="50" class="form-control rounded-pill" id="email_addr" name="email" placeholder="name@example.com">
               </div>
 
               <div class="mb-3">
@@ -1582,13 +1581,13 @@
 
               <div class="mb-3">
                 <label for="message" class="form-label fw-semibold">Message</label>
-                <textarea class="form-control rounded-4" id="message" name="message" rows="5" placeholder="Your message..." required aria-required="true"></textarea>
+                <textarea class="form-control rounded-4" id="message" name="message" rows="5" placeholder="Your message..." required></textarea>
               </div>
 
               <!-- Success redirect -->
               <input type="hidden" name="_next" value="https://iamrad.xyz/ThankYou.html" />
 
-              <button type="submit" class="btn btn-gradient w-100 py-2 btn-lg shadow-sm rounded-pill">
+              <button type="submit" class="btn btn-gradient w-100 py-2 btn-lg shadow-sm rounded-pill fw-semibold">
                 🚀 Send Message
               </button>
             </form>
@@ -1597,37 +1596,36 @@
       </div>
     </div>
 
-    <!-- Visitor Footer -->
-    <div class="text-center mt-4 small text-muted">
-      👀 Visitors (last 7 days): <span id="gaVisitorsValue" class="fw-bold">—</span>
-    </div>
-
   </div>
 </section>
 
+
 <!-- Custom Styling -->
 <style>
-  .btn-gradient {
-    background: linear-gradient(45deg, #007bff, #00c6ff);
-    color: #fff;
-    border: none;
-    transition: 0.3s ease-in-out;
+  /* Scope everything to the contact section */
+ 
+
+  /* Animate only the contact card(s), not every card on the site */
+  #contactme .card {
+    background: transparent; /* REMOVE white background */
+    animation: fadeInUp 0.9s ease both;
   }
-  .btn-gradient:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 16px rgba(0, 123, 255, 0.3);
-  }
-  .card { animation: fadeInUp 0.9s ease; }
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  /* Optional: tighten spacing on small screens */
+  /* Accessibility: reduce motion for users who prefer it */
+  @media (prefers-reduced-motion: reduce) {
+    #contactme .card { animation: none; }
+    #contactme .btn-gradient { transition: none; }
+    #contactme .btn-gradient:hover { transform: none; box-shadow: none; }
+  }
+
+  /* Tighten spacing / full-width CTAs on small screens */
   @media (max-width: 991.98px) {
     #contactme h2 { text-align: center; }
-    #contactme .btn-gradient,
-    #contactme a[rel="noopener"] {
+    #contactme .cta-buttons .btn {
       width: 100%;
       text-align: center;
     }
@@ -1635,35 +1633,35 @@
 </style>
 
 
-  <!-- GA Visitors (7 days) -->
-  <script>
-  (function(){
-    var GA_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyESvdUhdKwWmk_UnLvIAXfhReQG6ehqQp5F56uLr3ippQo5ih4v6OXerkt59k6mnPT/exec?days=7';
-    var out = document.getElementById('gaVisitorsValue');
-    var nf = new Intl.NumberFormat();
-    if (!out) return;
-    out.textContent = '...';
-    fetch(GA_ENDPOINT, { cache: 'no-store' })
-      .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
-      .then(function(d){ if (!d.ok) throw new Error(d.error || 'Unknown GA error'); out.textContent = nf.format(d.total || 0); })
-      .catch(function(err){ console.error('GA fetch failed:', err); out.textContent = 'N/A'; out.title = 'GA error: ' + (err && err.message ? err.message : err); });
-  })();
-  </script>
+<!-- GA Visitors (7 days) -->
+<script>
+(function(){
+  var GA_ENDPOINT = 'https://script.google.com/macros/s/AKfycbyESvdUhdKwWmk_UnLvIAXfhReQG6ehqQp5F56uLr3ippQo5ih4v6OXerkt59k6mnPT/exec?days=7';
+  var out = document.getElementById('gaVisitorsValue');
+  var nf = new Intl.NumberFormat();
+  if (!out) return;
+  out.textContent = '...';
+  fetch(GA_ENDPOINT, { cache: 'no-store' })
+    .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function(d){ if (!d.ok) throw new Error(d.error || 'Unknown GA error'); out.textContent = nf.format(d.total || 0); })
+    .catch(function(err){ console.error('GA fetch failed:', err); out.textContent = 'N/A'; out.title = 'GA error: ' + (err && err.message ? err.message : err); });
+})();
+</script>
 
-  <!-- AOS JS -->
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
-  <!-- Scripts -->
-  <script src="js/jquery.min.js" defer></script>
-  <script src="js/bootstrap.bundle.min.js" defer></script>
-  <script src="js/jquery.easing.min.js" defer></script>
-  <script src="js/scripts.js" defer></script>
-  <script src="js/cap.js" defer></script>
-  <script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+<!-- AOS JS -->
+<script src="https://unpkg.com/aos@2.3.4/dist/aos.js" defer></script>
+<!-- Scripts -->
+<script src="js/jquery.min.js" defer></script>
+<script src="js/bootstrap.bundle.min.js" defer></script>
+<script src="js/jquery.easing.min.js" defer></script>
+<script src="js/scripts.js" defer></script>
+<script src="js/cap.js" defer></script>
+<script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
 
-  <script>
-    document.addEventListener('DOMContentLoaded',function(){
-      if (window.AOS) AOS.init({ duration:700, easing:'ease-out-quart', once:true, offset:80 });
-    });
-  </script>
+<script>
+  document.addEventListener('DOMContentLoaded',function(){
+    if (window.AOS) AOS.init({ duration:700, easing:'ease-out-quart', once:true, offset:80 });
+  });
+</script>
 </body>
 </html>
