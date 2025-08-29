@@ -120,6 +120,7 @@
         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#liveanalytics">Live Analytics</a></li>
         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#certification">Certification</a></li>
         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#achievement">Achievement & Volunteering</a></li>
@@ -1215,6 +1216,303 @@
     </div>
   </div>
 </section>
+
+
+
+ 
+<!-- Live Analytics -->
+<section class="resume-section bg-grid py-10" id="liveanalytics">
+  <div class="resume-section-content container">
+    <h2 class="title">📊 Live Analytics</h2>
+    <div class="meta"><span id="lastUpdatedLabel" class="muted">Last updated: —</span></div>
+
+    <!-- Dashboard Grid (add more .card blocks as you grow) -->
+    <div class="dashboard-grid">
+      <!-- Card 1: Active bubble cloud -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">🏆 Top Countries by Visitors</h3>
+          <div class="stats">
+            <span class="muted">Visitors (last 7 days)</span>
+            <span id="gaVisitorsValue" class="counter">—</span>
+          </div>
+        </div>
+
+        <div id="gaCountryBarChart" class="chart"></div>
+        <div id="gaEmpty" class="empty muted" hidden>No data available.</div>
+      </div>
+
+      <!-- Card 2: Empty (same layout) -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title"> Source</h3>
+          <div class="stats">
+            <span class="muted">Visitors (—)</span>
+            <span class="counter">—</span>
+          </div>
+        </div>
+
+        <div id="gaCountryBarChart2" class="chart"></div>
+        <div class="empty muted">No data loaded yet.</div>
+      </div>
+
+      <!-- You can copy/paste more .card blocks here -->
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const GA_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxVHInAcoUybD8Uz2J8ve9gRUG44ewEXpnnRF9p7ddZqL8_5bCaLwhm6BnPDPG4g6A/exec';
+  const $ = s => document.querySelector(s);
+  const fmt = n => n.toLocaleString();
+
+  // palette
+  const colors = ['#2563eb','#10b981','#f59e0b','#ef4444','#8b5cf6','#14b8a6','#f97316','#22c55e','#eab308','#3b82f6'];
+  const color = i => colors[i % colors.length];
+
+  function setLastUpdated(){ $('#lastUpdatedLabel').textContent = 'Last updated: ' + new Date().toLocaleString(); }
+  function countUp(el, to){ el.textContent = fmt(to); }
+
+  // Fetch & render only for Card 1; others can be wired later
+  fetch(GA_ENDPOINT, { cache: 'no-store' })
+    .then(r=>r.json())
+    .then(json=>{
+      setLastUpdated();
+      if (!json || json.error) { $('#gaEmpty').hidden = false; return; }
+
+      const rows = Object.entries(json)
+        .map(([name, val]) => ({ name: name || 'Unknown', value: Number(val)||0 }))
+        .filter(d => d.value > 0)
+        .sort((a,b)=>b.value-a.value)
+        .slice(0, 30);
+
+      if (!rows.length){ $('#gaEmpty').hidden = false; return; }
+
+      const total = rows.reduce((s,r)=>s+r.value,0);
+      countUp($('#gaVisitorsValue'), total);
+
+      const host = $('#gaCountryBarChart');
+      host.hidden = false;
+
+      // Fit the chart to its card content box
+      const ro = new ResizeObserver(entries=>{
+        for (const e of entries){
+          const w = Math.max(280, Math.floor(e.contentRect.width));
+          const h = Math.max(220, Math.floor(e.contentRect.height));
+          drawBubbleCloud(host, rows, w, h);
+        }
+      });
+      ro.observe(host);
+    })
+    .catch(err=>{
+      console.error('GA fetch failed', err);
+      $('#gaEmpty').hidden = false;
+    });
+
+  // ===== Bubble cloud with stacked labels =====
+  function drawBubbleCloud(host, data, w, h){
+    host.innerHTML = '';
+    host.style.position = 'relative';
+
+    const svgNS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(svgNS, 'svg');
+    svg.setAttribute('width', '100%');
+    svg.setAttribute('height', '100%');
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    svg.style.display = 'block';
+
+    // big bubbles
+    const maxVal = Math.max(...data.map(d=>d.value)) || 1;
+    const minR = 40;
+    const maxR = Math.round(Math.min(w,h) / 2.6); // slightly conservative for tighter grids
+
+    const cx = w/2, cy = h/2;
+    data.forEach((d,i)=>{
+      d.r = Math.max(minR, Math.sqrt(d.value/maxVal) * maxR);
+      d.x = cx + (Math.random()-0.5) * (w*0.25);
+      d.y = cy + (Math.random()-0.5) * (h*0.25);
+      d.vx = 0; d.vy = 0;
+      d.color = color(i);
+    });
+
+    // pack
+    const padding = 6, edgePad = 6, steps = 260;
+    for (let k=0;k<steps;k++){
+      for (const d of data){ d.vx += (cx - d.x) * 0.003; d.vy += (cy - d.y) * 0.003; }
+      for (let i=0;i<data.length;i++){
+        for (let j=i+1;j<data.length;j++){
+          const a=data[i], b=data[j];
+          const dx=b.x-a.x, dy=b.y-a.y; let dist=Math.hypot(dx,dy)||0.0001;
+          const minD=a.r+b.r+padding;
+          if (dist<minD){
+            const push=(minD-dist)/2, ux=dx/dist, uy=dy/dist;
+            a.x-=ux*push; a.y-=uy*push; b.x+=ux*push; b.y+=uy*push;
+          }
+        }
+      }
+      for (const d of data){
+        d.x+=d.vx; d.y+=d.vy; d.vx*=0.88; d.vy*=0.88;
+        if (d.x-d.r<edgePad) d.x=edgePad+d.r;
+        if (d.x+d.r>w-edgePad) d.x=w-edgePad-d.r;
+        if (d.y-d.r<edgePad) d.y=edgePad+d.r;
+        if (d.y+d.r>h-edgePad) d.y=h-edgePad-d.r;
+      }
+    }
+
+    // tooltip
+    const tip = document.createElement('div');
+    tip.className = 'bubble-tip';
+    tip.style.opacity = 0;
+    host.appendChild(tip);
+
+    // text fit helper
+    function fitText(el, text, maxWidth, maxFS, minFS){
+      el.textContent = text;
+      el.style.fontSize = maxFS + 'px';
+      let bbox = el.getBBox();
+      while (bbox.width > maxWidth && maxFS > minFS){
+        maxFS -= 1; el.style.fontSize = maxFS + 'px'; bbox = el.getBBox();
+      }
+      if (bbox.width <= maxWidth) return;
+      let s = el.textContent;
+      while (s.length > 2 && el.getBBox().width > maxWidth){
+        s = s.slice(0, -2) + '…';
+        el.textContent = s;
+      }
+    }
+
+    // draw
+    const g = document.createElementNS(svgNS, 'g');
+    svg.appendChild(g);
+
+    data.forEach(d=>{
+      const group = document.createElementNS(svgNS, 'g');
+      group.setAttribute('transform', `translate(${d.x},${d.y})`);
+      g.appendChild(group);
+
+      // circle
+      const circ = document.createElementNS(svgNS, 'circle');
+      circ.setAttribute('r', d.r);
+      circ.setAttribute('fill', d.color);
+      circ.setAttribute('opacity', '0.97');
+      group.appendChild(circ);
+
+      // stacked texts: number on top, country below
+      const maxTextWidth = d.r * 1.7;
+      const num = document.createElementNS(svgNS, 'text');
+      num.setAttribute('text-anchor','middle');
+      num.setAttribute('class','bubble-value');
+      num.setAttribute('y', -4);
+      const fsNum = Math.max(12, Math.min(22, Math.round(d.r * 0.5)));
+      num.style.fontSize = fsNum + 'px';
+      num.textContent = fmt(d.value);
+      group.appendChild(num);
+
+      const lab = document.createElementNS(svgNS, 'text');
+      lab.setAttribute('text-anchor','middle');
+      lab.setAttribute('class','bubble-country');
+      lab.setAttribute('y', 14);
+      const fsLabMax = Math.max(10, Math.min(18, Math.round(d.r * 0.36)));
+      const fsLabMin = 9;
+      lab.style.fontSize = fsLabMax + 'px';
+      lab.textContent = d.name;
+      group.appendChild(lab);
+
+      if (d.r < 26){ num.setAttribute('opacity','0'); lab.setAttribute('opacity','0'); }
+      else { fitText(lab, d.name, maxTextWidth, fsLabMax, fsLabMin); }
+
+      // interactions
+      group.addEventListener('mouseenter', ()=>{
+        circ.setAttribute('opacity','1');
+        tip.innerHTML = `<b>${d.name}</b><br>${fmt(d.value)} visitors`;
+        tip.style.opacity = 1;
+      });
+      group.addEventListener('mousemove', (ev)=>{
+        const b = host.getBoundingClientRect();
+        tip.style.left = (ev.clientX - b.left + 12) + 'px';
+        tip.style.top  = (ev.clientY - b.top  + 12) + 'px';
+      });
+      group.addEventListener('mouseleave', ()=>{
+        circ.setAttribute('opacity','0.97');
+        tip.style.opacity = 0;
+      });
+    });
+
+    host.appendChild(svg);
+  }
+})();
+</script>
+
+<style>
+  :root{
+    --grid-gap: 18px;
+    --col-min: 320px;     /* minimum card width */
+    --card-min-h: 380px;  /* baseline card height */
+    --chart-aspect: 16/9; /* chart aspect ratio (modern browsers) */
+  }
+
+  .bg-grid { background:#f9fafb; }
+  .container { max-width:1200px; margin:auto; padding:0 20px; } /* wider page fit */
+  .title { font-size:2rem;text-align:center;margin-bottom:.5rem;color:#111827; }
+  .meta { text-align:right;margin-bottom:10px; }
+  .muted { color:#6b7280; }
+
+  /* Responsive auto-fit grid for many graphs */
+  .dashboard-grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(var(--col-min), 1fr));
+    gap: var(--grid-gap);
+    align-items: stretch; /* equal heights */
+  }
+
+
+  .card {
+    display:flex;               /* make chart stretch */
+    flex-direction:column;
+    min-height: var(--card-min-h);
+    border:1px solid #e5e7eb;
+    background:#fff;
+    border-radius:20px;
+    box-shadow:0 6px 20px rgba(0,0,0,.08);
+  }
+  .card-header {
+    display:flex;justify-content:space-between;align-items:end;
+    padding:20px 20px 10px 20px;
+  }
+  .card-title { font-size:1.1rem;color:#111827;margin:0; }
+  .stats { text-align:right; }
+  .counter { font-weight:600;font-size:1.25rem;color:#111827; }
+
+  /* Chart area fills remaining height in the card */
+  .chart {
+    flex:1 1 auto;
+    padding:0;
+    width:100%;
+    /* modern aspect ratio keeps consistent heights; min-height is fallback */
+    aspect-ratio: var(--chart-aspect);
+    min-height: 260px;
+  }
+  /* Ensure embedded SVG fills */
+  #gaCountryBarChart svg,
+  #gaCountryBarChart2 svg { width:100% !important; height:auto !important; }
+
+  .empty { text-align:center; padding:18px; }
+
+  /* Bubble text & tooltip */
+  .bubble-value { fill:#fff; font-weight:200; pointer-events:none; }
+  .bubble-country { fill:#ffffff; opacity:0.9; font-weight:100; pointer-events:none; }
+  .bubble-tip{
+    position:absolute; background:#fff; border:1px solid #e5e7eb; border-radius:20px;
+    padding:8px 10px; box-shadow:0 8px 24px rgba(0,0,0,.08);
+    color:#111827; font-size:12px; pointer-events:none; transition:opacity .12s ease; z-index:2;
+  }
+
+  @media (prefers-color-scheme: dark){
+    .bubble-tip{ background:#0f172a; border-color:#334155; color:#e5e7eb; }
+  }
+</style>
+
 
 
 <!-- Education -->
