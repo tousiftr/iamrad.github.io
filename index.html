@@ -431,13 +431,16 @@
     { id:"Tableau",  group:"Viz",  value:4, color:"#f59e0b" },
     { id:"SQL",      group:"Core", value:5, color:"#7c3aed" },
     { id:"Excel",    group:"Core", value:4, color:"#4b5563" },
+    { id:"Github",   group:"Code", value:4, color:"#0c0101" },
     { id:"dbt",      group:"ELT",  value:4, color:"#ef4444" },
     { id:"Python",   group:"Code", value:4, color:"#059669" }
+
   ];
   const links = [
     { s:"SQL",      t:"Power BI", w:1.2 },
     { s:"SQL",      t:"Tableau",  w:1.8 },
     { s:"SQL",      t:"dbt",      w:1.4 },
+    { s:"SQL",      t:"Github",   w:1.7 },
     { s:"Python",   t:"dbt",      w:1.2 },
     { s:"Python",   t:"SQL",      w:1.2 },
     { s:"Excel",    t:"Power BI", w:1.3 },
@@ -1051,110 +1054,105 @@
    <!-- Projects -->
 <section class="resume-section" id="projects">
   <style>
-    /* Scope everything only to #projects */
-    #projects {
-      padding: 60px 20px;
-      background: #f9f9f9;
-    }
+   #projects {
+  padding: 60px 20px;
+  background-color: #ffffff; /* Set the background to white */
+}
 
-    #projects .resume-section-content {
-      max-width: 1300px;
-      margin: 0 auto;
-    }
+#projects .resume-section-content {
+  max-width: 1300px;
+  margin: 0 auto;
+}
 
-    #projects h4 {
-      text-align: center;
-      margin-bottom: 10px;
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: #222;
-    }
+#projects h4 {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #222;
+}
 
-    #projects h3 {
-      margin-top: 40px;
-      text-align: center;
-      font-size: 1.6rem;
-      font-weight: 600;
-      color: #333;
-    }
+#projects h3 {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #333;
+}
 
-    #projects .projects-subtext {
-      text-align: center;
-      font-size: 1rem;
-      color: #666;
-      margin-bottom: 30px;
-    }
+#projects .projects-subtext {
+  text-align: center;
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 30px;
+  background-color: #ffffff; /* Set the background to white */
+}
 
-    /* Grid layout */
-    #projects .projects-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-      gap: 30px;
-    }
+#projects .projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 30px;
+  background-color: #fffffff; /* White background for the grid */
+}
+#projects .projects-card {
+  background: #ffffff; /* White background for each card */
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  min-height: 450px;
+}
 
-    /* Cards */
-    #projects .projects-card {
-      background: #fff;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      display: flex;
-      flex-direction: column;
-      min-height: 450px;
-    }
+#projects .projects-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
 
-    #projects .projects-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-    }
+#projects .projects-thumb {
+  width: 100%;
+  height: 320px;
+  object-fit: contain;
+  display: block;
+  background: #f7f7f7;
+  border-radius: 6px 6px 0 0;
+}
 
-    /* GIF / Image */
-    #projects .projects-thumb {
-      width: 100%;
-      height: 320px;
-      object-fit: contain;
-      display: block;
-      background: #f7f7f7;
-      border-radius: 6px 6px 0 0;
-    }
+#projects .projects-info {
+  flex-grow: 1;
+  padding: 20px;
+  text-align: center;
+}
 
-    /* Info */
-    #projects .projects-info {
-      flex-grow: 1;
-      padding: 20px;
-      text-align: center;
-    }
+#projects .projects-title {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #0077cc;
+}
 
-    #projects .projects-title {
-      margin: 0 0 10px;
-      font-size: 1.2rem;
-      font-weight: 600;
-      color: #0077cc;
-    }
+#projects .projects-title a {
+  color: inherit;
+  text-decoration: none;
+}
 
-    #projects .projects-title a {
-      color: inherit;
-      text-decoration: none;
-    }
+#projects .projects-title a:hover {
+  text-decoration: underline;
+}
 
-    #projects .projects-title a:hover {
-      text-decoration: underline;
-    }
+#projects .projects-note {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.5;
+}
 
-    #projects .projects-note {
-      margin: 0;
-      font-size: 0.95rem;
-      color: #555;
-      line-height: 1.5;
-    }
-
-    /* Responsive tweak */
-    @media (max-width: 480px) {
-      #projects .projects-thumb {
-        height: 240px;
-      }
-    }
+@media (max-width: 480px) {
+  #projects .projects-thumb {
+    height: 240px;
+  }
+}
   </style>
   
   <div class="resume-section-content">
@@ -1201,21 +1199,35 @@
 
 
 <!-- Analytics Engnieering -->
-    <h3>Analytics Engineering</h3>
+    <h3>Analytics and Data Engineering </h3>
     <p class="projects-subtext">Click the thumbnails to see the pipeline structure</p>
-
     <div class="projects-grid">
-  
-
       <!-- Project AE1 -->
       <article class="projects-card" data-aos="fade-up">
           <img class="projects-thumb" src="assets/img/webanalytics.png" alt="Website Analytics" loading="lazy" />
-        </a>
+ 
         <div class="projects-info">
           <h5 class="projects-title"><a href="" target="_blank">Website Analytics</a></h5>
           <p class="projects-note">iamrad.info(GA4) → Google Apps Script API → Supabase → Live Analytics(iamrad.info)</p>
         </div>
       </article>
+
+
+<article class="projects-card" data-aos="fade-up">
+  
+  <img class="projects-thumb" src="assets/img/uber.jpeg" alt="Uber logo" loading="lazy" />
+  <a href="https://github.com/tousiftr/dbt-radytics" target="_blank" rel="noopener"></a>
+  <div class="projects-info">
+    <h5 class="projects-title">
+      <a href="https://github.com/tousiftr/dbt-radytics" target="_blank" rel="noopener">Uber Customer Analytics</a>
+    </h5>
+    <p class="projects-note">
+  Uber Customer Analytics • Ingest CSV files from Google Cloud Storage into BigQuery, transform and model data with dbt, write results back to BigQuery, and build visualizations for insights.
+</p>
+  </div>
+</article>
+
+
     </div>
 
 
