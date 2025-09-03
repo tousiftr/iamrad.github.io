@@ -3,6 +3,16 @@
 <head>
   <!DOCTYPE html>
 <html lang="en">
+
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-MGTW755G');</script>
+<!-- End Google Tag Manager -->
+
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -28,64 +38,15 @@
 
   <!-- Google tag (gtag.js) for GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-ML87N8FG1H"></script>
-  <script>
-    gtag('js', new Date());
-    // If you plan to control page_view manually, add { send_page_view: false }:
-    // gtag('config', 'G-ML87N8FG1H', { send_page_view: false });
-    gtag('config', 'G-ML87N8FG1H');
-  </script>
+   
 </head>
 <body>
-  <!-- Your page content -->
-  <header>
-    
-  </header>
-
-  <!-- Example: call this after user accepts consent in your UI -->
-  <script>
-    function allowAnalytics(){
-      gtag('consent', 'update', {
-        ad_user_data: 'granted',
-        ad_personalization: 'granted',
-        analytics_storage: 'granted',
-        ad_storage: 'granted'
-      });
-      // If you set send_page_view:false above, you could send one now:
-      // gtag('event', 'page_view');
-    }
-  </script>
-
-  <!-- Optional: example custom events -->
-  <script>
-    // Outbound link example (basic)
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('a[href]');
-      if (!a) return;
-      const url = a.href;
-      const isExternal = a.host !== location.host;
-      if (isExternal) {
-        gtag('event', 'click', {
-          event_category: 'outbound',
-          event_label: url,
-          transport_type: 'beacon'
-        });
-      }
-    });
-
-    // File download example (tracks clicks on links ending with common file types)
-    document.addEventListener('click', (e) => {
-      const a = e.target.closest('a[href]');
-      if (!a) return;
-      const href = a.getAttribute('href') || '';
-      if (/\.(pdf|docx?|xlsx?|pptx?)$/i.test(href)) {
-        gtag('event', 'file_download', {
-          file_name: href.split('/').pop() || href,
-          transport_type: 'beacon'
-        });
-      }
-    });
-  </script>
-</body>
+ <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MGTW755G"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+ 
+ 
 
 
 
