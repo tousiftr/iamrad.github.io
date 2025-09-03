@@ -110,9 +110,9 @@
 .filters .field.actions{
   display:flex; flex-direction:row; gap:8px; justify-content:flex-end; align-items:center;
 }
-.filters .field:nth-child(1){ grid-column: span 3; }
-.filters .field:nth-child(2){ grid-column: span 3; }
-.filters .field:nth-child(3){ grid-column: span 4; }
+.filters .field:nth-child(1){ grid-column: span 3; } /* From */
+.filters .field:nth-child(2){ grid-column: span 3; } /* To */
+.filters .field:nth-child(3){ grid-column: span 4; } /* Country */
 .filters .field.actions{ grid-column: span 2; }
 
 @media (max-width: 980px){
@@ -123,10 +123,19 @@
   .filters .field.actions{ grid-column: span 6; justify-content:flex-start; }
 }
 @media (max-width: 640px){
-  .filters-grid{ grid-template-columns: 1fr; }
-  .filters .field,
-  .filters .field.actions{ grid-column: 1 / -1; }
-  .filters .field.actions{ justify-content:stretch; }
+  /* Switch to flex column so we can control order */
+  .filters-grid{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Order: From → To → Country → Actions */
+  .filters .field:nth-child(1){ order: 1; width: 100%; }
+  .filters .field:nth-child(2){ order: 2; width: 100%; }
+  .filters .field:nth-child(3){ order: 3; width: 100%; }
+  .filters .field.actions   { order: 4; width: 100%; justify-content: stretch; }
+
   .filters .field.actions .btn{ flex:1 1 auto; }
 }
 
@@ -168,4 +177,92 @@
 }
 @media (prefers-reduced-motion: reduce){
   .bubble-tip{ transition:none; }
+}
+
+/* === From/To date: size align + mobile-friendly === */
+.filters input[type="date"] {
+  height: 40px;
+  padding: 0 12px;
+  font-size: 14px;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+.filters .field:nth-child(1) .input,
+.filters .field:nth-child(2) .input {
+  height: 40px;
+}
+@supports (-webkit-touch-callout: none) {
+  .filters input[type="date"] {
+    padding-block: 0;
+  }
+  .filters input[type="date"]::-webkit-date-and-time-value {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .filters input[type="date"]::-webkit-calendar-picker-indicator {
+    margin-right: 4px;
+  }
+}
+@media (max-width: 640px){
+  .filters input[type="date"],
+  .filters .field:nth-child(1) .input,
+  .filters .field:nth-child(2) .input,
+  .filters .field.actions .btn {
+    height: 44px;
+  }
+}
+
+/* =========================
+   Mobile-only polish (<640px)
+   ========================= */
+@media (max-width: 640px){
+
+  /* Filters: tighter spacing */
+  .filters{
+    padding: 8px 12px 10px 12px;
+    gap: 8px;
+  }
+  .field-label{
+    font-size: 11px;
+    margin-bottom: 3px;
+  }
+  .input,
+  .filters input[type="date"]{
+    height: 44px;
+    font-size: 15px;
+  }
+
+  /* Cards & headers: reduced padding for space */
+  .card{
+    min-height: 240px;
+  }
+  .card-header{
+    padding: 10px 12px 4px 12px;
+    gap: 6px;
+  }
+  .card-title{ font-size: 1rem; }
+  .counter{ font-size: 1.05rem; }
+
+  /* Chart: keep 16:9 ratio, remove extra padding */
+  .chart-wrap{
+    padding: 6px 8px 2px 8px;
+  }
+  .chart{
+    min-height: auto;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    display: block;
+  }
+  .chart svg{
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+  }
+
+  /* Tooltip readability */
+  .bubble-tip{
+    max-width: 92vw;
+    font-size: 11px;
+  }
 }
