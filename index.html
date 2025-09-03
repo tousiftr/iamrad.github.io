@@ -26,14 +26,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
   <!-- Consent defaults BEFORE loading GA (required to ensure the right behavior) -->
   <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){ dataLayer.push(arguments); }
-    gtag('consent', 'default', {
-      ad_user_data: 'denied',
-      ad_personalization: 'denied',
-      analytics_storage: 'denied',
-      ad_storage: 'denied'
-    });
+   gtag("consent", "default", {
+  ad_storage: "granted",
+  analytics_storage: "granted",
+  personalization_storage: "granted",
+  security_storage: "granted"
+});
+
   </script>
 
   <!-- Google tag (gtag.js) for GA4 -->
