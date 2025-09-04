@@ -38,7 +38,7 @@
 }
 
 /* On mid-width screens, push actions row down */
-@media (max-width: 980px) {
+@media (max-width: 780px) {
   .filters .field.actions {
     grid-column: span 6;
     justify-content: flex-start;
@@ -47,7 +47,7 @@
 }
 
 /* On small screens, buttons will already stack full width */
-@media (max-width: 840px) {
+@media (max-width: 640px) {
   .filters .field.actions {
     justify-content: stretch;
   }
