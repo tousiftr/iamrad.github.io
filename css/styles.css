@@ -11323,3 +11323,46 @@ body.welcome {
     font-size: 18px;
   }
 }
+/* ---------- Social icons (mobile-safe) ---------- */
+.social-icons { margin-top: 15px; text-align: center; }
+.social-icons-inner {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.social-icons-inner a{
+  width:48px;height:48px;min-width:48px;min-height:48px;
+  border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;font-size:20px;color:#fff;
+  transition:all .25s ease;
+}
+.social-icons-inner a.linkedin{background:#0A66C2;}
+.social-icons-inner a.email{background:#EA4335;}
+.social-icons-inner a.phone{background:#10B981;}
+.social-icons-inner a.github{background:#111827;}
+.social-icons-inner a:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 6px 15px rgba(0,0,0,.15);}
+
+/* Ensure icon glyphs render on mobile (Font Awesome / icon fonts) */
+.social-icons-inner a i,
+.social-icons-inner a .fa,
+.social-icons-inner a [class^="fa-"],
+.social-icons-inner a [class*=" fa-"]{
+  display:inline-block !important;
+  line-height:1;
+  font-size:1em;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  /* Force correct FA font if a global font-family overrides it */
+  font-family:"Font Awesome 6 Brands","Font Awesome 6 Free",sans-serif !important;
+  font-weight:900; /* needed for Free Solid; harmless for Brands */
+}
+
+/* If you use inline SVG icons, make sure they’re visible too */
+.social-icons-inner a svg{display:block;width:1em;height:1em}
+
+/* Slightly smaller on very small screens */
+@media (max-width:480px){
+  .social-icons-inner a{width:40px;height:40px;font-size:18px}
+}
