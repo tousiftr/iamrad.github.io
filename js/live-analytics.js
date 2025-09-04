@@ -209,7 +209,7 @@
 
                 // Defaults: last 30 days
                 elTo.value = toISO(today);
-                elFrom.value = toISO(minusDays(today, 30));
+                elFrom.value = toISO(minusDays(today, 1));
 
                 function sbHeaders(){
                   return { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` };

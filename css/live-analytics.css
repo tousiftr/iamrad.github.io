@@ -1,7 +1,8 @@
+
 :root{
   --grid-gap: 11px;
-  --col-min: 20px;
-  --card-min-h: 380px;
+  --col-min: 500px;
+  --card-min-h: 480px;
   --chart-aspect: 16/9;
 
   --bg: #ffffff;
@@ -46,7 +47,7 @@
 }
 
 /* On small screens, buttons will already stack full width */
-@media (max-width: 640px) {
+@media (max-width: 840px) {
   .filters .field.actions {
     justify-content: stretch;
   }
@@ -59,8 +60,8 @@
   border: 1px solid var(--stroke);
   background: var(--bg);
   border-radius: 20px;
-  box-shadow: none; /* no gray shadow */
-  overflow: hidden; /* ensures content respects the rounded corners */
+  box-shadow: none;  
+  overflow: hidden;  
 }
 .card.flat { box-shadow: none; overflow: hidden; }
 
@@ -76,7 +77,7 @@
 }
 .card-title{ font-size:1.1rem; color:var(--text); margin:0; }
 .stats{ text-align:right; }
-.counter{ font-weight:600; font-size:1.25rem; color:var(--text); }
+.counter{ font-weight:800; font-size:1.25rem; color:var(--text); }
 
 .chart {
   flex: 1 1 auto;

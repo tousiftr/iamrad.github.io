@@ -105,7 +105,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     a.clean:hover{ text-decoration:underline }
       /* Subtle motion on cards & tiles */
     .cardish{ transition: transform .25s ease, box-shadow .25s ease; }
-    .cardish:hover{ transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+    .cardish:hover{ transform: translateY(4px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
     .logo-grid .tile{ transition: transform .25s ease, box-shadow .25s ease; }
     .logo-grid .tile:hover{ transform: translateY(-3px) scale(1.03); box-shadow: 0 6px 16px rgba(0,0,0,.06); }
 </style>
@@ -188,7 +188,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         border-radius: 12px;
         background: #fff;
         padding: 20px;
-         margin-bottom: 26px;
+        margin-bottom: 26px;
       }
       @media (max-width: 640px) {
         .cardish { padding: 16px; }
@@ -210,15 +210,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       /* Make height responsive but bounded */
       .tl-svg {
         width: 100%;
-        height: clamp(460px, 48vw, 420px);
+        height: clamp(490px, 48vw, 420px);
         display: block;
         overflow: visible;
       }
-      .bar { rx: 6; ry: 6; cursor: pointer }
+      .bar { rx: 9; ry: 9; cursor: pointer }
       .bar.edu { fill: #7c3aed33; stroke: #7c3aed; stroke-width: 1.5 }
       .bar.job { fill: #2563eb26; stroke: #2563eb; stroke-width: 1.5 }
+        
 
-      .tl-tip {
+
+
+      .tl-tip {   
         position: fixed; /* fixed so it doesn’t get clipped in scrolling parents */
         padding: 6px 10px; background: #111827; color: #fff;
         font-size: .8rem; border-radius: 6px; white-space: nowrap;
@@ -239,7 +242,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       #skills-network .legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;font-size:14px}
       #skills-network .chip{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px}
       #skills-network .tip{
-        position: fixed; padding:6px 10px; background:#111827; color:#fff; font-size:.95rem;
+        position: fixed; padding:9px 10px; background:#111827; color:#fff; font-size:.95rem;
         border-radius:6px; white-space:nowrap; pointer-events:none; opacity:0; transform:translate(-50%,-120%);
         transition:.12s opacity; z-index:30
       }
