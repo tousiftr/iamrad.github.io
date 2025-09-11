@@ -411,9 +411,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
       <span class="d-block d-lg-none">#data</span>
-      <span class="d-none d-lg-block">
-        <img class="img-fluid rounded-circle mx-auto mb-3" src="assets/img/imradp.jpg" alt="Profile" width="150" height="150" loading="lazy" />
-      </span>
+      <div class="avatar a-badge">
+ 
+  <img src="assets/img/imradp.jpg" alt="Profile">
+</div>
+
+<style>
+.a-badge{--size:120px;position:relative;width:var(--size);height:var(--size);margin:auto}
+.a-badge img{position:absolute;inset:10px;border-radius:50%;width:calc(100% - 20px);height:calc(100% - 20px);object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.a-badge .badge{position:absolute;top:-6px;left:50%;transform:translateX(-50%);padding:2px 8px;border-radius:999px;
+  font:700 10px/1 system-ui;color:#0f172a;background:#e0f2fe;border:1px solid #bae6fd}
+</style>
+
     </a>
 
     <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -433,6 +442,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <li class="nav-item mb-3"><a class="nav-link js-scroll-trigger py-2 px-3 rounded hover-shadow" href="#contactme">Contact Me</a></li>
       </ul>
     </div>
+
+    <svg xmlns="http://www.w3.org/2000/svg" width="220" height="40" viewBox="0 0 220 40">
+  <defs>
+    <linearGradient id="grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6366f1" />
+      <stop offset="100%" stop-color="#8b5cf6" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background rounded pill -->
+  <rect x="0" y="0" width="220" height="40" rx="20" fill="url(#grad)" />
+
+  <!-- Glossy shine overlay -->
+  <rect x="0" y="0" width="220" height="40" rx="20" fill="white" opacity="0.08" />
+
+  <!-- Text -->
+  <text x="110" y="25" text-anchor="middle" fill="white" font-size="14" font-family="Segoe UI, Arial, sans-serif">
+    Last Update: v12Sep2025
+  </text>
+</svg>
+
           <script>
   // Smooth-scroll for anchor links
   document.querySelectorAll('a.js-scroll-trigger[href^="#"]').forEach(a => {
