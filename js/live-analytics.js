@@ -124,8 +124,9 @@
   const yyyymmdd = iso => (iso||'').replaceAll('-', '');
 
   // Defaults: last 30 days (bugfix)
-  elTo.value = toISO(today);
-  elFrom.value = toISO(minusDays(today, 30));
+ const yesterday = minusDays(today, 1);
+elTo.value   = toISO(yesterday);
+elFrom.value = toISO(yesterday);
 
   function updateSummary(){ const parts = []; if (elFrom.value && elTo.value) parts.push(`${elFrom.value} → ${elTo.value}`); if (elCtry.value) parts.push(`Country: ${elCtry.value}`); elSum.textContent = parts.length ? `Filters: ${parts.join(' • ')}` : ''; }
 

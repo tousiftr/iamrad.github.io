@@ -317,11 +317,93 @@
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
 
-  <!-- Splash / Welcome (optional) -->
+ <section id="welcome-section">
+  <!-- Splash / Welcome -->
   <div class="welcome">
     <span id="splash-overlay" class="splash"></span>
     <span id="welcome" class="z-depth-4"></span>
   </div>
+
+  <!-- Quote (initially hidden) -->
+  <div id="quote-container" class="quote" hidden>
+    <blockquote id="quote-text"></blockquote>
+    <cite id="quote-author"></cite>
+  </div>
+
+  <style>
+    /* Splash overlay (example fade out) */
+    .splash {
+      position: fixed;
+      inset: 0;
+      background: var(--bg, #fff);
+      z-index: 1000;
+      animation: fadeOut 2s forwards;
+    }
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    /* Welcome container */
+    .welcome {
+      text-align: center;
+      margin-top: 80px;
+    }
+
+    /* Quote styling */
+    .quote {
+      text-align: center;
+      margin: 60px auto 0;
+      max-width: 700px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+      color: var(--text, #111827);
+    }
+    .quote blockquote {
+      font-size: 1.5rem;
+      font-style: italic;
+      margin: 0 0 10px 0;
+    }
+    .quote cite {
+      display: block;
+      font-size: 1rem;
+      color: var(--muted, #6b7280);
+    }
+    .quote.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+
+  <script>
+    window.addEventListener('load', () => {
+      const quotes = [
+        { text: "The only limit to our realization of tomorrow is our doubts of today.", author: "Franklin D. Roosevelt" },
+        { text: "In the middle of every difficulty lies opportunity.", author: "Albert Einstein" },
+        { text: "Do what you can, with what you have, where you are.", author: "Theodore Roosevelt" },
+        { text: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "Winston Churchill" },
+        { text: "It always seems impossible until it is done.", author: "Nelson Mandela" },
+        { text: "Happiness depends upon ourselves.", author: "Aristotle" }
+      ];
+
+      // Pick a random quote
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+
+      // Fill content
+      document.getElementById('quote-text').textContent = `“${randomQuote.text}”`;
+      document.getElementById('quote-author').textContent = `— ${randomQuote.author}`;
+
+      // Show after splash delay
+      const quoteContainer = document.getElementById('quote-container');
+      setTimeout(() => {
+        quoteContainer.hidden = false;
+        quoteContainer.classList.add('show');
+      }, 2500); // delay matches splash fade-out
+    });
+  </script>
+</section>
+
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="sideNav">
@@ -347,34 +429,139 @@
         <li class="nav-item mb-1"><a class="nav-link js-scroll-trigger py-2 px-3 rounded hover-shadow" href="#education">Education</a></li>
         <li class="nav-item mb-1"><a class="nav-link js-scroll-trigger py-2 px-3 rounded hover-shadow" href="#certification">Certification</a></li>
         <li class="nav-item mb-3"><a class="nav-link js-scroll-trigger py-2 px-3 rounded hover-shadow" href="#contactme">Contact Me</a></li>
-
       </ul>
     </div>
+          <script>
+  // Smooth-scroll for anchor links
+  document.querySelectorAll('a.js-scroll-trigger[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (!target) return;
+      e.preventDefault();
+      const y = target.getBoundingClientRect().top + window.pageYOffset - 70;
+      window.scrollTo({ top: y, behavior: 'smooth' });
+
+      // Collapse on mobile after click
+      if (window.innerWidth < 992) {
+        const collapse = document.getElementById('navbarSupportedContent');
+        if (collapse && collapse.classList.contains('show')) {
+          $('.navbar-collapse').collapse('hide'); // requires Bootstrap bundle
+        }
+      }
+    });
+  });
+
+  // Staggered reveal of nav items on load
+  window.addEventListener('load', () => {
+    const items = document.querySelectorAll('#sideNav .nav-item');
+    items.forEach((li, i) => {
+      li.style.opacity = 0;
+      li.style.transform = 'translateX(-8px)';
+      li.style.transition = 'opacity .4s ease, transform .4s ease';
+      setTimeout(() => {
+        li.style.opacity = 1;
+        li.style.transform = 'translateX(0)';
+      }, 150 + i * 70);
+    });
+  });
+
+    // Subtle ripple effect on nav link click (no extra libs)
+    document.querySelectorAll('#sideNav .nav-link').forEach(link => {
+      link.style.overflow = 'hidden';
+      link.addEventListener('click', function(e) {
+        const rect = this.getBoundingClientRect();
+        const ripple = document.createElement('span');
+        const size = Math.max(rect.width, rect.height);
+        ripple.style.position = 'absolute';
+        ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
+        ripple.style.top  = (e.clientY - rect.top  - size/2) + 'px';
+        ripple.style.width = ripple.style.height = size + 'px';
+        ripple.style.borderRadius = '50%';
+        ripple.style.background = 'rgba(255,255,255,.25)';
+        ripple.style.transform = 'scale(0)';
+        ripple.style.transition = 'transform .45s ease, opacity .6s ease';
+        ripple.style.pointerEvents = 'none';
+        this.appendChild(ripple);
+        requestAnimationFrame(() => { ripple.style.transform = 'scale(1.2)'; ripple.style.opacity = '0'; });
+        setTimeout(() => ripple.remove(), 650);
+      });
+    });
+  </script>
+   
+  <style>
+    /* Sidebar slides in on page load */
+    #sideNav {
+      transform: translateX(-32px);
+      opacity: 0;
+      animation: sideIn 700ms ease-out forwards;
+      will-change: transform, opacity;
+    }
+    @keyframes sideIn { to { transform: translateX(0); opacity: 1; } }
+
+    /* Smooth hover for links */
+    #sideNav .nav-link {
+      position: relative;
+      transition: transform .25s ease, background-color .25s ease, box-shadow .25s ease;
+      border-radius: .5rem;
+    }
+    #sideNav .nav-link:hover {
+      transform: translateX(6px);
+      background-color: rgba(255,255,255,.12);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.08);
+    }
+
+    /* Underline grow on hover */
+    #sideNav .nav-link::before {
+      content: "";
+      position: absolute;
+      left: 12px;
+      right: auto;
+      bottom: 6px;
+      height: 2px;
+      width: 0;
+      background: currentColor;
+      opacity: .6;
+      transition: width .3s ease;
+    }
+    #sideNav .nav-link:hover::before { width: calc(100% - 24px); }
+
+    /* Active link shimmer */
+    #sideNav .nav-link.active {
+      background: rgba(255,255,255,.10);
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+    }
+    #sideNav .nav-link.active::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 0%, rgba(255,255,255,.35) 50%, transparent 100%);
+      transform: translateX(-120%);
+      animation: shimmer 2s infinite;
+      pointer-events: none;
+    }
+    @keyframes shimmer { 100% { transform: translateX(120%); } }
+
+    /* Profile image gentle pulse on hover */
+    #sideNav img.rounded-circle {
+      transition: transform .45s ease, filter .45s ease;
+      filter: drop-shadow(0 8px 16px rgba(0,0,0,.35));
+    }
+    #sideNav img.rounded-circle:hover {
+      transform: scale(1.05) rotate(-2deg);
+      filter: drop-shadow(0 12px 28px rgba(0,0,0,.5));
+    }
+
+    /* Extra-smooth collapse */
+    .collapse { transition: height .4s ease; }
+
+    /* Respect prefers-reduced-motion */
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: 1ms !important; transition-duration: 1ms !important; }
+    }
+  </style>
   </nav>
 
   <!-- Your page sections go here ... -->
-
-  <!-- Optional: count-up animation for the visitors number -->
-  <script>
-    (function(){
-      const el = document.getElementById('visitorCount');
-      if(!el) return;
-      const target = parseInt((el.textContent || '0').replace(/[, ]/g,''), 10) || 0;
-      let start = 0;
-      const duration = 1200;
-      const startTime = performance.now();
-      function tick(now){
-        const p = Math.min((now - startTime)/duration, 1);
-        const eased = 1 - Math.pow(1 - p, 3);
-        const val = Math.floor(start + (target - start) * eased);
-        el.textContent = val.toLocaleString();
-        if(p < 1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    })();
-  </script>
-
-
 
   <!-- Page Content -->
  
@@ -1500,6 +1687,9 @@
        
 <link rel="stylesheet" href="css/live-analytics.css">
 <script src="js/live-analytics.js" defer></script>
+ 
+
+
  <!-- Live Analytics (refined, aligned) -->
 <section class="resume-section" id="liveanalytics" aria-labelledby="liveanalytics-title">
   <div class="resume-section-content container">
@@ -1514,7 +1704,46 @@
 
     <div class="dashboard-grid">
 
-      <!-- Card 2: Source (with filters, Supabase) — moved first -->
+      <!-- Card 1: Last 7 Days Summary -->
+      <div class="card" id="card-country-summary">
+        <div class="card-header">
+          <h3 class="card-title">Last 7 Days Summary</h3>
+          <div class="stats muted">
+            <span id="csDateFrom">—</span> → <span id="csDateTo">—</span>
+          </div>
+        </div>
+
+        <!-- Counters -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px">
+          <div>
+            <div class="muted tiny">Total Users</div>
+            <div id="csTotalUsers" class="counter" aria-live="polite">—</div>
+          </div>
+          <div>
+            <div class="muted tiny">New Users</div>
+            <div id="csNewUsers" class="counter" aria-live="polite">—</div>
+          </div>
+          <div>
+            <div class="muted tiny">Sessions</div>
+            <div id="csSessions" class="counter" aria-live="polite">—</div>
+          </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-wrap">
+          <div
+            id="csChart"
+            class="chart"
+            role="img"
+            aria-label="Last 7 days: Total vs New vs Sessions">
+          </div>
+        </div>
+
+        <!-- Fallback -->
+        <div id="csEmpty" class="empty muted" hidden>No data found.</div>
+      </div>
+
+      <!-- Card 2: Source -->
       <div class="card" id="card-source">
         <div class="card-header">
           <h3 class="card-title">Source</h3>
@@ -1572,7 +1801,7 @@
         </div>
       </div>
 
-      <!-- Card 1: Top Countries (Bubble Cloud) — moved down -->
+      <!-- Card 3: Top 5 Countries (Bubble Cloud) -->
       <div class="card" id="card-top-countries">
         <div class="card-header">
           <h3 class="card-title">Top 5 Countries by Visitors</h3>
@@ -1590,45 +1819,6 @@
           </div>
         </div>
         <div id="gaEmpty" class="empty muted" hidden>No data available.</div>
-      </div>
-
-      <!-- Card 3: Last 7 Days Summary -->
-      <div class="card" id="card-country-summary">
-        <div class="card-header">
-          <h3 class="card-title">Last 7 Days Summary</h3>
-          <div class="stats muted">
-            <span id="csDateFrom">—</span> → <span id="csDateTo">—</span>
-          </div>
-        </div>
-
-        <!-- Counters -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px">
-          <div>
-            <div class="muted tiny">Total Users</div>
-            <div id="csTotalUsers" class="counter" aria-live="polite">—</div>
-          </div>
-          <div>
-            <div class="muted tiny">New Users</div>
-            <div id="csNewUsers" class="counter" aria-live="polite">—</div>
-          </div>
-          <div>
-            <div class="muted tiny">Sessions</div>
-            <div id="csSessions" class="counter" aria-live="polite">—</div>
-          </div>
-        </div>
-
-        <!-- Chart -->
-        <div class="chart-wrap">
-          <div
-            id="csChart"
-            class="chart"
-            role="img"
-            aria-label="Last 7 days: Total vs New vs Sessions">
-          </div>
-        </div>
-
-        <!-- Fallback -->
-        <div id="csEmpty" class="empty muted" hidden>No data found.</div>
       </div>
 
       <!-- Card 4: Top Countries — New Users -->
@@ -1654,7 +1844,10 @@
 </section>
 
 
-
+<style>#card-top-countries { order: 1; }
+#card-source         { order: 2; }
+#card-country-summary{ order: 3; }
+#card-country-new    { order: 4; }</style>
 
 <!-- Education -->
     <section class="resume-section" id="education">
