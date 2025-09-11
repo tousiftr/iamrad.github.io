@@ -1,63 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!DOCTYPE html>
-<html lang="en">
-
-<!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-PTDPHN9Q');</script>
-<!-- End Google Tag Manager -->
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-   <title>I AM RAD !!!!!</title>
+  <title>I AM RAD !!!!!</title>
   <link rel="icon" type="image/x-icon" href="assets/img/trp.png" />
 
+  <!-- Google Tag Manager (load only once) -->
+  <script>
+    (function(w,d,s,l,i){
+      w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});
+      var f=d.getElementsByTagName(s)[0], j=d.createElement(s), dl=l!='dataLayer'?'&l='+l:'';
+      j.async=true; j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+      f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-PTDPHN9Q');
+  </script>
+  <!-- End Google Tag Manager -->
+
   <!-- Fonts & Icons -->
-  <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css?family=Saira+Extra+Condensed:500,700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Muli:400,400i,800,800i&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
 
-  <!-- Consent defaults BEFORE loading GA (required to ensure the right behavior) -->
-  <script>
-   gtag("consent", "default", {
-  ad_storage: "granted",
-  analytics_storage: "granted",
-  personalization_storage: "granted",
-  security_storage: "granted"
-});
-
-  </script>
-
-  <!-- Google tag (gtag.js) for GA4 -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ML87N8FG1H"></script>
-   
-</head>
-<body>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=GT-57SSN76N"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'GT-57SSN76N');
-</script>
-
-  <!-- Bootstrap + Theme -->
+  <!-- Your theme / Bootstrap bundle (assumes Bootstrap classes are in here) -->
   <link href="css/styles.css" rel="stylesheet" />
 
-  <!-- Page-specific compact styles (no floats; responsive grids) -->
+  <!-- Animate On Scroll (optional) -->
+  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+
+  <!-- Page-specific compact styles -->
   <style>
     :root{
       --card-radius:12px; --muted:#6b7280; --line:#e5e7eb; --pad:14px; --gap:16px;
-      --logo-size:42px; /* tweak this to make logos smaller/larger */
+      --logo-size:42px;
     }
     body{scroll-behavior:smooth}
 
@@ -66,6 +42,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
     /* Utility */
     .cardish{border:1px solid var(--line); border-radius:var(--card-radius); background:#fff;}
+    .cardish{ transition: transform .25s ease, box-shadow .25s ease; }
+    .cardish:hover{ transform: translateY(4px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
 
     /* EXPERIENCE */
     .experience-grid{ display:grid; grid-template-columns:1fr; gap:var(--gap); }
@@ -85,13 +63,15 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .logo-grid{ list-style:none; padding:0; margin:0; display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px }
     @media (min-width:576px){ .logo-grid{ grid-template-columns:repeat(4, minmax(0,1fr)); } }
     @media (min-width:992px){ .logo-grid{ grid-template-columns:repeat(3, minmax(0,1fr)); } }
-    .tile{ display:flex; align-items:center; justify-content:center; padding:10px; border:1px solid var(--line); border-radius:10px; background:#fff; min-height:72px }
+    .tile{ display:flex; align-items:center; justify-content:center; padding:10px; border:1px solid var(--line); border-radius:10px; background:#fff; min-height:72px;
+      transition: transform .25s ease, box-shadow .25s ease; }
+    .tile:hover{ transform: translateY(-3px) scale(1.03); box-shadow: 0 6px 16px rgba(0,0,0,.06); }
     .logo{ width:44px; height:44px; object-fit:contain }
     .logo-fallback{ font-size:.85rem; color:var(--muted) }
 
     /* PROJECTS */
-    .project-card{ display:flex; gap:2px; padding:var(--pad); }
-    .project-thumb{ width:2000px; height:100px; object-fit:cover; border-radius:8px; flex-shrink:0 }
+    .project-card{ display:flex; gap:12px; padding:var(--pad); }
+    .project-thumb{ width:200px; height:100px; object-fit:cover; border-radius:8px; flex-shrink:0 }
     .project-title{ margin:0 0 6px }
     .project-note{ color:var(--muted); margin:4px 0 0 }
 
@@ -99,36 +79,252 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     .counter-container{ position:fixed; bottom:10px; right:10px; font-family:Arial, Helvetica, sans-serif; font-size:15px; background:#f2f2f2; border:1px solid #eee; padding:10px; width:150px; text-align:center }
     .website-counter{ background:#000; color:#fff; font-weight:700; margin-top:10px; padding:6px 6px 4px; border-radius:3px }
 
-    /* Misc cleanups */
-    section.resume-section{ scroll-margin-top:500px }
-    a.clean{ color:#545454; text-decoration:none }
-    a.clean:hover{ text-decoration:underline }
-      /* Subtle motion on cards & tiles */
-    .cardish{ transition: transform .25s ease, box-shadow .25s ease; }
-    .cardish:hover{ transform: translateY(4px); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
-    .logo-grid .tile{ transition: transform .25s ease, box-shadow .25s ease; }
-    .logo-grid .tile:hover{ transform: translateY(-3px) scale(1.03); box-shadow: 0 6px 16px rgba(0,0,0,.06); }
-</style>
-  <!-- Animate On Scroll (AOS) -->
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet" />
+    /* =========================
+       Sidebar (Desktop + Mobile)
+       ========================= */
+
+    /* Base sidebar layout */
+    #sideNav {
+      width: 260px;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #94C3FF, #94C3FF, #94C3FF);
+      background-size: 300% 300%;
+      animation: gradientShift 12s ease infinite;
+      box-shadow: 4px 0 18px rgba(0,0,0,.35);
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Animated gradient background */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Nav links */
+    #sideNav .navbar-nav .nav-link {
+      color: #f1f3ff;
+      font-weight: 500;
+      transition: .2s background, .2s transform, .2s color;
+      position: relative;
+      overflow: hidden;
+    }
+    #sideNav .navbar-nav .nav-link:hover {
+      background: #5f72d8;
+      color: #ffffff;
+      transform: translateX(3px);
+      box-shadow: 0 0 10px #ffffff33 inset;
+    }
+
+    /* Active link glow & shimmer */
+    #sideNav .navbar-nav .nav-link.active {
+      background: linear-gradient(90deg, #6e86ff, #8EA6FA);
+      color: #ffffff;
+      box-shadow: 0 0 14px #ffffff55;
+    }
+    #sideNav .navbar-nav .nav-link.active::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent, #ffffff44, transparent);
+      animation: shimmer 2s linear infinite;
+    }
+    @keyframes shimmer {
+      0% { transform: translateX(-150%); }
+      100% { transform: translateX(150%); }
+    }
+
+    /* Floating glowing profile image */
+    #sideNav .navbar-brand .rounded-circle {
+      position: relative;
+      animation: floaty 4s ease-in-out infinite;
+    }
+    #sideNav .navbar-brand .rounded-circle::before {
+      content:"";
+      position:absolute;
+      inset:-8px;
+      border-radius:50%;
+      background: radial-gradient(circle, #ffffff44, transparent 70%);
+      z-index:-1;
+      animation: pulseGlow 3s ease-in-out infinite;
+    }
+    @keyframes floaty {
+      0%,100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    @keyframes pulseGlow {
+      0%,100% { opacity:.3; transform: scale(1); }
+      50% { opacity:.8; transform: scale(1.1); }
+    }
+
+    /* ====== Mini Bar Chart (optional) ====== */
+    .mini-bar-chart {
+      display: flex;
+      gap: 6px;
+      align-items: end;
+      height: 36px;
+      padding: 6px 8px;
+      border-radius: 10px;
+      background: #7c91f5;
+      border: 1px solid #ffffff22;
+      overflow: hidden;
+    }
+    .mini-bar-chart .bar {
+      width: 10px;
+      height: 8px;
+      border-radius: 6px;
+      background: linear-gradient(180deg, #ffffff, #cfd7ff);
+      animation: grow 1.2s var(--d) infinite ease-in-out;
+    }
+    @keyframes grow {
+      0%,100% { height: 8px; opacity: .7; }
+      50% { height: 32px; opacity: 1; }
+    }
+
+    /* ====== "Today's Visitors" widget (optional) ====== */
+    .today-visitors {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      background: #7c91f5;
+      border: 1px solid #ffffff22;
+      box-shadow: 0 0 10px #ffffff22 inset;
+    }
+    .today-visitors .visitor-icon {
+      font-size: 20px;
+      color: #ffffff;
+      animation: bounce 2s infinite;
+    }
+    .today-visitors .visitor-count {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 1px;
+      animation: fadeIn 1.5s ease-out;
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: translateY(5px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Focus styles for accessibility */
+    #sideNav .navbar-nav .nav-link:focus {
+      outline: 2px solid #ffffff88;
+      outline-offset: 2px;
+    }
+
+    /* =========================
+       Mobile Responsiveness
+       ========================= */
+    @media (max-width: 991.98px) {
+      #sideNav {
+        position: sticky;
+        top: 0;
+        width: 100%;
+        min-height: auto;
+        height: auto;
+        padding: 8px 12px;
+        border-radius: 0;
+        box-shadow: 0 2px 12px rgba(0,0,0,.2);
+        flex-direction: row;
+        align-items: center;
+        z-index: 1030;
+      }
+      #sideNav .navbar-brand {
+        padding: 0;
+        margin-right: auto;
+        display: flex;
+        align-items: center;
+      }
+      #sideNav .navbar-brand .rounded-circle {
+        width: 56px;
+        height: 56px;
+      }
+      #sideNav .navbar-toggler {
+        margin-left: 12px;
+        border: none;
+        outline: none;
+      }
+      #navbarSupportedContent {
+        width: 100%;
+        margin-top: 8px;
+      }
+      #sideNav .navbar-nav {
+        flex-direction: column;
+        max-height: 55vh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 8px;
+        background: rgba(255,255,255,0.06);
+        border: 1px solid #ffffff22;
+        border-radius: 12px;
+        backdrop-filter: blur(6px);
+      }
+      #sideNav .navbar-nav .nav-link {
+        padding: 10px 12px;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        transform: none !important;
+      }
+      #sideNav .navbar-nav .nav-link.active::after {
+        animation-duration: 3s;
+        opacity: 0.7;
+      }
+      .mini-bar-chart,
+      .today-visitors {
+        height: auto;
+        padding: 8px 10px;
+        gap: 6px;
+      }
+      .mini-bar-chart .bar { width: 8px; }
+      .today-visitors .visitor-count { font-size: 18px; }
+
+      /* Softer avatar float on mobile */
+      @keyframes floaty {
+        0%,100% { transform: translateY(0px); }
+        50% { transform: translateY(-3px); }
+      }
+    }
+    @media (max-width: 575.98px) {
+      #sideNav { padding: 6px 10px; }
+      #sideNav .navbar-brand .rounded-circle { width: 48px; height: 48px; }
+      #sideNav .navbar-nav .nav-link { font-size: 0.9rem; padding: 9px 10px; }
+    }
+
+    /* Reduced Motion */
+    @media (prefers-reduced-motion: reduce) {
+      #sideNav { animation: none; }
+      #sideNav .navbar-nav .nav-link.active::after { animation: none; }
+      #sideNav .navbar-brand .rounded-circle { animation: none; }
+      .mini-bar-chart .bar { animation: none; }
+      .today-visitors .visitor-icon,
+      .today-visitors .visitor-count { animation: none; }
+    }
+  </style>
+  <!-- Google tag (gtag.js) for GA4 --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-ML87N8FG1H"></script>
 </head>
 
 <body id="page-top">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PTDPHN9Q"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
 
-      <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-59K4TMMN"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
-  
-  <!-- Splash / Welcome (kept as-is) -->
+  <!-- Splash / Welcome (optional) -->
   <div class="welcome">
     <span id="splash-overlay" class="splash"></span>
     <span id="welcome" class="z-depth-4"></span>
   </div>
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top" id="sideNav">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="sideNav">
     <a class="navbar-brand js-scroll-trigger" href="#page-top">
       <span class="d-block d-lg-none">#data</span>
       <span class="d-none d-lg-block">
@@ -136,33 +332,49 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
       </span>
     </a>
 
-    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#about">About</a></li>
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#experience">Experience</a></li>
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#skills">Skills</a></li>
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#projects">Projects</a></li>
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#liveanalytics">Live Analytics</a></li>
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#education">Education</a></li>
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#certification">Certification</a></li>
-        <!-- <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#achievement">Achievement & Volunteering</a></li> -->
-        <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#contactme">Contact Me</a></li>
+      <ul class="navbar-nav flex-column text-start w-100">
+        <li class="nav-item mb-1"><a class="nav-link js-scroll-trigger py-2 px-3 rounded hover-shadow active" href="#about">About</a></li>
+        <li class="nav-item mb-1"><a class="nav-link js-scroll-trigger py-2 px-3 rounded hover-shadow" href="#experience">Experience</a></li>
+        <li class="nav-item mb-1"><a class="nav-link js-scroll-trigger py-2 px-3 rounded hover-shadow" href="#skills">Skills</a></li>
+        <li class="nav-item mb-1"><a class="nav-link js-scroll-trigger py-2 px-3 rounded hover-shadow" href="#projects">Projects</a></li>
+        <li class="nav-item mb-1"><a class="nav-link js-scroll-trigger py-2 px-3 rounded hover-shadow" href="#liveanalytics">Live Analytics</a></li>
+        <li class="nav-item mb-1"><a class="nav-link js-scroll-trigger py-2 px-3 rounded hover-shadow" href="#education">Education</a></li>
+        <li class="nav-item mb-1"><a class="nav-link js-scroll-trigger py-2 px-3 rounded hover-shadow" href="#certification">Certification</a></li>
+        <li class="nav-item mb-3"><a class="nav-link js-scroll-trigger py-2 px-3 rounded hover-shadow" href="#contactme">Contact Me</a></li>
+
       </ul>
     </div>
-
- <main>
-    <!-- Minimal loader SVG retained -->
-    <svg version="1.1" id="L6" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100" xml:space="preserve" aria-hidden="true">
-      <rect fill="none" stroke="#fff" stroke-width="4" x="25" y="25" width="50" height="50">
-        <animateTransform attributeName="transform" dur="0.5s" from="0 50 50" to="180 50 50" type="rotate" id="strokeBox" attributeType="XML" begin="rectBox.end"/>
-      </rect>
-      <rect x="27" y="27" fill="#fff" width="46" height="50">
-        <animate attributeName="height" dur="2.5s" attributeType="XML" from="50" to="0" id="rectBox" fill="freeze" begin="0s;strokeBox.end"/>
-      </rect>
-    </svg>
   </nav>
+
+  <!-- Your page sections go here ... -->
+
+  <!-- Optional: count-up animation for the visitors number -->
+  <script>
+    (function(){
+      const el = document.getElementById('visitorCount');
+      if(!el) return;
+      const target = parseInt((el.textContent || '0').replace(/[, ]/g,''), 10) || 0;
+      let start = 0;
+      const duration = 1200;
+      const startTime = performance.now();
+      function tick(now){
+        const p = Math.min((now - startTime)/duration, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        const val = Math.floor(start + (target - start) * eased);
+        el.textContent = val.toLocaleString();
+        if(p < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
+
+
 
   <!-- Page Content -->
  
@@ -1813,7 +2025,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <script src="js/jquery.easing.min.js" defer></script>
 <script src="js/scripts.js" defer></script>
 <script src="js/cap.js" defer></script>
-<script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script>
+<script src="https://platform.linkedin.com/badges/js/profile.js" async defer type="text/javascript"></script> 
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script> if (window.AOS) AOS.init({ once: true }); </script>
+ 
+
 
 <script>
   document.addEventListener('DOMContentLoaded',function(){
