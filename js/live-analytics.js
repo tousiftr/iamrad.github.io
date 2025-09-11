@@ -5,48 +5,55 @@
                 const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
 
                 // ---------- Card 1: GA bubble cloud ----------
-                const GA_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxVHInAcoUybD8Uz2J8ve9gRUG44ewEXpnnRF9p7ddZqL8_5bCaLwhm6BnPDPG4g6A/exec';
+const GA_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxVHInAcoUybD8Uz2J8ve9gRUG44ewEXpnnRF9p7ddZqL8_5bCaLwhm6BnPDPG4g6A/exec';
 
-                function setLastUpdated(){ $('#lastUpdatedLabel').textContent = 'Last updated: ' + new Date().toLocaleString(); }
-                function countUp(el, to){ el.textContent = fmt(to); }
+function setLastUpdated(){ $('#lastUpdatedLabel').textContent = 'Last updated: ' + new Date().toLocaleString(); }
+function countUp(el, to){ el.textContent = fmt(to); }
 
-                fetch(GA_ENDPOINT, { cache: 'no-store' })
-                  .then(r=>r.json())
-                  .then(json=>{
-                    setLastUpdated();
-                    if (!json || json.error) { $('#gaEmpty').hidden = false; return; }
+fetch(GA_ENDPOINT, { cache: 'no-store' })
+  .then(r=>r.json())
+  .then(json=>{
+    setLastUpdated();
+    if (!json || json.error) { $('#gaEmpty').hidden = false; return; }
 
-                    const rows = Object.entries(json)
-                      .map(([name, val]) => ({ name: name || 'Unknown', value: Number(val)||0 }))
-                      .filter(d => d.value > 0)
-                      .sort((a,b)=>b.value-a.value)
-                      .slice(0, 30);
+    // Determine N from DOM (e.g., <div id="card-top-countries" data-top-n="5">)
+    const card = $('#card-top-countries');
+    const TOP_N = Number(card?.dataset?.topN) > 0 ? Number(card.dataset.topN) : 5;
 
-                    if (!rows.length){ $('#gaEmpty').hidden = false; return; }
+    // Build full list once
+    const allRows = Object.entries(json)
+      .map(([name, val]) => ({ name: name || 'Unknown', value: Number(val)||0 }))
+      .filter(d => d.value > 0)
+      .sort((a,b)=>b.value-a.value);
 
-                    const total = rows.reduce((s,r)=>s+r.value,0);
-                    countUp($('#gaVisitorsValue'), total);
+    if (!allRows.length){ $('#gaEmpty').hidden = false; return; }
 
-                    const host = $('#gaCountryBarChart');
-                    host.hidden = false;
+    // Total from ALL countries
+    const totalAll = allRows.reduce((s,r)=>s+r.value,0);
+    countUp($('#gaVisitorsValue'), totalAll);
 
-                    // ResizeObserver – cleanup-safe
-                    const ro = new ResizeObserver(entries=>{
-                      for (const e of entries){
-                        const w = clamp(Math.floor(e.contentRect.width), 280, 4000);
-                        const h = clamp(Math.floor(e.contentRect.height), 220, 4000);
-                        drawBubbleCloud(host, rows, w, h);
-                      }
-                    });
-                    ro.observe(host);
-                    // tidy up when page leaves
-                    window.addEventListener('beforeunload', ()=> ro.disconnect(), { once:true });
-                  })
-                  .catch(err=>{
-                    console.error('GA fetch failed', err);
-                    $('#gaEmpty').hidden = false;
-                  });
+    // Render only Top N
+    const rows = allRows.slice(0, TOP_N);
 
+    const host = $('#gaCountryBarChart');
+    host.hidden = false;
+
+    // ResizeObserver – cleanup-safe
+    const ro = new ResizeObserver(entries=>{
+      for (const e of entries){
+        const w = clamp(Math.floor(e.contentRect.width), 280, 4000);
+        const h = clamp(Math.floor(e.contentRect.height), 220, 4000);
+        drawBubbleCloud(host, rows, w, h);
+      }
+    });
+    ro.observe(host);
+    // tidy up when page leaves
+    window.addEventListener('beforeunload', ()=> ro.disconnect(), { once:true });
+  })
+  .catch(err=>{
+    console.error('GA fetch failed', err);
+    $('#gaEmpty').hidden = false;
+  });
                 // ===== Bubble cloud with stacked labels =====
                 function drawBubbleCloud(host, data, w, h){
                   host.innerHTML = '';
