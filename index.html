@@ -1500,15 +1500,12 @@
        
 <link rel="stylesheet" href="css/live-analytics.css">
 <script src="js/live-analytics.js" defer></script>
-
-
-
-
-<!-- Live Analytics (refined, fixed) -->
+ 
+<!-- Live Analytics (refined, aligned) -->
 <section class="resume-section" id="liveanalytics" aria-labelledby="liveanalytics-title">
   <div class="resume-section-content container">
     <h2 id="liveanalytics-title">Live Analytics</h2>
-    <br />
+    <br>
 
     <h5>IAMRAD.INFO Insight</h5>
 
@@ -1526,11 +1523,13 @@
             <span id="gaVisitorsValue" class="counter" aria-live="polite">—</span>
           </div>
         </div>
-        <div
-          class="chart"
-          id="gaCountryBarChart"
-          role="img"
-          aria-label="Bubble chart of visitors by country">
+        <div class="chart-wrap">
+          <div
+            class="chart"
+            id="gaCountryBarChart"
+            role="img"
+            aria-label="Bubble chart of visitors by country">
+          </div>
         </div>
         <div id="gaEmpty" class="empty muted" hidden>No data available.</div>
       </div>
@@ -1550,12 +1549,12 @@
           <div class="filters-grid" role="group" aria-label="Filters">
             <label class="field">
               <span class="field-label" id="srcDateStartLabel">From</span>
-              <input id="srcDateStart" type="date" class="input" aria-labelledby="srcDateStartLabel" />
+              <input id="srcDateStart" type="date" class="input" aria-labelledby="srcDateStartLabel">
             </label>
 
             <label class="field">
               <span class="field-label" id="srcDateEndLabel">To</span>
-              <input id="srcDateEnd" type="date" class="input" aria-labelledby="srcDateEndLabel" />
+              <input id="srcDateEnd" type="date" class="input" aria-labelledby="srcDateEndLabel">
             </label>
 
             <label class="field">
@@ -1566,8 +1565,8 @@
             </label>
 
             <div class="field actions">
-              <button id="srcRefresh" class="btn primary" title="Apply filters" type="button">Apply</button>
-              <button id="srcClear" class="btn" title="Clear filters" type="button">Clear</button>
+              <button id="srcRefresh" class="btn primary" type="button" title="Apply filters">Apply</button>
+              <button id="srcClear" class="btn" type="button" title="Clear filters">Clear</button>
             </div>
           </div>
 
@@ -1619,7 +1618,7 @@
         </div>
 
         <!-- Chart -->
-        <div class="chart-wrap" style="padding: 8px 16px 16px;">
+        <div class="chart-wrap">
           <div
             id="csChart"
             class="chart"
@@ -1639,7 +1638,7 @@
           <div class="stats muted"><span>Last 7 days</span></div>
         </div>
 
-        <div class="chart-wrap" style="padding: 8px 16px 16px;">
+        <div class="chart-wrap">
           <div
             id="csCountryNewChart"
             class="chart"

@@ -1,74 +1,269 @@
-/* =========================
-   Card alignment overrides
-   ========================= */
 
-/* 1) Let grid columns be consistent at all sizes */
-@media (max-width: 1024px){
-  :root { --col-min: 360px; }   /* was 500px; lets 2 columns fit on tablets */
-}
-@media (max-width: 768px){
-  :root { --col-min: 320px; }   /* common mid phones */
-}
-@media (max-width: 640px){
-  :root { --col-min: 280px; }   /* small phones: clean single-column stack */
-}
+:root{
+  --grid-gap: 11px;
+  --col-min: 500px;
+  --card-min-h: 480px;
+  --chart-aspect: 16/9;
 
-/* 2) Prevent any inner child from forcing a card wider than its grid column */
-.card,
-.card * {
-  min-width: 0;                 /* critical: allow wrapping instead of stretching the column */
-}
+  --bg: #ffffff;
+  --bg-soft: #f9fafb;
+  --text: #111827;
+  --muted: #6b7280;
+  --stroke: rgba(0,0,0,0.06);
 
-/* 3) Normalize internal padding so cards visually line up */
-.card-header { padding: 16px 16px 8px 16px; }
-.chart-wrap   { padding: 12px 16px; }      /* replace the previous 12px 16px 2px 9px */
-@media (max-width: 640px){
-  .card-header { padding: 10px 12px 6px 12px; }
-  .chart-wrap  { padding: 8px 10px; }
+  --shadow: 0 6px 20px rgba(0,0,0,.08);
+
+  --brand: #111827;
+  --brand-cta: #111827;
+  --bar: #3b82f6;
 }
 
-/* 4) Charts: never overflow; keep aspect and fit the same space */
-.chart {
-  width: 100%;
-  display: block;
-  min-height: 300px;
-}
-.chart svg{
-  width: 100% !important;
-  height: auto !important;
-  display: block;
-}
-@media (max-width: 640px){
-  .chart{ min-height: auto; aspect-ratio: var(--chart-aspect); }
-  .chart svg{ height: 100% !important; }
+.bg-grid { background: var(--bg-soft); }
+.container { max-width:1200px; margin:auto; padding:0 20px; }
+.title { font-size:2rem; text-align:center; margin-bottom:.5rem; color:var(--text); }
+.meta { text-align:right; margin-bottom:10px; }
+.muted { color:var(--muted); }
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--col-min), 1fr));
+  gap: var(--grid-gap);
+  align-items: stretch;
 }
 
-/* 5) Filters: avoid pushing width on mid/small screens */
-.filters-grid { min-width: 0; }
-.filters, .filters-row, .stats, .quick-pills { min-width: 0; }
-
+/* Adjust filter layout */
 .filters .field.actions {
-  gap: 8px;
-  justify-content: flex-end;
+  grid-column: span 2;
+  min-width: 120px; /* ensures buttons don’t squish */
 }
+
+/* On mid-width screens, push actions row down */
+@media (max-width: 780px) {
+  .filters .field.actions {
+    grid-column: span 6;
+    justify-content: flex-start;
+    margin-top: 4px;
+  }
+}
+
+/* On small screens, buttons will already stack full width */
+@media (max-width: 640px) {
+  .filters .field.actions {
+    justify-content: stretch;
+  }
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  min-height: var(--card-min-h);
+  border: 1px solid var(--stroke);
+  background: var(--bg);
+  border-radius: 20px;
+  box-shadow: none;  
+  overflow: hidden;  
+}
+.card.flat { box-shadow: none; overflow: hidden; }
+
+#card-top-countries,
+#card-source {
+  box-shadow: none;
+  overflow: hidden;
+}
+
+.card-header{
+  display:flex; justify-content:space-between; align-items:end;
+  padding:20px 20px 10px 20px;
+}
+.card-title{ font-size:1.1rem; color:var(--text); margin:0; }
+.stats{ text-align:right; }
+.counter{ font-weight:800; font-size:1.25rem; color:var(--text); }
+
+.chart {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 300px;
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+.chart svg{ width:100% !important; height:auto !important; display:block; }
+.chart-wrap {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 16px 2px 9px;
+}
+.chart svg { display: block; }
+.empty{ text-align:center; padding:18px; color:var(--muted); }
+
+/* Filters */
+.filters{ display:flex; flex-direction:column; gap:10px; padding:6px 20px 12px 20px; }
+.filters-grid{
+  display:grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 10px;
+  align-items: end;
+}
+/* from/to = 3 cols each, country = 4, actions = 2 on wide screens */
+.filters .field{ display:flex; flex-direction:column; gap:6px; }
+.filters .field.actions{
+  display:flex; flex-direction:row; gap:8px; justify-content:flex-end; align-items:center;
+}
+.filters .field:nth-child(1){ grid-column: span 3; } /* From */
+.filters .field:nth-child(2){ grid-column: span 3; } /* To */
+.filters .field:nth-child(3){ grid-column: span 4; } /* Country */
+.filters .field.actions{ grid-column: span 2; }
+
 @media (max-width: 980px){
-  .filters .field.actions { justify-content: flex-start; }
+  .filters-grid{ grid-template-columns: repeat(6, 1fr); }
+  .filters .field:nth-child(1),
+  .filters .field:nth-child(2){ grid-column: span 3; }
+  .filters .field:nth-child(3){ grid-column: span 6; }
+  .filters .field.actions{ grid-column: span 6; justify-content:flex-start; }
 }
 @media (max-width: 640px){
-  .filters .field.actions { width: 100%; }
-  .filters .field.actions .btn { flex: 1 1 auto; } /* buttons fill width, don't stretch card */
+  /* Switch to flex column so we can control order */
+  .filters-grid{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Order: From → To → Country → Actions */
+  .filters .field:nth-child(1){ order: 1; width: 100%; }
+  .filters .field:nth-child(2){ order: 2; width: 100%; }
+  .filters .field:nth-child(3){ order: 3; width: 100%; }
+  .filters .field.actions   { order: 4; width: 100%; justify-content: stretch; }
+
+  .filters .field.actions .btn{ flex:1 1 auto; }
 }
 
-/* 6) Text wrapping safety so labels/snippets never widen the card */
-.card .card-title,
-.card .stats,
-.filters .field,
-.filters .input,
-.filters .pill,
-.empty {
-  overflow-wrap: anywhere;      /* break long tokens */
-  word-break: normal;
+.field-label{ font-size:12px; color:var(--muted); }
+.input{
+  border:1px solid var(--stroke); border-radius:10px; padding:8px 10px; font-size:13px;
+  background: var(--bg); color: var(--text);
+}
+.btn{
+  padding:8px 12px; border-radius:12px; border:1px solid var(--stroke); background:var(--bg);
+  box-shadow:0 2px 10px rgba(0,0,0,.05); cursor:pointer; font-size:13px; color:var(--text);
+}
+.btn.primary{ background:var(--brand-cta); color:#fff; border-color:var(--brand-cta); }
+.btn:hover{ box-shadow:0 4px 16px rgba(0,0,0,.08); }
+
+.filters-row{
+  display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
 }
 
-/* Optional: equalize row heights visually (cards stretch to same height in a row) */
-.dashboard-grid { align-items: stretch; }
+.quick-pills{ display:flex; gap:8px; flex-wrap:wrap; }
+.pill{
+  border:1px solid var(--stroke); background:var(--bg);
+  padding:6px 10px; border-radius:999px; font-size:12px; cursor:pointer;
+}
+.pill:hover{ background:rgba(0,0,0,.04); }
+@media (prefers-color-scheme: dark){
+  .pill:hover{ background:rgba(255,255,255,.06); }
+}
+
+.tiny{ font-size:11px; }
+
+/* Bubble chart text & tooltip */
+.bubble-value { fill:#fff; font-weight:200; pointer-events:none; }
+.bubble-country { fill:#ffffff; opacity:0.9; font-weight:100; pointer-events:none; }
+.bubble-tip{
+  position:absolute; background:var(--bg); border:1px solid var(--stroke); border-radius:14px;
+  padding:8px 10px; box-shadow: var(--shadow);
+  color:var(--text); font-size:12px; pointer-events:none; transition:opacity .12s ease; z-index:2;
+}
+@media (prefers-reduced-motion: reduce){
+  .bubble-tip{ transition:none; }
+}
+
+/* === From/To date: size align + mobile-friendly === */
+.filters input[type="date"] {
+  height: 40px;
+  padding: 0 12px;
+  font-size: 14px;
+  line-height: 1.2;
+  box-sizing: border-box;
+}
+.filters .field:nth-child(1) .input,
+.filters .field:nth-child(2) .input {
+  height: 40px;
+}
+@supports (-webkit-touch-callout: none) {
+  .filters input[type="date"] {
+    padding-block: 0;
+  }
+  .filters input[type="date"]::-webkit-date-and-time-value {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  .filters input[type="date"]::-webkit-calendar-picker-indicator {
+    margin-right: 4px;
+  }
+}
+@media (max-width: 640px){
+  .filters input[type="date"],
+  .filters .field:nth-child(1) .input,
+  .filters .field:nth-child(2) .input,
+  .filters .field.actions .btn {
+    height: 44px;
+  }
+}
+
+/* =========================
+   Mobile-only polish (<640px)
+   ========================= */
+@media (max-width: 640px){
+
+  /* Filters: tighter spacing */
+  .filters{
+    padding: 8px 12px 10px 12px;
+    gap: 8px;
+  }
+  .field-label{
+    font-size: 11px;
+    margin-bottom: 3px;
+  }
+  .input,
+  .filters input[type="date"]{
+    height: 44px;
+    font-size: 15px;
+  }
+
+  /* Cards & headers: reduced padding for space */
+  .card{
+    min-height: 240px;
+  }
+  .card-header{
+    padding: 10px 12px 4px 12px;
+    gap: 6px;
+  }
+  .card-title{ font-size: 1rem; }
+  .counter{ font-size: 1.05rem; }
+
+  /* Chart: keep 16:9 ratio, remove extra padding */
+  .chart-wrap{
+    padding: 6px 8px 2px 8px;
+  }
+  .chart{
+    min-height: auto;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    display: block;
+  }
+  .chart svg{
+    width: 100% !important;
+    height: 100% !important;
+    display: block;
+  }
+
+  /* Tooltip readability */
+  .bubble-tip{
+    max-width: 92vw;
+    font-size: 11px;
+  }
+}
