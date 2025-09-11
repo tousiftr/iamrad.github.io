@@ -1577,6 +1577,55 @@
                         <div id="srcEmpty" class="empty muted" hidden>No data for the selected filters.</div>
                       </div>
                     </div>
+                        <!-- Card 3: Last 7 Days Summary -->
+                      <div class="card" id="card-country-summary">
+                        <div class="card-header">
+                          <h3 class="card-title">Last 7 Days Summary</h3>
+                          <div class="stats muted">
+                            <span id="csDateFrom">—</span> → <span id="csDateTo">—</span>
+                          </div>
+                        </div>
+
+                        <!-- Counters -->
+                        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px">
+                          <div>
+                            <div class="muted tiny">Total Users</div>
+                            <div id="csTotalUsers" class="counter">—</div>
+                          </div>
+                          <div>
+                            <div class="muted tiny">New Users</div>
+                            <div id="csNewUsers" class="counter">—</div>
+                          </div>
+                          <div>
+                            <div class="muted tiny">Sessions</div>
+                            <div id="csSessions" class="counter">—</div>
+                          </div>
+                        </div>
+
+                        <!-- Chart -->
+                        <div class="chart-wrap" style="padding: 8px 16px 16px;">
+                          <div id="csChart" class="chart" role="img" aria-label="Last 7 days: Total vs New vs Sessions"></div>
+                        </div>
+
+                        <!-- Fallback -->
+                        <div id="csEmpty" class="empty muted" hidden>No data found.</div>
+                      </div>
+<div class="card" id="card-country-new">
+  <div class="card-header">
+    <h3 class="card-title">Top Countries — New Users</h3>
+    <div class="stats muted"><span>Last 7 days</span></div>
+  </div>
+
+  <div class="chart-wrap" style="padding: 8px 16px 16px;">
+    <div id="csCountryNewChart" class="chart"></div>
+    <div id="csCountryNewEmpty" class="empty muted" hidden>No data found.</div>
+  </div>
+</div>
+
+
+                     </div>   
+
+
                   </div>
                 </div>
               </section>
