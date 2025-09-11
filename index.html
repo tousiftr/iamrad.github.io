@@ -1500,8 +1500,7 @@
        
 <link rel="stylesheet" href="css/live-analytics.css">
 <script src="js/live-analytics.js" defer></script>
- 
-<!-- Live Analytics (refined, aligned) -->
+ <!-- Live Analytics (refined, aligned) -->
 <section class="resume-section" id="liveanalytics" aria-labelledby="liveanalytics-title">
   <div class="resume-section-content container">
     <h2 id="liveanalytics-title">Live Analytics</h2>
@@ -1514,27 +1513,8 @@
     </div>
 
     <div class="dashboard-grid">
-      <!-- Card 1: Top Countries (Bubble Cloud) -->
-      <div class="card" id="card-top-countries">
-        <div class="card-header">
-          <h3 class="card-title">Top 5 Countries by Visitors</h3>
-          <div class="stats">
-            <span class="muted">Visitors (last 7 days)</span>
-            <span id="gaVisitorsValue" class="counter" aria-live="polite">—</span>
-          </div>
-        </div>
-        <div class="chart-wrap">
-          <div
-            class="chart"
-            id="gaCountryBarChart"
-            role="img"
-            aria-label="Bubble chart of visitors by country">
-          </div>
-        </div>
-        <div id="gaEmpty" class="empty muted" hidden>No data available.</div>
-      </div>
 
-      <!-- Card 2: Source (with filters, Supabase) -->
+      <!-- Card 2: Source (with filters, Supabase) — moved first -->
       <div class="card" id="card-source">
         <div class="card-header">
           <h3 class="card-title">Source</h3>
@@ -1590,6 +1570,26 @@
           <div id="srcLoading" class="empty muted" hidden>Loading…</div>
           <div id="srcEmpty" class="empty muted" hidden>No data for the selected filters.</div>
         </div>
+      </div>
+
+      <!-- Card 1: Top Countries (Bubble Cloud) — moved down -->
+      <div class="card" id="card-top-countries">
+        <div class="card-header">
+          <h3 class="card-title">Top 5 Countries by Visitors</h3>
+          <div class="stats">
+            <span class="muted">Visitors (last 7 days)</span>
+            <span id="gaVisitorsValue" class="counter" aria-live="polite">—</span>
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <div
+            class="chart"
+            id="gaCountryBarChart"
+            role="img"
+            aria-label="Bubble chart of visitors by country">
+          </div>
+        </div>
+        <div id="gaEmpty" class="empty muted" hidden>No data available.</div>
       </div>
 
       <!-- Card 3: Last 7 Days Summary -->
@@ -1648,12 +1648,11 @@
           <div id="csCountryNewEmpty" class="empty muted" hidden>No data found.</div>
         </div>
       </div>
+
     </div> <!-- /.dashboard-grid -->
   </div> <!-- /.resume-section-content.container -->
 </section>
 
-               
-              
 
 
 

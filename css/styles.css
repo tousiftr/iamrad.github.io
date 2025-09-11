@@ -11378,7 +11378,6 @@ body.welcome {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
-  align-items: stretch;                 /* make all cards equal height in each row */
 }
 
 .card {
@@ -11398,6 +11397,3 @@ body.welcome {
   width: 100%;
   height: 220px; /* adjust as needed */
 }
-
-*::before,
-*::after { box-sizing: border-box; }
