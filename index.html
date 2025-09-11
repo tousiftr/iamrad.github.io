@@ -1501,134 +1501,155 @@
 <link rel="stylesheet" href="css/live-analytics.css">
 <script src="js/live-analytics.js" defer></script>
  
-<!-- Live Analytics (refined) -->
-              <section class="resume-section" id="liveanalytics">
-                <div class="resume-section-content container">
-              <h2>Live Analytics</h2>
-              <BR>
-               <h5>IAMRAD.INFO Insight</h5>
+ 
+              <!-- Live Analytics (refined, fixed) -->
+<section class="resume-section" id="liveanalytics" aria-labelledby="liveanalytics-title">
+  <div class="resume-section-content container">
+    <h2 id="liveanalytics-title">Live Analytics</h2>
+    <br />
 
-                  <div class="meta"><span id="lastUpdatedLabel" class="muted">Last updated: —</span></div>
+    <h5>IAMRAD.INFO Insight</h5>
 
-                  <div class="dashboard-grid">
-                    <!-- Card 1: Top Countries (Bubble Cloud) -->
-                    <div class="card" id="card-top-countries">
-                      <div class="card-header">
-                        <h3 class="card-title">Top 5 Countries by Visitors</h3>
-                        <div class="stats">
-                          <span class="muted">Visitors (last 7 days)</span>
-                          <span id="gaVisitorsValue" class="counter">—</span>
-                        </div>
-                      </div>
-                      <div class="chart" id="gaCountryBarChart" role="img" aria-label="Bubble chart of visitors by country"></div>
-                      <div id="gaEmpty" class="empty muted" hidden>No data available.</div>
-                    </div>
+    <div class="meta">
+      <span class="muted">Last updated: <time id="lastUpdatedLabel" datetime="">—</time></span>
+    </div>
 
-                    <!-- Card 2: Source (with filters, Supabase) -->
-                    <div class="card" id="card-source">
-                      <div class="card-header">
-                        <h3 class="card-title">Source</h3>
-                        <div class="stats">
-                          <span class="muted">Visitors</span>
-                          <span id="srcTotalVisitors" class="counter">—</span>
-                        </div>
-                      </div>
+    <div class="dashboard-grid">
+      <!-- Card 1: Top Countries (Bubble Cloud) -->
+      <div class="card" id="card-top-countries">
+        <div class="card-header">
+          <h3 class="card-title">Top 5 Countries by Visitors</h3>
+          <div class="stats">
+            <span class="muted">Visitors (last 7 days)</span>
+            <span id="gaVisitorsValue" class="counter" aria-live="polite">—</span>
+          </div>
+        </div>
+        <div
+          class="chart"
+          id="gaCountryBarChart"
+          role="img"
+          aria-label="Bubble chart of visitors by country">
+        </div>
+        <div id="gaEmpty" class="empty muted" hidden>No data available.</div>
+      </div>
 
-                      <!-- Filter section -->
-                      <div class="filters">
-                        <div class="filters-grid">
-                          <label class="field">
-                            <span class="field-label">From</span>
-                            <input id="srcDateStart" type="date" class="input">
-                          </label>
+      <!-- Card 2: Source (with filters, Supabase) -->
+      <div class="card" id="card-source">
+        <div class="card-header">
+          <h3 class="card-title">Source</h3>
+          <div class="stats">
+            <span class="muted">Visitors</span>
+            <span id="srcTotalVisitors" class="counter" aria-live="polite">—</span>
+          </div>
+        </div>
 
-                          <label class="field">
-                            <span class="field-label">To</span>
-                            <input id="srcDateEnd" type="date" class="input">
-                          </label>
+        <!-- Filter section -->
+        <div class="filters">
+          <div class="filters-grid" role="group" aria-label="Filters">
+            <label class="field">
+              <span class="field-label" id="srcDateStartLabel">From</span>
+              <input id="srcDateStart" type="date" class="input" aria-labelledby="srcDateStartLabel" />
+            </label>
 
-                          <label class="field">
-                            <span class="field-label">Country</span>
-                            <select id="srcCountry" class="input">
-                              <option value="">(All)</option>
-                            </select>
-                          </label>
+            <label class="field">
+              <span class="field-label" id="srcDateEndLabel">To</span>
+              <input id="srcDateEnd" type="date" class="input" aria-labelledby="srcDateEndLabel" />
+            </label>
 
-                          <div class="field actions">
-                            <button id="srcRefresh" class="btn primary" title="Apply filters">Apply</button>
-                            <button id="srcClear" class="btn" title="Clear filters">Clear</button>
-                          </div>
-                        </div>
+            <label class="field">
+              <span class="field-label" id="srcCountryLabel">Country</span>
+              <select id="srcCountry" class="input" aria-labelledby="srcCountryLabel">
+                <option value="">(All)</option>
+              </select>
+            </label>
 
-                        <div class="filters-row">
+            <div class="field actions">
+              <button id="srcRefresh" class="btn primary" title="Apply filters" type="button">Apply</button>
+              <button id="srcClear" class="btn" title="Clear filters" type="button">Clear</button>
+            </div>
+          </div>
 
-                          <div class="quick-pills" aria-label="Quick ranges">
-                            <button data-preset="7" class="pill">Last 7d</button>
-                            <button data-preset="30" class="pill">Last 30d</button>
-                            <button data-preset="month" class="pill">This month</button>
-                          </div>
-                          <div id="srcSummary" class="muted tiny" role="status" aria-live="polite"></div>
-                        </div>
-                      </div>
+          <div class="filters-row">
+            <div class="quick-pills" aria-label="Quick ranges">
+              <button data-preset="7" class="pill" type="button">Last 7d</button>
+              <button data-preset="30" class="pill" type="button">Last 30d</button>
+              <button data-preset="month" class="pill" type="button">This month</button>
+            </div>
+            <div id="srcSummary" class="muted tiny" role="status" aria-live="polite"></div>
+          </div>
+        </div>
 
-                      <div class="chart-wrap">
-                        <div id="gaCountryBarChart2" class="chart" role="img" aria-label="Bar chart of visitors by source"></div>
-                        <div id="srcLoading" class="empty muted" hidden>Loading…</div>
-                        <div id="srcEmpty" class="empty muted" hidden>No data for the selected filters.</div>
-                      </div>
-                    </div>
-                        <!-- Card 3: Last 7 Days Summary -->
-                      <div class="card" id="card-country-summary">
-                        <div class="card-header">
-                          <h3 class="card-title">Last 7 Days Summary</h3>
-                          <div class="stats muted">
-                            <span id="csDateFrom">—</span> → <span id="csDateTo">—</span>
-                          </div>
-                        </div>
+        <div class="chart-wrap">
+          <div
+            id="gaCountryBarChart2"
+            class="chart"
+            role="img"
+            aria-label="Bar chart of visitors by source">
+          </div>
+          <div id="srcLoading" class="empty muted" hidden>Loading…</div>
+          <div id="srcEmpty" class="empty muted" hidden>No data for the selected filters.</div>
+        </div>
+      </div>
 
-                        <!-- Counters -->
-                        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px">
-                          <div>
-                            <div class="muted tiny">Total Users</div>
-                            <div id="csTotalUsers" class="counter">—</div>
-                          </div>
-                          <div>
-                            <div class="muted tiny">New Users</div>
-                            <div id="csNewUsers" class="counter">—</div>
-                          </div>
-                          <div>
-                            <div class="muted tiny">Sessions</div>
-                            <div id="csSessions" class="counter">—</div>
-                          </div>
-                        </div>
+      <!-- Card 3: Last 7 Days Summary -->
+      <div class="card" id="card-country-summary">
+        <div class="card-header">
+          <h3 class="card-title">Last 7 Days Summary</h3>
+          <div class="stats muted">
+            <span id="csDateFrom">—</span> → <span id="csDateTo">—</span>
+          </div>
+        </div>
 
-                        <!-- Chart -->
-                        <div class="chart-wrap" style="padding: 8px 16px 16px;">
-                          <div id="csChart" class="chart" role="img" aria-label="Last 7 days: Total vs New vs Sessions"></div>
-                        </div>
+        <!-- Counters -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px">
+          <div>
+            <div class="muted tiny">Total Users</div>
+            <div id="csTotalUsers" class="counter" aria-live="polite">—</div>
+          </div>
+          <div>
+            <div class="muted tiny">New Users</div>
+            <div id="csNewUsers" class="counter" aria-live="polite">—</div>
+          </div>
+          <div>
+            <div class="muted tiny">Sessions</div>
+            <div id="csSessions" class="counter" aria-live="polite">—</div>
+          </div>
+        </div>
 
-                        <!-- Fallback -->
-                        <div id="csEmpty" class="empty muted" hidden>No data found.</div>
-                      </div>
-<div class="card" id="card-country-new">
-  <div class="card-header">
-    <h3 class="card-title">Top Countries — New Users</h3>
-    <div class="stats muted"><span>Last 7 days</span></div>
-  </div>
+        <!-- Chart -->
+        <div class="chart-wrap" style="padding: 8px 16px 16px;">
+          <div
+            id="csChart"
+            class="chart"
+            role="img"
+            aria-label="Last 7 days: Total vs New vs Sessions">
+          </div>
+        </div>
 
-  <div class="chart-wrap" style="padding: 8px 16px 16px;">
-    <div id="csCountryNewChart" class="chart"></div>
-    <div id="csCountryNewEmpty" class="empty muted" hidden>No data found.</div>
-  </div>
-</div>
+        <!-- Fallback -->
+        <div id="csEmpty" class="empty muted" hidden>No data found.</div>
+      </div>
 
+      <!-- Card 4: Top Countries — New Users -->
+      <div class="card" id="card-country-new">
+        <div class="card-header">
+          <h3 class="card-title">Top Countries — New Users</h3>
+          <div class="stats muted"><span>Last 7 days</span></div>
+        </div>
 
-                     </div>   
-
-
-                  </div>
-                </div>
-              </section>
+        <div class="chart-wrap" style="padding: 8px 16px 16px;">
+          <div
+            id="csCountryNewChart"
+            class="chart"
+            role="img"
+            aria-label="Top countries by new users">
+          </div>
+          <div id="csCountryNewEmpty" class="empty muted" hidden>No data found.</div>
+        </div>
+      </div>
+    </div> <!-- /.dashboard-grid -->
+  </div> <!-- /.resume-section-content.container -->
+</section>
 
                
               
