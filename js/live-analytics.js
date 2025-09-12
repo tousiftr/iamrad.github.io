@@ -443,17 +443,38 @@
   // ================================================================
   // CARD 3 — Last 7 Days Summary (deduped + lightweight)
   // ================================================================
+// ================================
+// Card 3 — Last 7 Days Summary
+// ================================
+(() => {
+  // ---------- Element refs ----------
+  const elTotal7     = document.getElementById('csTotalUsers');
+  const elNew7       = document.getElementById('csNewUsers');
+  const elSes7       = document.getElementById('csSessions');
+  const elFrom7      = document.getElementById('csDateFrom');
+  const elTo7        = document.getElementById('csDateTo');
+  const elEmpty7     = document.getElementById('csEmpty');
+  const dayChartHost = document.getElementById('csChart');
+  const newListHost  = document.getElementById('csCountryNewChart');
+  const newListEmpty = document.getElementById('csCountryNewEmpty');
 
-  const elTotal7 = $('#csTotalUsers');
-  const elNew7 = $('#csNewUsers');
-  const elSes7 = $('#csSessions');
-  const elFrom7 = $('#csDateFrom');
-  const elTo7 = $('#csDateTo');
-  const elEmpty7 = $('#csEmpty');
-  const dayChartHost = $('#csChart');
-  const newListHost = $('#csCountryNewChart');
-  const newListEmpty = $('#csCountryNewEmpty');
+  // ---------- Utilities ----------
+  // Fallback palette (only used if window.PALETTE is missing/short)
+  window.PALETTE = Array.isArray(window.PALETTE) && window.PALETTE.length >= 3
+    ? window.PALETTE
+    : ['#3b82f6', '#10b981', '#f59e0b']; // Total, New, Sessions
 
+  // Number formatter (K/M/B)
+  window.fmt = window.fmt || function fmt(n) {
+    if (n == null) return '0';
+    const abs = Math.abs(n);
+    if (abs >= 1e9) return (n / 1e9).toFixed(1).replace(/\.0$/, '') + 'B';
+    if (abs >= 1e6) return (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
+    if (abs >= 1e3) return (n / 1e3).toFixed(1).replace(/\.0$/, '') + 'K';
+    return String(Math.round(n));
+  };
+
+  // ---------- Data fetch ----------
   async function fetchRecentDaily(limit = 500) {
     const url = new URL(`${SUPABASE_URL}/rest/v1/ga_country_daily`);
     url.searchParams.set('select', 'date,country,total_users,new_users,sessions');
@@ -461,7 +482,9 @@
     url.searchParams.set('limit', String(limit));
     const rows = await requestJSON(url.toString(), { headers: sbHeaders() });
     return rows.map((r) => ({
-      date: String(r.date || '').length === 8 ? `${String(r.date).slice(0, 4)}-${String(r.date).slice(4, 6)}-${String(r.date).slice(6, 8)}` : String(r.date || ''),
+      date: String(r.date || '').length === 8
+        ? `${String(r.date).slice(0, 4)}-${String(r.date).slice(4, 6)}-${String(r.date).slice(6, 8)}`
+        : String(r.date || ''),
       country: (r.country || '(not set)').toString(),
       total_users: Number(r.total_users || 0),
       new_users: Number(r.new_users || 0),
@@ -469,98 +492,251 @@
     }));
   }
 
+  // ---------- Reduce to last 7 distinct days (across countries) ----------
   function pick7Days(rows) {
-    const seen = new Set(); const dates = [];
-    for (const r of rows) { if (!r.date) continue; if (!seen.has(r.date)) { seen.add(r.date); dates.push(r.date); if (dates.length === 7) break; } }
+    const seen = new Set();
+    const dates = [];
+    for (const r of rows) {
+      if (!r.date) continue;
+      if (!seen.has(r.date)) {
+        seen.add(r.date);
+        dates.push(r.date);
+        if (dates.length === 7) break;
+      }
+    }
     if (!dates.length) return null;
-    const daysAsc = [...dates].reverse();
-    const perDay = {}; daysAsc.forEach((d) => (perDay[d] = { t: 0, n: 0, s: 0 }));
+
+    const daysAsc = [...dates].reverse(); // chronological
+    const perDay = {};
+    daysAsc.forEach((d) => (perDay[d] = { t: 0, n: 0, s: 0 }));
+
     let sumT = 0, sumN = 0, sumS = 0;
     for (const r of rows) {
       if (!dates.includes(r.date)) continue;
-      sumT += r.total_users; sumN += r.new_users; sumS += r.sessions;
-      perDay[r.date].t += r.total_users; perDay[r.date].n += r.new_users; perDay[r.date].s += r.sessions;
+      sumT += r.total_users;
+      sumN += r.new_users;
+      sumS += r.sessions;
+      perDay[r.date].t += r.total_users;
+      perDay[r.date].n += r.new_users;
+      perDay[r.date].s += r.sessions;
     }
-    return { daysAsc, perDay, sumT, sumN, sumS, from: daysAsc[0], to: daysAsc[daysAsc.length - 1] };
+    return {
+      daysAsc,
+      perDay,
+      sumT,
+      sumN,
+      sumS,
+      from: daysAsc[0],
+      to: daysAsc[daysAsc.length - 1],
+    };
   }
 
+  // ---------- Chart (with labels, legend, tooltip) ----------
   function drawGroupedBars(host, days, data) {
     host.innerHTML = '';
+    const parent = host.parentElement || host;  // .chart-wrap
     const ns = 'http://www.w3.org/2000/svg';
+
     const W = Math.max(Math.floor(host.getBoundingClientRect().width), 340);
-    const H = 260; const PAD = { t: 24, r: 14, b: 36, l: 44 };
-    const innerW = W - PAD.l - PAD.r; const innerH = H - PAD.t - PAD.b;
-    const tArr = days.map((d) => Number(data[d]?.t || 0));
-    const nArr = days.map((d) => Number(data[d]?.n || 0));
-    const sArr = days.map((d) => Number(data[d]?.s || 0));
+    const H = 260;
+    const PAD = { t: 28, r: 12, b: 40, l: 48 };
+    const innerW = W - PAD.l - PAD.r;
+    const innerH = H - PAD.t - PAD.b;
+
+    const palette = (window.PALETTE && window.PALETTE.length >= 3)
+      ? window.PALETTE
+      : ['#3b82f6', '#10b981', '#f59e0b'];
+
+    const series = [
+      { key: 't', name: 'Total',    get: d => Number(data[d]?.t || 0), color: palette[0] },
+      { key: 'n', name: 'New',      get: d => Number(data[d]?.n || 0), color: palette[1] },
+      { key: 's', name: 'Sessions', get: d => Number(data[d]?.s || 0), color: palette[2] },
+    ];
+
+    const tArr = days.map(d => series[0].get(d));
+    const nArr = days.map(d => series[1].get(d));
+    const sArr = days.map(d => series[2].get(d));
     const maxY = Math.max(1, ...tArr, ...nArr, ...sArr);
+
     const xBand = (i) => PAD.l + (i + 0.5) * (innerW / days.length);
     const y = (v) => PAD.t + (1 - v / maxY) * innerH;
 
+    // Tooltip (uses your .bubble-tip CSS)
+    let tip = parent.querySelector('.bubble-tip');
+    if (!tip) {
+      tip = document.createElement('div');
+      tip.className = 'bubble-tip';
+      tip.style.opacity = '0';
+      tip.style.position = 'absolute';
+      tip.style.pointerEvents = 'none';
+      parent.appendChild(tip);
+    }
+    const showTip = (html, evt) => {
+      const box = parent.getBoundingClientRect();
+      const px = (evt?.clientX || box.left) - box.left + 12;
+      const py = (evt?.clientY || box.top) - box.top + 12;
+      tip.innerHTML = html;
+      tip.style.left = `${px}px`;
+      tip.style.top = `${py}px`;
+      tip.style.opacity = '1';
+    };
+    const hideTip = () => { tip.style.opacity = '0'; };
+
+    // SVG root
     const svg = document.createElementNS(ns, 'svg');
     svg.setAttribute('width', '100%');
     svg.setAttribute('height', H);
     svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('aria-label', 'Last 7 days: Total vs New vs Sessions');
     host.appendChild(svg);
 
+    // Y grid & ticks
     const gridN = 4;
     for (let i = 0; i <= gridN; i++) {
       const gy = PAD.t + (i / gridN) * innerH;
       const line = document.createElementNS(ns, 'line');
       line.setAttribute('x1', PAD.l); line.setAttribute('x2', PAD.l + innerW);
-      line.setAttribute('y1', gy); line.setAttribute('y2', gy);
+      line.setAttribute('y1', gy);    line.setAttribute('y2', gy);
       line.setAttribute('stroke', '#e5e7eb'); line.setAttribute('stroke-width', 1);
       svg.appendChild(line);
+
       const val = Math.round((1 - i / gridN) * maxY);
       const lab = document.createElementNS(ns, 'text');
-      lab.setAttribute('x', PAD.l - 6); lab.setAttribute('y', gy);
-      lab.setAttribute('text-anchor', 'end'); lab.setAttribute('dominant-baseline', 'central'); lab.setAttribute('fill', '#6b7280');
-      lab.style.fontSize = '11px'; lab.textContent = fmt(val);
+      lab.setAttribute('x', PAD.l - 6);
+      lab.setAttribute('y', gy);
+      lab.setAttribute('text-anchor', 'end');
+      lab.setAttribute('dominant-baseline', 'central');
+      lab.setAttribute('fill', '#6b7280');
+      lab.style.fontSize = '11px';
+      lab.textContent = fmt(val);
       svg.appendChild(lab);
     }
 
+    // X labels (dates)
     days.forEach((d, i) => {
       const tx = xBand(i);
       const lab = document.createElementNS(ns, 'text');
-      lab.setAttribute('x', tx); lab.setAttribute('y', PAD.t + innerH + 16);
-      lab.setAttribute('text-anchor', 'middle'); lab.setAttribute('fill', '#6b7280');
-      lab.style.fontSize = '11px'; lab.textContent = d.slice(5);
+      lab.setAttribute('x', tx);
+      lab.setAttribute('y', PAD.t + innerH + 16);
+      lab.setAttribute('text-anchor', 'middle');
+      lab.setAttribute('fill', '#6b7280');
+      lab.style.fontSize = '11px';
+      lab.textContent = d.slice(5);
       svg.appendChild(lab);
     });
 
-    const groupW = innerW / days.length; const gapG = Math.min(12, groupW * 0.2); const avail = groupW - gapG; const barW = Math.max(6, Math.floor(avail / 3) - 2);
+    // Bars & value labels
+    const groupW = innerW / days.length;
+    const gapG = Math.min(12, groupW * 0.2);
+    const avail = groupW - gapG;
+    const barW = Math.max(6, Math.floor(avail / 3) - 2);
 
-    const seriesColors = [PALETTE[0], PALETTE[1], PALETTE[2]]; // Total, New, Sessions
+    const makeText = (x, yVal, txt, inside) => {
+      const t = document.createElementNS(ns, 'text');
+      t.setAttribute('x', x);
+      t.setAttribute('y', yVal);
+      t.setAttribute('text-anchor', 'middle');
+      t.style.fontSize = '11px';
+      if (inside) {
+        t.setAttribute('fill', '#ffffff');
+        t.setAttribute('stroke', 'rgba(0,0,0,0.25)');
+        t.setAttribute('stroke-width', '1.5');
+        t.style.paintOrder = 'stroke';
+      } else {
+        t.setAttribute('fill', '#374151');
+        t.setAttribute('stroke', 'rgba(255,255,255,0.75)');
+        t.setAttribute('stroke-width', '2');
+        t.style.paintOrder = 'stroke';
+      }
+      t.textContent = txt;
+      return t;
+    };
 
     days.forEach((d, i) => {
-      const left = PAD.l + (i * innerW / days.length) + gapG / 2;
-      const series = [
-        { name: 'Total', val: Number(data[d]?.t || 0), idx: 0 },
-        { name: 'New', val: Number(data[d]?.n || 0), idx: 1 },
-        { name: 'Sessions', val: Number(data[d]?.s || 0), idx: 2 },
-      ];
+      const baseLeft = PAD.l + (i * innerW / days.length) + gapG / 2;
+
       series.forEach((s, k) => {
+        const v = s.get(d);
+        const h = Math.max(1, y(0) - y(v));
+        const x = baseLeft + k * barW;
+
         const rect = document.createElementNS(ns, 'rect');
-        const h = Math.max(1, y(0) - y(s.val));
-        rect.setAttribute('x', left + k * barW);
-        rect.setAttribute('y', y(s.val));
+        rect.setAttribute('x', x);
+        rect.setAttribute('y', y(v));
         rect.setAttribute('width', barW);
         rect.setAttribute('height', h);
         rect.setAttribute('rx', 4);
-        rect.setAttribute('fill', seriesColors[s.idx]);
-        rect.setAttribute('opacity', '0.9');
+        rect.setAttribute('fill', s.color);
+        rect.setAttribute('opacity', '0. Nine'); // keep bars soft
+        rect.setAttribute('role', 'img');
+        rect.setAttribute('aria-label', `${s.name} on ${d}: ${fmt(v)}`);
+
+        rect.addEventListener('mouseenter', (evt) => {
+          showTip(`<strong>${s.name}</strong> &middot; ${d}<br/>${fmt(v)}`, evt);
+        });
+        rect.addEventListener('mousemove', (evt) => showTip(tip.innerHTML, evt));
+        rect.addEventListener('mouseleave', hideTip);
+
         svg.appendChild(rect);
+
+        // value label (inside if tall enough, else above)
+       const cx = x + barW / 2;
+const ty = y(v) - 6;        // 6px above bar top
+const label = document.createElementNS(ns, 'text');
+label.setAttribute('x', cx);
+label.setAttribute('y', ty);
+label.setAttribute('text-anchor', 'middle');
+label.setAttribute('fill', '#374151'); // dark text
+label.style.fontSize = '11px';
+label.style.fontWeight = '500';
+label.textContent = fmt(v);
+svg.appendChild(label);
       });
     });
+
+    // Legend (top-right)
+    const legend = document.createElementNS(ns, 'g');
+    const legendItems = series.map(s => ({ name: s.name, color: s.color }));
+    const itemW = 78, itemH = 14;
+    const legendW = itemW * legendItems.length;
+    const lx = Math.max(PAD.l, W - PAD.r - legendW - 6);
+    const ly = 8;
+
+    legendItems.forEach((it, idx) => {
+      const gx = document.createElementNS(ns, 'g');
+      const x0 = lx + idx * itemW;
+
+      const swatch = document.createElementNS(ns, 'rect');
+      swatch.setAttribute('x', x0);
+      swatch.setAttribute('y', ly);
+      swatch.setAttribute('width', 10);
+      swatch.setAttribute('height', 10);
+      swatch.setAttribute('rx', 2);
+      swatch.setAttribute('fill', it.color);
+      gx.appendChild(swatch);
+
+      const lab = document.createElementNS(ns, 'text');
+      lab.setAttribute('x', x0 + 10 + 6);
+      lab.setAttribute('y', ly + 9);
+      lab.setAttribute('fill', '#374151');
+      lab.style.fontSize = '12px';
+      lab.textContent = it.name;
+      gx.appendChild(lab);
+
+      legend.appendChild(gx);
+    });
+    svg.appendChild(legend);
   }
 
+  // ---------- Main loader ----------
   let dayRO;
   async function load7DaySummary() {
     try {
       if (elEmpty7) elEmpty7.hidden = true;
       if (elTotal7) elTotal7.textContent = '…';
-      if (elNew7) elNew7.textContent = '…';
-      if (elSes7) elSes7.textContent = '…';
+      if (elNew7)   elNew7.textContent = '…';
+      if (elSes7)   elSes7.textContent = '…';
 
       const rows = await fetchRecentDaily();
       if (!rows.length) { if (elEmpty7) elEmpty7.hidden = false; return; }
@@ -568,11 +744,11 @@
       const r = pick7Days(rows);
       if (!r) { if (elEmpty7) elEmpty7.hidden = false; return; }
 
-      if (elFrom7) elFrom7.textContent = r.from;
-      if (elTo7) elTo7.textContent = r.to;
+      if (elFrom7)  elFrom7.textContent = r.from;
+      if (elTo7)    elTo7.textContent = r.to;
       if (elTotal7) elTotal7.textContent = fmt(r.sumT);
-      if (elNew7) elNew7.textContent = fmt(r.sumN);
-      if (elSes7) elSes7.textContent = fmt(r.sumS);
+      if (elNew7)   elNew7.textContent = fmt(r.sumN);
+      if (elSes7)   elSes7.textContent = fmt(r.sumS);
 
       const redraw = () => drawGroupedBars(dayChartHost, r.daysAsc, r.perDay);
       if (dayRO) dayRO.disconnect();
@@ -580,7 +756,7 @@
       dayRO.observe(dayChartHost);
       redraw();
 
-      // Top countries by new users (last 7 days)
+      // Top countries by new users (same 7-day window)
       const picked = new Set(r.daysAsc);
       const totals = new Map();
       for (const row of rows) {
@@ -594,9 +770,11 @@
 
       if (newListHost) {
         newListHost.innerHTML = '';
-        if (!list.length) { if (newListEmpty) newListEmpty.hidden = false; }
-        else {
+        if (!list.length) {
+          if (newListEmpty) newListEmpty.hidden = false;
+        } else {
           if (newListEmpty) newListEmpty.hidden = true;
+
           const header = document.createElement('div');
           header.className = 'muted tiny';
           header.style.display = 'grid';
@@ -605,6 +783,7 @@
           header.style.padding = '4px 0';
           header.innerHTML = `<span>Country</span><span>New Users</span>`;
           newListHost.appendChild(header);
+
           list.forEach((d) => {
             const row = document.createElement('div');
             row.style.display = 'grid';
@@ -622,6 +801,12 @@
       if (elEmpty7) elEmpty7.hidden = false;
     }
   }
+
+  // ---------- Boot (Card 3) ----------
+  load7DaySummary();
+  // Auto-refresh every 5 minutes
+  setInterval(load7DaySummary, 5 * 60 * 1000);
+})();
 
   // ================================================================
   // CARD 4 — Reserved hook (add future widget/charts here)

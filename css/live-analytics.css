@@ -288,3 +288,6 @@
   max-height: 480px;       /* choose your own limit */
   overflow: auto;          /* tidy scroll inside the card */
 }
+window.PALETTE = Array.isArray(window.PALETTE) && window.PALETTE.length >= 3
+  ? window.PALETTE
+  : ['#3b82f6', '#10b981', '#f59e0b']; // Total, New, Sessions
