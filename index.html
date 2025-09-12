@@ -459,7 +459,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- Text -->
   <text x="110" y="25" text-anchor="middle" fill="white" font-size="14" font-family="Segoe UI, Arial, sans-serif">
-    Last Update: v12Sep2025
+    Last Update: v13Sep2025
   </text>
 </svg>
 
@@ -1869,9 +1869,84 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
           <div id="csCountryNewEmpty" class="empty muted" hidden>No data found.</div>
         </div>
-      </div>
+      </div> 
 
 
+<!-- Card 5 — Operating Systems (Donut + Legend) -->
+<!-- Optional: global default scale if you don't use per-card data-scale -->
+<!-- <script>window.DONUT_SCALE = 0.75;</script> -->
+
+<!-- Card 5 — Operating Systems (Donut + Legend) -->
+<section id="card-os" class="card">
+  <div class="card-header">
+    <h3 class="card-title">Operating Systems </h3>
+    <div class="stats">
+      <span class="muted"> <h1>Range: <span id="osRange">—</span></span>
+      <span id="osTotal" title="Total visitors in range">—</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div id="osLoading" class="muted" hidden>Loading…</div>
+    <div id="osEmpty" class="empty muted" hidden>No data for the selected filters.</div>
+
+    <div class="impact-col">
+      <!-- Smaller donut: data-scale + constrained width -->
+      <div
+        id="osPie"
+        class="chart"
+        role="img"
+        aria-label="OS share donut"
+        data-scale="0.75"
+        style="min-height:280px; max-width:360px; margin-inline:auto;"
+      ></div>
+
+      <div
+        id="osLegend"
+        class="legend"
+        aria-label="OS legend"
+        style="margin-top:10px; max-width:360px; margin-inline:auto;"
+      ></div>
+    </div>
+  </div>
+</section>
+
+<!-- Card 6 — Browsers (Donut + Legend) -->
+<section id="card-browser" class="card">
+  <div class="card-header">
+    <h3 class="card-title">Browsers</h3>
+    <div class="stats">
+      <span class="muted">Range: <span id="brRange">—</span></span>
+      <span id="brTotal" title="Total visitors in range">—</span>
+    </div>
+  </div>
+
+  <div class="content">
+    <div id="brLoading" class="muted" hidden>Loading…</div>
+    <div id="brEmpty" class="empty muted" hidden>No data for the selected filters.</div>
+
+    <div class="impact-col">
+      <!-- Smaller donut: data-scale + constrained width -->
+      <div
+        id="brPie"
+        class="chart"
+        role="img"
+        aria-label="Browser share donut"
+        data-scale="0.75"
+        style="min-height:280px; max-width:360px; margin-inline:auto;"
+      ></div>
+
+      <div
+        id="brLegend"
+        class="legend"
+        aria-label="Browser legend"
+        style="margin-top:10px; max-width:360px; margin-inline:auto;"
+      ></div>
+    </div>
+  </div>
+</section>
+
+ 
 
     </div> <!-- /.dashboard-grid -->
   </div> <!-- /.resume-section-content.container -->
@@ -1881,7 +1956,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <style>#card-top-countries { order: 1; }
 #card-source         { order: 2; }
 #card-country-summary{ order: 3; }
-#card-country-new    { order: 4; }</style>
+#card-country-new    { order: 4; } 
+#card-os   { order: 5; }
+#card-browser    { order: 5; }
+</style>
+
+
 
 <!-- Education -->
     <section class="resume-section" id="education">

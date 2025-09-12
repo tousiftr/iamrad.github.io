@@ -1,7 +1,7 @@
 :root{
-  --grid-gap: 05px;
-  --col-min: 400px;
-  --card-min-h: 580px;
+  --grid-gap: 15px;
+  --col-min: 450px;
+  --card-min-h: 380px;
   --chart-aspect: 16/9;
 
   --bg: #ffffff;
@@ -297,3 +297,10 @@
   transform: translate(0, 0); /* keep simple since you set left/top */
   white-space: nowrap;
 }
+#card-os .impact-col .chart,
+#card-browser .impact-col .chart {
+  max-width: 360px;   /* tweak as you like */
+  margin-inline: auto;
+}
+
+
