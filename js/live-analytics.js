@@ -53,394 +53,440 @@
   const yyyymmdd = (iso) => (iso || '').replaceAll('-', '');
 
   // ================================================================
-  // CARD 1 — GA Bubble Cloud (Top Countries)
-  // ================================================================
+// CARD 1 — GA Bubble Cloud (Top Countries) — now powered by Supabase (Card 2 data)
+// ================================================================
 
-  const GA_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxVHInAcoUybD8Uz2J8ve9gRUG44ewEXpnnRF9p7ddZqL8_5bCaLwhm6BnPDPG4g6A/exec';
+// Uses the same Supabase GA4 dataset and date/country filters defined for Card 2.
+// Removed the Google Apps Script endpoint. Both cards are now in sync.
 
-  async function initCard1() {
-    try {
-      const json = await requestJSON(GA_ENDPOINT);
-      setLastUpdated();
+// -----------------------------
+// Shared helpers expected:
+// - requestJSON(url, opts?)
+// - fmt(n)
+// - clamp(v, lo, hi)
+// - setLastUpdated()
+// - today, minusDays(d, n), toISO(d), yyyymmdd(s)
+// - PALETTE[]
+// - $('#id')
+// -----------------------------
 
-      if (!json || json.error) {
-        const empty = $('#gaEmpty');
-        if (empty) empty.hidden = false;
-        return;
-      }
+// ================================================================
+// CARD 2 — Supabase Source Bar Chart (responsive, auto-fitting)
+// (kept as-is, with small tweaks to also feed Card 1)
+// ================================================================
 
-      const card = $('#card-top-countries');
-      const TOP_N = Number(card?.dataset?.topN) > 0 ? Number(card.dataset.topN) : 5;
+const SUPABASE_URL = 'https://nmsgbinaxfwwcpgpsucx.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5tc2diaW5heGZ3d2NwZ3BzdWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0ODAzNzAsImV4cCI6MjA3MjA1NjM3MH0.TC-LcpNJPTB6mwiTZgRYlh69fycs5tcGmS4B8yt0nNY';
+const sbHeaders = () => ({ apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` });
 
-      const allRows = Object.entries(json)
-        .map(([name, val]) => ({ name: name || 'Unknown', value: Number(val) || 0 }))
-        .filter((d) => d.value > 0)
-        .sort((a, b) => b.value - a.value);
+// Card 2 elements & filters (shared)
+const elChart = $('#gaCountryBarChart2');
+const elEmpty = $('#srcEmpty');
+const elLoading = $('#srcLoading');
+const elTotal = $('#srcTotalVisitors');
 
-      if (!allRows.length) {
-        const empty = $('#gaEmpty');
-        if (empty) empty.hidden = false;
-        return;
-      }
+const elFrom = $('#srcDateStart');
+const elTo = $('#srcDateEnd');
+const elCtry = $('#srcCountry');
+const elBtn = $('#srcRefresh');
+const elClear = $('#srcClear');
+const elSum = $('#srcSummary');
 
-      // Total visitors label
-      countUp($('#gaVisitorsValue'), allRows.reduce((s, r) => s + r.value, 0));
+// Defaults: last 30 days
+const defaultEnd = today;
+const defaultStart = minusDays(today, 30);
+if (elTo) elTo.value = toISO(defaultEnd);
+if (elFrom) elFrom.value = toISO(defaultStart);
 
-      const rows = allRows.slice(0, TOP_N);
-      const host = $('#gaCountryBarChart');
-      if (!host) return;
-      host.hidden = false;
+function updateSummary() {
+  const parts = [];
+  if (elFrom?.value && elTo?.value) parts.push(`${elFrom.value} → ${elTo.value}`);
+  if (elCtry?.value) parts.push(`Country: ${elCtry.value}`);
+  if (elSum) elSum.textContent = parts.length ? `Filters: ${parts.join(' • ')}` : '';
+}
 
-      const ro = new ResizeObserver((entries) => {
-        for (const e of entries) {
-          const w = clamp(Math.floor(e.contentRect.width), 280, 4000);
-          const h = clamp(Math.floor(e.contentRect.height), 220, 4000);
-          drawBubbleCloud(host, rows, w, h);
-        }
-      });
-      ro.observe(host);
-      window.addEventListener('beforeunload', () => ro.disconnect(), { once: true });
-    } catch (_) {
-      const empty = $('#gaEmpty');
-      if (empty) empty.hidden = false;
-    }
-  }
-
-  function drawBubbleCloud(host, data, w, h) {
-    host.innerHTML = '';
-    host.style.position = 'relative';
-
-    const svgNS = 'http://www.w3.org/2000/svg';
-    const svg = document.createElementNS(svgNS, 'svg');
-    svg.setAttribute('width', '100%');
-    svg.setAttribute('height', '100%');
-    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    svg.style.display = 'block';
-
-    const cx = w / 2, cy = h / 2;
-    const maxVal = Math.max(1, ...data.map((d) => d.value));
-    const minR = 14;
-    const maxR = Math.round(Math.min(w, h) / 3.6);
-
-    function seededRand(seed) {
-      let s = 0;
-      for (let i = 0; i < seed.length; i++) s = (s * 31 + seed.charCodeAt(i)) >>> 0;
-      return () => (s = (1103515245 * s + 12345) >>> 0) / 2 ** 32;
-    }
-
-    const rng = seededRand(data.map((d) => d.name).join('|'));
-
-    const nodes = data.map((d, i) => ({
-      ...d,
-      r: Math.max(minR, Math.sqrt(d.value / maxVal) * maxR),
-      x: cx + (rng() - 0.5) * (w * 0.25),
-      y: cy + (rng() - 0.5) * (h * 0.25),
-      vx: 0,
-      vy: 0,
-      color: PALETTE[i % PALETTE.length],
-    }));
-
-    const padding = 6, edgePad = 6, steps = 240;
-
-    for (let k = 0; k < steps; k++) {
-      // pull to center
-      for (const d of nodes) { d.vx += (cx - d.x) * 0.003; d.vy += (cy - d.y) * 0.003; }
-      // collision resolve
-      for (let i = 0; i < nodes.length; i++) {
-        for (let j = i + 1; j < nodes.length; j++) {
-          const a = nodes[i], b = nodes[j];
-          const dx = b.x - a.x, dy = b.y - a.y; let dist = Math.hypot(dx, dy) || 0.0001;
-          const minD = a.r + b.r + padding;
-          if (dist < minD) {
-            const push = (minD - dist) / 2, ux = dx / dist, uy = dy / dist;
-            a.x -= ux * push; a.y -= uy * push;
-            b.x += ux * push; b.y += uy * push;
-          }
-        }
-      }
-      // integrate & clamp
-      for (const d of nodes) {
-        d.x += d.vx; d.y += d.vy; d.vx *= 0.88; d.vy *= 0.88;
-        d.x = clamp(d.x, edgePad + d.r, w - edgePad - d.r);
-        d.y = clamp(d.y, edgePad + d.r, h - edgePad - d.r);
-      }
-    }
-
-    // Tooltip (lazy-create)
-    let tip = host.querySelector('.bubble-tip');
-    if (!tip) { tip = document.createElement('div'); tip.className = 'bubble-tip'; tip.style.opacity = 0; host.appendChild(tip); }
-
-    const g = document.createElementNS(svgNS, 'g');
-    svg.appendChild(g);
-
-    function fitText(el, text, maxWidth, maxFS, minFS) {
-      el.textContent = text;
-      el.style.fontSize = maxFS + 'px';
-      let bbox = el.getBBox();
-      while (bbox.width > maxWidth && maxFS > minFS) {
-        maxFS -= 1; el.style.fontSize = maxFS + 'px'; bbox = el.getBBox();
-      }
-      if (bbox.width <= maxWidth) return;
-      let s = el.textContent;
-      while (s.length > 2 && el.getBBox().width > maxWidth) {
-        s = s.slice(0, -2) + '…'; el.textContent = s;
-      }
-    }
-
-    nodes.forEach((d, i) => {
-      const group = document.createElementNS(svgNS, 'g');
-      group.setAttribute('transform', `translate(${d.x},${d.y})`);
-      g.appendChild(group);
-
-      const circ = document.createElementNS(svgNS, 'circle');
-      circ.setAttribute('r', d.r);
-      circ.setAttribute('fill', d.color);
-      circ.setAttribute('opacity', '0.97');
-      group.appendChild(circ);
-
-      const maxTextWidth = d.r * 1.7;
-
-      const num = document.createElementNS(svgNS, 'text');
-      num.setAttribute('text-anchor', 'middle');
-      num.setAttribute('class', 'bubble-value');
-      num.setAttribute('y', -2);
-      num.style.fontSize = Math.max(12, Math.min(22, Math.round(d.r * 0.5))) + 'px';
-      num.textContent = fmt(d.value);
-      group.appendChild(num);
-
-      const lab = document.createElementNS(svgNS, 'text');
-      lab.setAttribute('text-anchor', 'middle');
-      lab.setAttribute('class', 'bubble-country');
-      lab.setAttribute('y', 16);
-      const fsLabMax = Math.max(10, Math.min(18, Math.round(d.r * 0.36)));
-      lab.style.fontSize = fsLabMax + 'px';
-      lab.textContent = d.name;
-      group.appendChild(lab);
-
-      if (d.r < 26) { num.setAttribute('opacity', '0'); lab.setAttribute('opacity', '0'); }
-      else { fitText(lab, d.name, maxTextWidth, fsLabMax, 9); }
-
-      group.addEventListener('mouseenter', () => {
-        circ.setAttribute('opacity', '1');
-        tip.innerHTML = `<b>${d.name}</b><br>${fmt(d.value)} visitors`;
-        tip.style.opacity = 1;
-      });
-      group.addEventListener('mousemove', (ev) => {
-        const b = host.getBoundingClientRect();
-        tip.style.left = ev.clientX - b.left + 12 + 'px';
-        tip.style.top = ev.clientY - b.top + 12 + 'px';
-      });
-      group.addEventListener('mouseleave', () => { circ.setAttribute('opacity', '0.97'); tip.style.opacity = 0; });
-    });
-
-    host.appendChild(svg);
-  }
-
-  // ================================================================
-  // CARD 2 — Supabase Source Bar Chart (responsive, auto-fitting)
-  // ================================================================
-
-  const SUPABASE_URL = 'https://nmsgbinaxfwwcpgpsucx.supabase.co';
-  const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5tc2diaW5heGZ3d2NwZ3BzdWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0ODAzNzAsImV4cCI6MjA3MjA1NjM3MH0.TC-LcpNJPTB6mwiTZgRYlh69fycs5tcGmS4B8yt0nNY';
-  const sbHeaders = () => ({ apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` });
-
-  const elChart = $('#gaCountryBarChart2');
-  const elEmpty = $('#srcEmpty');
-  const elLoading = $('#srcLoading');
-  const elTotal = $('#srcTotalVisitors');
-
-  const elFrom = $('#srcDateStart');
-  const elTo = $('#srcDateEnd');
-  const elCtry = $('#srcCountry');
-  const elBtn = $('#srcRefresh');
-  const elClear = $('#srcClear');
-  const elSum = $('#srcSummary');
-
-  // Defaults: last 30 days (bugfix)
-  const defaultEnd = today;
-  const defaultStart = minusDays(today, 30);
-  if (elTo) elTo.value = toISO(defaultEnd);
-  if (elFrom) elFrom.value = toISO(defaultStart);
-
-  function updateSummary() {
-    const parts = [];
-    if (elFrom?.value && elTo?.value) parts.push(`${elFrom.value} → ${elTo.value}`);
-    if (elCtry?.value) parts.push(`Country: ${elCtry.value}`);
-    if (elSum) elSum.textContent = parts.length ? `Filters: ${parts.join(' • ')}` : '';
-  }
-
-  async function loadCountries() {
-    try {
-      const url = new URL(`${SUPABASE_URL}/rest/v1/ga4_users`);
-      url.searchParams.set('select', 'country');
-      url.searchParams.set('order', 'country.asc');
-      const rows = await requestJSON(url.toString(), { headers: sbHeaders() });
-      const seen = new Set();
-      rows.forEach((r) => {
-        const c = r.country || '';
-        if (!c || seen.has(c)) return; seen.add(c);
-        const opt = document.createElement('option'); opt.value = c; opt.textContent = c; elCtry?.appendChild(opt);
-      });
-    } catch (e) {
-      console.warn('Country list failed:', e);
-    }
-  }
-
-  async function fetchRows() {
+async function loadCountries() {
+  try {
     const url = new URL(`${SUPABASE_URL}/rest/v1/ga4_users`);
-    url.searchParams.set('select', 'date,country,source,medium,totalusers');
-    url.searchParams.set('order', 'totalusers.desc');
-    const start = yyyymmdd(elFrom?.value);
-    const end = yyyymmdd(elTo?.value);
-    if (start) url.searchParams.append('date', `gte.${start}`);
-    if (end) url.searchParams.append('date', `lte.${end}`);
-    if ((elCtry?.value || '').trim()) url.searchParams.append('country', `eq.${elCtry.value.trim()}`);
-    return requestJSON(url.toString(), { headers: sbHeaders() });
-  }
-
-  function bySource(rows) {
-    const map = new Map();
-    for (const r of rows) {
-      const k = r.source || '(not set)';
-      map.set(k, (map.get(k) || 0) + Number(r.totalusers || 0));
-    }
-    const arr = Array.from(map, ([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value);
-    return { arr, total: arr.reduce((s, x) => s + x.value, 0) };
-  }
-
-  // Responsive bar chart with overflow-safe labels
-  function drawBarChart(host, data) {
-    host.innerHTML = '';
-    const W = Math.max(Math.floor(host.getBoundingClientRect().width), 320);
-
-    const ROW = 48;
-    const PAD_TOP = 20, PAD_RIGHT = 72, PAD_BOTTOM = 10, LABEL_W = 160; // wider labels
-    const H = PAD_TOP + PAD_BOTTOM + data.length * ROW;
-
-    const innerW = W - LABEL_W - PAD_RIGHT;
-    const maxVal = Math.max(1, ...data.map((d) => d.value));
-    const x = (v) => (v / maxVal) * innerW;
-
-    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    svg.setAttribute('width', '100%');
-    svg.setAttribute('height', H);
-    svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
-    host.appendChild(svg);
-
-    const ns = svg.namespaceURI;
-    const styles = getComputedStyle(document.documentElement);
-    const colMuted = styles.getPropertyValue('--muted').trim() || '#6b7280';
-    const colText = styles.getPropertyValue('--text').trim() || '#111827';
-
-    const truncate = (s, max = 24) => (s.length > max ? s.slice(0, max - 1) + '…' : s);
-
-    data.forEach((d, i) => {
-      const yMid = PAD_TOP + i * ROW + ROW / 2;
-
-      // label (with title tooltip)
-      const lab = document.createElementNS(ns, 'text');
-      lab.setAttribute('x', LABEL_W - 10);
-      lab.setAttribute('y', yMid);
-      lab.setAttribute('text-anchor', 'end');
-      lab.setAttribute('dominant-baseline', 'middle');
-      lab.setAttribute('fill', colMuted);
-      lab.style.fontSize = '12px';
-      lab.textContent = truncate(d.name, Math.max(12, Math.floor(LABEL_W / 7)));
-      const ttitle = document.createElementNS(ns, 'title'); ttitle.textContent = d.name; lab.appendChild(ttitle);
-      svg.appendChild(lab);
-
-      // bar
-      const bw = Math.max(2, x(d.value));
-      const rect = document.createElementNS(ns, 'rect');
-      rect.setAttribute('x', LABEL_W);
-      rect.setAttribute('y', yMid - 9);
-      rect.setAttribute('width', bw);
-      rect.setAttribute('height', 18);
-      rect.setAttribute('rx', 9);
-      rect.setAttribute('fill', PALETTE[i % PALETTE.length]);
-      rect.setAttribute('opacity', 0.9);
-      svg.appendChild(rect);
-
-      // value label — switches to inside if overflow
-      let valX = LABEL_W + bw + 6;
-      let anchor = 'start';
-      let fill = colText;
-      const roomInside = bw > 40; // inside room threshold
-      if (valX > W - PAD_RIGHT) { // would overflow → put inside
-        valX = LABEL_W + bw - 6;
-        anchor = 'end';
-        fill = roomInside ? '#ffffff' : colText;
-      }
-      const val = document.createElementNS(ns, 'text');
-      val.setAttribute('x', valX);
-      val.setAttribute('y', yMid);
-      val.setAttribute('text-anchor', anchor);
-      val.setAttribute('dominant-baseline', 'middle');
-      val.setAttribute('fill', fill);
-      val.style.fontSize = '12px';
-      val.textContent = fmt(d.value);
-      svg.appendChild(val);
+    url.searchParams.set('select', 'country');
+    url.searchParams.set('order', 'country.asc');
+    const rows = await requestJSON(url.toString(), { headers: sbHeaders() });
+    const seen = new Set();
+    rows.forEach((r) => {
+      const c = r.country || '';
+      if (!c || seen.has(c)) return; seen.add(c);
+      const opt = document.createElement('option'); opt.value = c; opt.textContent = c; elCtry?.appendChild(opt);
     });
+  } catch (e) {
+    console.warn('Country list failed:', e);
+  }
+}
+
+async function fetchRows() {
+  const url = new URL(`${SUPABASE_URL}/rest/v1/ga4_users`);
+  url.searchParams.set('select', 'date,country,source,medium,totalusers');
+  url.searchParams.set('order', 'totalusers.desc');
+  const start = yyyymmdd(elFrom?.value);
+  const end = yyyymmdd(elTo?.value);
+  if (start) url.searchParams.append('date', `gte.${start}`);
+  if (end) url.searchParams.append('date', `lte.${end}`);
+  if ((elCtry?.value || '').trim()) url.searchParams.append('country', `eq.${elCtry.value.trim()}`);
+  return requestJSON(url.toString(), { headers: sbHeaders() });
+}
+
+function bySource(rows) {
+  const map = new Map();
+  for (const r of rows) {
+    const k = r.source || '(not set)';
+    map.set(k, (map.get(k) || 0) + Number(r.totalusers || 0));
+  }
+  const arr = Array.from(map, ([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value);
+  return { arr, total: arr.reduce((s, x) => s + x.value, 0) };
+}
+
+// NEW: country aggregator for Card 1
+function byCountry(rows) {
+  const map = new Map();
+  for (const r of rows) {
+    const k = r.country || 'Unknown';
+    map.set(k, (map.get(k) || 0) + Number(r.totalusers || 0));
+  }
+  const arr = Array.from(map, ([name, value]) => ({ name, value })).filter(d => d.value > 0).sort((a, b) => b.value - a.value);
+  return { arr, total: arr.reduce((s, x) => s + x.value, 0) };
+}
+
+// -----------------------------
+// Card 2: Responsive bar chart
+// -----------------------------
+function drawBarChart(host, data) {
+  host.innerHTML = '';
+  const W = Math.max(Math.floor(host.getBoundingClientRect().width), 320);
+
+  const ROW = 48;
+  const PAD_TOP = 20, PAD_RIGHT = 72, PAD_BOTTOM = 10, LABEL_W = 160; // wider labels
+  const H = PAD_TOP + PAD_BOTTOM + data.length * ROW;
+
+  const innerW = W - LABEL_W - PAD_RIGHT;
+  const maxVal = Math.max(1, ...data.map((d) => d.value));
+  const x = (v) => (v / maxVal) * innerW;
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('width', '100%');
+  svg.setAttribute('height', H);
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  host.appendChild(svg);
+
+  const ns = svg.namespaceURI;
+  const styles = getComputedStyle(document.documentElement);
+  const colMuted = styles.getPropertyValue('--muted').trim() || '#6b7280';
+  const colText = styles.getPropertyValue('--text').trim() || '#111827';
+
+  const truncate = (s, max = 24) => (s.length > max ? s.slice(0, max - 1) + '…' : s);
+
+  data.forEach((d, i) => {
+    const yMid = PAD_TOP + i * ROW + ROW / 2;
+
+    // label (with title tooltip)
+    const lab = document.createElementNS(ns, 'text');
+    lab.setAttribute('x', LABEL_W - 10);
+    lab.setAttribute('y', yMid);
+    lab.setAttribute('text-anchor', 'end');
+    lab.setAttribute('dominant-baseline', 'middle');
+    lab.setAttribute('fill', colMuted);
+    lab.style.fontSize = '12px';
+    lab.textContent = truncate(d.name, Math.max(12, Math.floor(LABEL_W / 7)));
+    const ttitle = document.createElementNS(ns, 'title'); ttitle.textContent = d.name; lab.appendChild(ttitle);
+    svg.appendChild(lab);
+
+    // bar
+    const bw = Math.max(2, x(d.value));
+    const rect = document.createElementNS(ns, 'rect');
+    rect.setAttribute('x', LABEL_W);
+    rect.setAttribute('y', yMid - 9);
+    rect.setAttribute('width', bw);
+    rect.setAttribute('height', 18);
+    rect.setAttribute('rx', 9);
+    rect.setAttribute('fill', PALETTE[i % PALETTE.length]);
+    rect.setAttribute('opacity', 0.9);
+    svg.appendChild(rect);
+
+    // value label — switches to inside if overflow
+    let valX = LABEL_W + bw + 6;
+    let anchor = 'start';
+    let fill = colText;
+    const roomInside = bw > 40; // inside room threshold
+    if (valX > W - PAD_RIGHT) { // would overflow → put inside
+      valX = LABEL_W + bw - 6;
+      anchor = 'end';
+      fill = roomInside ? '#ffffff' : colText;
+    }
+    const val = document.createElementNS(ns, 'text');
+    val.setAttribute('x', valX);
+    val.setAttribute('y', yMid);
+    val.setAttribute('text-anchor', anchor);
+    val.setAttribute('dominant-baseline', 'middle');
+    val.setAttribute('fill', fill);
+    val.style.fontSize = '12px';
+    val.textContent = fmt(d.value);
+    svg.appendChild(val);
+  });
+}
+
+let lastSourceData = [];
+let barRO;
+function mountSourceChart(data) {
+  lastSourceData = data.slice(0, 12); // cap to 12 rows
+  const redraw = () => drawBarChart(elChart, lastSourceData);
+  if (barRO) barRO.disconnect();
+  barRO = new ResizeObserver(redraw);
+  barRO.observe(elChart);
+  redraw();
+}
+
+// ================================================================
+// CARD 1 — Bubble Cloud (Top Countries) — shared Supabase data
+// ================================================================
+
+const elBubbleHost = $('#gaCountryBarChart'); // existing host for Card 1 bubble cloud
+const elGAEmpty = $('#gaEmpty');
+const elGATotal = $('#gaVisitorsValue');
+const cardTopCountries = $('#card-top-countries');
+let bubbleRO;
+
+function drawBubbleCloud(host, data, w, h) {
+  host.innerHTML = '';
+  host.style.position = 'relative';
+
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svg = document.createElementNS(svgNS, 'svg');
+  svg.setAttribute('width', '100%');
+  svg.setAttribute('height', '100%');
+  svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+  svg.style.display = 'block';
+
+  const cx = w / 2, cy = h / 2;
+  const maxVal = Math.max(1, ...data.map((d) => d.value));
+  const minR = 14;
+  const maxR = Math.round(Math.min(w, h) / 3.6);
+
+  function seededRand(seed) {
+    let s = 0;
+    for (let i = 0; i < seed.length; i++) s = (s * 31 + seed.charCodeAt(i)) >>> 0;
+    return () => (s = (1103515245 * s + 12345) >>> 0) / 2 ** 32;
   }
 
-  let lastSourceData = [];
-  let barRO;
-  function mountSourceChart(data) {
-    lastSourceData = data.slice(0, 12); // cap to 12 rows
-    const redraw = () => drawBarChart(elChart, lastSourceData);
-    if (barRO) barRO.disconnect();
-    barRO = new ResizeObserver(redraw);
-    barRO.observe(elChart);
-    redraw();
-  }
+  const rng = seededRand(data.map((d) => d.name).join('|'));
 
-  async function refreshSources() {
-    try {
-      if (elLoading) elLoading.hidden = false;
-      if (elEmpty) elEmpty.hidden = true;
-      if (elTotal) elTotal.textContent = '—';
-      updateSummary();
-      const rows = await fetchRows();
-      const { arr, total } = bySource(rows);
-      if (elTotal) elTotal.textContent = fmt(total);
-      if (!arr.length) { if (elChart) elChart.innerHTML = ''; if (elEmpty) elEmpty.hidden = false; return; }
-      mountSourceChart(arr);
-    } catch (e) {
-      console.error('Source refresh failed', e);
-      if (elChart) elChart.innerHTML = '';
-      if (elEmpty) elEmpty.hidden = false;
-    } finally {
-      if (elLoading) elLoading.hidden = true;
+  const nodes = data.map((d, i) => ({
+    ...d,
+    r: Math.max(minR, Math.sqrt(d.value / maxVal) * maxR),
+    x: (w / 2) + (rng() - 0.5) * (w * 0.25),
+    y: (h / 2) + (rng() - 0.5) * (h * 0.25),
+    vx: 0,
+    vy: 0,
+    color: PALETTE[i % PALETTE.length],
+  }));
+
+  const padding = 6, edgePad = 6, steps = 240;
+
+  for (let k = 0; k < steps; k++) {
+    // pull to center
+    for (const d of nodes) { d.vx += ((w / 2) - d.x) * 0.003; d.vy += ((h / 2) - d.y) * 0.003; }
+    // collision resolve
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const dx = b.x - a.x, dy = b.y - a.y; let dist = Math.hypot(dx, dy) || 0.0001;
+        const minD = a.r + b.r + padding;
+        if (dist < minD) {
+          const push = (minD - dist) / 2, ux = dx / dist, uy = dy / dist;
+          a.x -= ux * push; a.y -= uy * push;
+          b.x += ux * push; b.y += uy * push;
+        }
+      }
+    }
+    // integrate & clamp
+    for (const d of nodes) {
+      d.x += d.vx; d.y += d.vy; d.vx *= 0.88; d.vy *= 0.88;
+      d.x = clamp(d.x, edgePad + d.r, w - edgePad - d.r);
+      d.y = clamp(d.y, edgePad + d.r, h - edgePad - d.r);
     }
   }
 
-  // Bindings
-  elBtn?.addEventListener('click', refreshSources);
-  elClear?.addEventListener('click', () => {
-    if (elCtry) elCtry.value = '';
-    if (elTo) elTo.value = toISO(today);
-    if (elFrom) elFrom.value = toISO(minusDays(today, 30));
+  // Tooltip (lazy-create)
+  let tip = host.querySelector('.bubble-tip');
+  if (!tip) { tip = document.createElement('div'); tip.className = 'bubble-tip'; tip.style.opacity = 0; host.appendChild(tip); }
+
+  const g = document.createElementNS(svgNS, 'g');
+  svg.appendChild(g);
+
+  function fitText(el, text, maxWidth, maxFS, minFS) {
+    el.textContent = text;
+    el.style.fontSize = maxFS + 'px';
+    let bbox = el.getBBox();
+    while (bbox.width > maxWidth && maxFS > minFS) {
+      maxFS -= 1; el.style.fontSize = maxFS + 'px'; bbox = el.getBBox();
+    }
+    if (bbox.width <= maxWidth) return;
+    let s = el.textContent;
+    while (s.length > 2 && el.getBBox().width > maxWidth) {
+      s = s.slice(0, -2) + '…'; el.textContent = s;
+    }
+  }
+
+  nodes.forEach((d, i) => {
+    const group = document.createElementNS(svgNS, 'g');
+    group.setAttribute('transform', `translate(${d.x},${d.y})`);
+    g.appendChild(group);
+
+    const circ = document.createElementNS(svgNS, 'circle');
+    circ.setAttribute('r', d.r);
+    circ.setAttribute('fill', d.color);
+    circ.setAttribute('opacity', '0.97');
+    group.appendChild(circ);
+
+    const maxTextWidth = d.r * 1.7;
+
+    const num = document.createElementNS(svgNS, 'text');
+    num.setAttribute('text-anchor', 'middle');
+    num.setAttribute('class', 'bubble-value');
+    num.setAttribute('y', -2);
+    num.style.fontSize = Math.max(12, Math.min(22, Math.round(d.r * 0.5))) + 'px';
+    num.textContent = fmt(d.value);
+    group.appendChild(num);
+
+    const lab = document.createElementNS(svgNS, 'text');
+    lab.setAttribute('text-anchor', 'middle');
+    lab.setAttribute('class', 'bubble-country');
+    lab.setAttribute('y', 16);
+    const fsLabMax = Math.max(10, Math.min(18, Math.round(d.r * 0.36)));
+    lab.style.fontSize = fsLabMax + 'px';
+    lab.textContent = d.name;
+    group.appendChild(lab);
+
+    if (d.r < 26) { num.setAttribute('opacity', '0'); lab.setAttribute('opacity', '0'); }
+    else { fitText(lab, d.name, maxTextWidth, fsLabMax, 9); }
+
+    group.addEventListener('mouseenter', () => {
+      circ.setAttribute('opacity', '1');
+      tip.innerHTML = `<b>${d.name}</b><br>${fmt(d.value)} visitors`;
+      tip.style.opacity = 1;
+    });
+    group.addEventListener('mousemove', (ev) => {
+      const b = host.getBoundingClientRect();
+      tip.style.left = ev.clientX - b.left + 12 + 'px';
+      tip.style.top = ev.clientY - b.top + 12 + 'px';
+    });
+    group.addEventListener('mouseleave', () => { circ.setAttribute('opacity', '0.97'); tip.style.opacity = 0; });
+  });
+
+  host.appendChild(svg);
+}
+
+// Drive Card 1 from Card 2's fetched rows
+function updateCard1FromRows(allRows) {
+  try {
+    setLastUpdated?.();
+
+    const card = cardTopCountries;
+    const TOP_N = Number(card?.dataset?.topN) > 0 ? Number(card.dataset.topN) : 5;
+
+    const { arr, total } = byCountry(allRows);
+
+    if (!arr.length) {
+      if (elGAEmpty) elGAEmpty.hidden = false;
+      if (elBubbleHost) elBubbleHost.innerHTML = '';
+      if (elGATotal) elGATotal.textContent = '—';
+      return;
+    }
+
+    // total visitors
+    if (elGATotal) elGATotal.textContent = '';
+    countUp?.(elGATotal, total);
+
+    const rows = arr.slice(0, TOP_N);
+    if (!elBubbleHost) return;
+    elBubbleHost.hidden = false;
+
+    const redraw = () => {
+      const r = elBubbleHost.getBoundingClientRect();
+      const w = clamp(Math.floor(r.width), 280, 4000);
+      const h = clamp(Math.floor(r.height), 220, 4000);
+      drawBubbleCloud(elBubbleHost, rows, w, h);
+    };
+
+    if (bubbleRO) bubbleRO.disconnect();
+    bubbleRO = new ResizeObserver(redraw);
+    bubbleRO.observe(elBubbleHost);
+    redraw();
+  } catch (e) {
+    console.warn('Card1 update failed:', e);
+    if (elGAEmpty) elGAEmpty.hidden = false;
+  }
+}
+
+// Main refresh now powers BOTH cards
+async function refreshSources() {
+  try {
+    if (elLoading) elLoading.hidden = false;
+    if (elEmpty) elEmpty.hidden = true;
+    if (elTotal) elTotal.textContent = '—';
+    updateSummary();
+
+    const rows = await fetchRows();
+
+    // Card 2 (sources)
+    const { arr, total } = bySource(rows);
+    if (elTotal) elTotal.textContent = fmt(total);
+    if (!arr.length) { if (elChart) elChart.innerHTML = ''; if (elEmpty) elEmpty.hidden = false; }
+    else { mountSourceChart(arr); }
+
+    // Card 1 (countries) — same dataset/filters
+    updateCard1FromRows(rows);
+  } catch (e) {
+    console.error('Source refresh failed', e);
+    if (elChart) elChart.innerHTML = '';
+    if (elEmpty) elEmpty.hidden = false;
+    if (elGAEmpty) elGAEmpty.hidden = false;
+  } finally {
+    if (elLoading) elLoading.hidden = true;
+  }
+}
+
+// Bindings
+elBtn?.addEventListener('click', refreshSources);
+elClear?.addEventListener('click', () => {
+  if (elCtry) elCtry.value = '';
+  if (elTo) elTo.value = toISO(today);
+  if (elFrom) elFrom.value = toISO(minusDays(today, 30));
+  refreshSources();
+});
+
+document.querySelectorAll('.quick-pills .pill').forEach((p) => {
+  p.addEventListener('click', () => {
+    const preset = p.getAttribute('data-preset');
+    const now = new Date();
+    if (preset === 'month') {
+      const first = new Date(now.getFullYear(), now.getMonth(), 1);
+      if (elFrom) elFrom.value = toISO(first);
+      if (elTo) elTo.value = toISO(now);
+    } else {
+      const n = Number(preset) || 7;
+      if (elFrom) elFrom.value = toISO(minusDays(now, n));
+      if (elTo) elTo.value = toISO(now);
+    }
     refreshSources();
   });
+});
 
-  document.querySelectorAll('.quick-pills .pill').forEach((p) => {
-    p.addEventListener('click', () => {
-      const preset = p.getAttribute('data-preset');
-      const now = new Date();
-      if (preset === 'month') {
-        const first = new Date(now.getFullYear(), now.getMonth(), 1);
-        if (elFrom) elFrom.value = toISO(first);
-        if (elTo) elTo.value = toISO(now);
-      } else {
-        const n = Number(preset) || 7;
-        if (elFrom) elFrom.value = toISO(minusDays(now, n));
-        if (elTo) elTo.value = toISO(now);
-      }
-      refreshSources();
-    });
-  });
+// Init
+loadCountries();
+refreshSources();
 
- 
+
+  // ================================================================
+  // CARD 3 — Last 7 Days Summary (deduped + lightweight)
+  // ================================================================
 // ================================
 // Card 3 — Last 7 Days Summary
 // ================================
