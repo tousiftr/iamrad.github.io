@@ -425,6 +425,8 @@ function updateCard1FromRows(allRows) {
   }
 }
 
+
+
 // Main refresh now powers BOTH cards
 async function refreshSources() {
   try {
@@ -461,6 +463,126 @@ elClear?.addEventListener('click', () => {
   if (elFrom) elFrom.value = toISO(minusDays(today, 30));
   refreshSources();
 });
+
+// === Unified Visitors header for Card 2 (#srcTotalVisitors) + Card 1 ===
+// Drop this after your filter elements and refreshSources/bySource/fetchRows are defined.
+
+(function () {
+  // Build a short label from current date range inputs
+  function rangeShortLabel() {
+    const now = new Date();
+    const f = elFrom?.value ? new Date(elFrom.value) : null;
+    const t = elTo?.value ? new Date(elTo.value) : null;
+    if (!f || !t) return "All";
+
+    // normalize to midnight
+    const fd = new Date(f.getFullYear(), f.getMonth(), f.getDate());
+    const td = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+    const diffDays = Math.round((td - fd) / 86400000);
+    const firstOfThisMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    if (fd.getTime() === firstOfThisMonth.getTime()) return "This month";
+    if (diffDays === 7) return "7d";
+    if (diffDays === 30) return "30d";
+    return `${elFrom.value} → ${elTo.value}`;
+  }
+
+  // Get numeric value from #srcTotalVisitors text (fallback when we haven't fetched yet)
+  function currentTotalFromDOM() {
+    const raw = String(document.getElementById("srcTotalVisitors")?.textContent || "");
+    return Number(raw.replace(/[^\d.-]/g, "")) || 0;
+  }
+
+  // Update labels + numbers on both cards
+  function updateBothCards(total) {
+    const range = rangeShortLabel();
+
+    // ---- Card 2 (Source) ----
+    const c2Label = document.querySelector("#card-source .stats .muted");
+    if (c2Label) c2Label.textContent = `Visitors (${range}):`;
+    const c2Num = document.getElementById("srcTotalVisitors");
+    if (c2Num) c2Num.textContent = (typeof fmt === "function") ? fmt(total) : String(total);
+
+    // ---- Card 1 (Top Countries) ----
+    const c1Label = document.querySelector("#card-top-countries .stats .muted");
+    if (c1Label) c1Label.textContent = `Visitors (${range}):`;
+    const c1Num = document.getElementById("gaVisitorsValue");
+    if (c1Num) {
+      if (typeof countUp === "function") countUp(c1Num, total);
+      else c1Num.textContent = (typeof fmt === "function") ? fmt(total) : String(total);
+    }
+  }
+
+  // Patch refreshSources to also update both headers with the computed total
+  const _refreshSources = typeof refreshSources === "function" ? refreshSources : null;
+  if (_refreshSources) {
+    refreshSources = async function patchedRefreshSources() {
+      try {
+        if (elLoading) elLoading.hidden = false;
+        if (elEmpty) elEmpty.hidden = true;
+        if (elTotal) elTotal.textContent = "—";
+        updateSummary?.();
+
+        const rows = await fetchRows();
+
+        // Card 2 (sources total)
+        const { arr, total } = bySource(rows);
+        if (elTotal) elTotal.textContent = (typeof fmt === "function") ? fmt(total) : String(total);
+        if (!arr.length) {
+          if (elChart) elChart.innerHTML = "";
+          if (elEmpty) elEmpty.hidden = false;
+        } else {
+          mountSourceChart(arr);
+        }
+
+        // Card 1 (bubble) if you have this hooked up
+        if (typeof updateCard1FromRows === "function") updateCard1FromRows(rows);
+
+        // Update both card headers with the SAME total
+        updateBothCards(total);
+      } catch (e) {
+        console.error("Source refresh failed", e);
+        if (elChart) elChart.innerHTML = "";
+        if (elEmpty) elEmpty.hidden = false;
+        updateBothCards(0);
+      } finally {
+        if (elLoading) elLoading.hidden = true;
+      }
+    };
+  }
+
+  // Keep labels responsive to date filter changes even before Apply
+  [elFrom, elTo].forEach((el) => el?.addEventListener("change", () => {
+    updateBothCards(currentTotalFromDOM());
+  }));
+
+  // Also react to quick-pills
+  document.querySelectorAll(".quick-pills .pill").forEach((p) => {
+    p.addEventListener("click", () => {
+      updateBothCards(currentTotalFromDOM());
+    });
+  });
+
+  // Initial paint
+  updateBothCards(currentTotalFromDOM());
+})();
+
+
+
+function updateVisitorsLabel() {
+  const label = document.getElementById('gaVisitorsLabel');
+  if (!label) return;
+
+  const from = elFrom?.value?.trim();
+  const to = elTo?.value?.trim();
+  const ctry = elCtry?.value?.trim();
+
+  const parts = [];
+  if (from && to) parts.push(`${from} → ${to}`);
+  if (ctry) parts.push(`Country: ${ctry}`);
+
+  label.textContent = parts.length ? `Visitors (${parts.join(' • ')})` : 'Visitors';
+}
 
 document.querySelectorAll('.quick-pills .pill').forEach((p) => {
   p.addEventListener('click', () => {
