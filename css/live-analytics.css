@@ -288,6 +288,12 @@
   max-height: 480px;       /* choose your own limit */
   overflow: auto;          /* tidy scroll inside the card */
 }
-window.PALETTE = Array.isArray(window.PALETTE) && window.PALETTE.length >= 3
-  ? window.PALETTE
-  : ['#3b82f6', '#10b981', '#f59e0b']; // Total, New, Sessions
+
+
+.bubble-tip {
+  background: rgba(0,0,0,0.8);
+  color: #fff; padding: 6px 8px; border-radius: 6px;
+  font: 12px/1.3 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  transform: translate(0, 0); /* keep simple since you set left/top */
+  white-space: nowrap;
+}

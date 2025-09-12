@@ -440,9 +440,7 @@
     });
   });
 
-  // ================================================================
-  // CARD 3 — Last 7 Days Summary (deduped + lightweight)
-  // ================================================================
+ 
 // ================================
 // Card 3 — Last 7 Days Summary
 // ================================
@@ -681,18 +679,18 @@
         svg.appendChild(rect);
 
         // value label (inside if tall enough, else above)
-       const cx = x + barW / 2;
-const ty = y(v) - 6;        // 6px above bar top
-const label = document.createElementNS(ns, 'text');
-label.setAttribute('x', cx);
-label.setAttribute('y', ty);
-label.setAttribute('text-anchor', 'middle');
-label.setAttribute('fill', '#374151'); // dark text
-label.style.fontSize = '11px';
-label.style.fontWeight = '500';
-label.textContent = fmt(v);
-svg.appendChild(label);
-      });
+                 const cx = x + barW / 2;
+          const ty = y(v) - 6;        // 6px above bar top
+          const label = document.createElementNS(ns, 'text');
+          label.setAttribute('x', cx);
+          label.setAttribute('y', ty);
+          label.setAttribute('text-anchor', 'middle');
+          label.setAttribute('fill', '#374151'); // dark text
+          label.style.fontSize = '11px';
+          label.style.fontWeight = '500';
+          label.textContent = fmt(v);
+          svg.appendChild(label);
+                });
     });
 
     // Legend (top-right)
