@@ -1,3 +1,4 @@
+
 'use strict';
 
 (() => {
@@ -62,33 +63,55 @@
 
   // Defaults: last 30 days
   const defaultEnd = today;
-  const defaultStart = minusDays(today, 30);
+  const defaultStart = minusDays(today, 7);
   if (elTo) elTo.value = toISO(defaultEnd);
   if (elFrom) elFrom.value = toISO(defaultStart);
+
+  // ---- WORLD FILTER SUPPORT (NEW) ----
+  function currentCountry() {
+    // Treat blank or "WORLD" as global / all countries
+    const v = (elCtry?.value || '').trim();
+    return v && v !== 'WORLD' ? v : '';
+  }
+  function currentCountryLabel() {
+    const v = (elCtry?.value || '').trim();
+    return v && v !== 'WORLD' ? v : 'World';
+  }
 
   // Filters summary label (Card 2)
   function updateSummary() {
     const parts = [];
     if (elFrom?.value && elTo?.value) parts.push(`${elFrom.value} → ${elTo.value}`);
-    if (elCtry?.value) parts.push(`Country: ${elCtry.value}`);
+    parts.push(`Country: ${currentCountryLabel()}`);
     if (elSum) elSum.textContent = parts.length ? `Filters: ${parts.join(' • ')}` : '';
   }
 
+  // Populate countries + "World"
   async function loadCountries() {
     try {
+      if (!elCtry) return;
+      // Reset & inject "World" option first
+      elCtry.innerHTML = '';
+      {
+        const opt = document.createElement('option');
+        opt.value = 'WORLD'; // sentinel value = global
+        opt.textContent = 'World (All)';
+        elCtry.appendChild(opt);
+      }
+
       const url = new URL(`${SUPABASE_URL}/rest/v1/ga4_users`);
       url.searchParams.set('select', 'country');
       url.searchParams.set('order', 'country.asc');
       const rows = await requestJSON(url.toString(), { headers: sbHeaders() });
       const seen = new Set();
       rows.forEach((r) => {
-        const c = r.country || '';
+        const c = (r.country || '').toString().trim();
         if (!c || seen.has(c)) return;
         seen.add(c);
         const opt = document.createElement('option');
         opt.value = c;
         opt.textContent = c;
-        elCtry?.appendChild(opt);
+        elCtry.appendChild(opt);
       });
     } catch (e) {
       console.warn('Country list failed:', e);
@@ -103,7 +126,8 @@
     const end = yyyymmdd(elTo?.value);
     if (start) url.searchParams.append('date', `gte.${start}`);
     if (end) url.searchParams.append('date', `lte.${end}`);
-    if ((elCtry?.value || '').trim()) url.searchParams.append('country', `eq.${elCtry.value.trim()}`);
+    const c = currentCountry();
+    if (c) url.searchParams.append('country', `eq.${c}`);
     return requestJSON(url.toString(), { headers: sbHeaders() });
   }
 
@@ -133,6 +157,7 @@
   // Card 2 — Source Bar Chart
   // =======================
   function drawBarChart(host, data) {
+    if (!host) return; // safe-guard
     host.innerHTML = '';
     const W = Math.max(Math.floor(host.getBoundingClientRect().width), 320);
 
@@ -216,8 +241,10 @@
     lastSourceData = data.slice(0, 12); // cap to 12 rows
     const redraw = () => drawBarChart(elChart, lastSourceData);
     if (barRO) barRO.disconnect();
-    barRO = new ResizeObserver(redraw);
-    barRO.observe(elChart);
+    if (elChart) {
+      barRO = new ResizeObserver(redraw);
+      barRO.observe(elChart);
+    }
     redraw();
   }
 
@@ -231,6 +258,7 @@
   let bubbleRO;
 
   function drawBubbleCloud(host, data, w, h) {
+    if (!host) return; // safe-guard
     host.innerHTML = '';
     host.style.position = 'relative';
 
@@ -449,16 +477,17 @@
 
   function updateBothCards(total) {
     const range = rangeShortLabel();
+    const ctry = currentCountryLabel();
 
     // Card 2
     const c2Label = document.querySelector('#card-source .stats .muted');
-    if (c2Label) c2Label.textContent = `Visitors (${range}):`;
+    if (c2Label) c2Label.textContent = `Visitors (${range}, ${ctry}):`;
     const c2Num = document.getElementById('srcTotalVisitors');
     if (c2Num) c2Num.textContent = fmt(total);
 
     // Card 1
     const c1Label = document.querySelector('#card-top-countries .stats .muted');
-    if (c1Label) c1Label.textContent = `Visitors (${range}):`;
+    if (c1Label) c1Label.textContent = `Visitors (${range}, ${ctry}):`;
     const c1Num = document.getElementById('gaVisitorsValue');
     if (c1Num) countUp(c1Num, total);
   }
@@ -514,7 +543,7 @@
   // =======================
   elBtn?.addEventListener('click', refreshSources);
   elClear?.addEventListener('click', () => {
-    if (elCtry) elCtry.value = '';
+    if (elCtry) elCtry.value = 'WORLD'; // reset to global
     if (elTo) elTo.value = toISO(today);
     if (elFrom) elFrom.value = toISO(minusDays(today, 30));
     refreshSources();
@@ -539,6 +568,7 @@
 
   // =======================
   // Card 3 — Last 7 Days Summary
+  // (now respects country; blank/WORLD = global)
   // =======================
   (() => {
     const elTotal7 = document.getElementById('csTotalUsers');
@@ -551,11 +581,12 @@
     const newListHost = document.getElementById('csCountryNewChart');
     const newListEmpty = document.getElementById('csCountryNewEmpty');
 
-    async function fetchRecentDaily(limit = 500) {
+    async function fetchRecentDaily(country, limit = 500) {
       const url = new URL(`${SUPABASE_URL}/rest/v1/ga_country_daily`);
       url.searchParams.set('select', 'date,country,total_users,new_users,sessions');
       url.searchParams.set('order', 'date.desc');
       url.searchParams.set('limit', String(limit));
+      if (country) url.searchParams.append('country', `eq.${country}`);
       const rows = await requestJSON(url.toString(), { headers: sbHeaders() });
       return rows.map((r) => ({
         date:
@@ -602,6 +633,7 @@
     }
 
     function drawGroupedBars(host, days, data) {
+      if (!host) return; // safe-guard
       host.innerHTML = '';
       const parent = host.parentElement || host;
       const ns = 'http://www.w3.org/2000/svg';
@@ -770,7 +802,7 @@
         if (elNew7) elNew7.textContent = '…';
         if (elSes7) elSes7.textContent = '…';
 
-        const rows = await fetchRecentDaily();
+        const rows = await fetchRecentDaily(currentCountry());
         if (!rows.length) {
           if (elEmpty7) elEmpty7.hidden = false;
           return;
@@ -790,8 +822,10 @@
 
         const redraw = () => drawGroupedBars(dayChartHost, r.daysAsc, r.perDay);
         if (dayRO) dayRO.disconnect();
-        dayRO = new ResizeObserver(redraw);
-        dayRO.observe(dayChartHost);
+        if (dayChartHost) {
+          dayRO = new ResizeObserver(redraw);
+          dayRO.observe(dayChartHost);
+        }
         redraw();
 
         // Top countries by new users (same 7-day window)
@@ -801,10 +835,16 @@
           if (!picked.has(row.date)) continue;
           totals.set(row.country, (totals.get(row.country) || 0) + row.new_users);
         }
-        const list = Array.from(totals, ([name, value]) => ({ name, value }))
+        let list = Array.from(totals, ([name, value]) => ({ name, value }))
           .filter((d) => d.value > 0)
-          .sort((a, b) => b.value - a.value)
-          .slice(0, 8);
+          .sort((a, b) => b.value - a.value);
+
+        // If a specific country is selected, show only that one; otherwise top 8 globally.
+        if (currentCountry()) {
+          list = list.filter((d) => d.name === currentCountry()).slice(0, 1);
+        } else {
+          list = list.slice(0, 8);
+        }
 
         if (newListHost) {
           newListHost.innerHTML = '';
@@ -842,6 +882,11 @@
 
     load7DaySummary();
     setInterval(load7DaySummary, 5 * 60 * 1000);
+
+    // keep Card 3 in sync with global controls
+    elCtry?.addEventListener('change', load7DaySummary);
+    elBtn?.addEventListener('click', load7DaySummary);
+    elClear?.addEventListener('click', load7DaySummary);
   })();
 
   // =======================
@@ -935,8 +980,9 @@
   }
 
   function drawImpactDonut(host, legendHost, data, centerLabel) {
+    if (!host) return; // safe-guard
     host.innerHTML = '';
-    legendHost.innerHTML = '';
+    if (legendHost) legendHost.innerHTML = '';
 
     // square, full-bleed
     const W = Math.max(320, Math.floor(host.getBoundingClientRect().width));
@@ -1046,8 +1092,8 @@
 
       path.addEventListener('mouseenter', () => {
         const mid = (a0 + a1) / 2;
-        const dx = Math.cos(mid) * explode;
-        const dy = Math.sin(mid) * explode;
+        const dx = Math.cos(mid) * 10;
+        const dy = Math.sin(mid) * 10;
         path.style.transform = `translate(${dx}px, ${dy}px)`;
         big.textContent = `${Math.round(frac * 1000) / 10}%`;
         small.textContent = `${d.name} · ${fmt(d.value)} visitors`;
@@ -1205,7 +1251,7 @@
           if (!startISO || !endISO) ({ startISO, endISO } = last30ISO());
           range = { startISO, endISO };
         }
-        const country = elCtry?.value || '';
+        const country = currentCountry();
 
         const rows = await fetchRowsForRange({ ...range, country });
         const { arr, total } = aggregateShare(rows, key);
@@ -1308,3 +1354,5 @@
     } catch {}
   })();
 })();
+
+ 
