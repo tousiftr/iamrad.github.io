@@ -1,7 +1,7 @@
-:root{
-  --grid-gap: 15px;
-  --col-min: 400px;
-  --card-min-h: 380px;
+:root {
+  --grid-gap: clamp(10px, 2vw, 24px);
+  --col-min: clamp(260px, 30vw, 420px);
+  --card-min-h: clamp(260px, 40vw, 420px);
   --chart-aspect: 16/9;
 
   --bg: #ffffff;
@@ -16,6 +16,7 @@
   --brand-cta: #111827;
   --bar: #3b82f6;
 }
+
 
 /* Basics */
 .bg-grid { background: var(--bg-soft); }
