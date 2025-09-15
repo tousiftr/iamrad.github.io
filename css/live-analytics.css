@@ -48,7 +48,7 @@ html { font-size: clamp(14px, 1.6vw, 16px); }
   );
   gap: var(--grid-gap);
   align-items: stretch;
-  container-type: inline-size; /* enables container queries below */
+  container-type: inline-size;
 }
 
 /* ======
@@ -96,19 +96,17 @@ html { font-size: clamp(14px, 1.6vw, 16px); }
   flex-direction: column;
   padding: 12px 16px 2px 9px;
 }
-.chart svg { display: block; }
 .empty{ text-align:center; padding:18px; color:var(--muted); }
 
 /* =========================
    Filters (auto-adjusting)
-   Desktop: 3 cols (From | To | Actions)
-   Row 2: Country spans two cols; Actions on right
    ========================= */
 .filters{ display:flex; flex-direction:column; gap: clamp(8px, 1.6vw, 12px); padding:6px 20px 12px 20px; }
 
+/* Desktop: make Actions column wide enough for stacked buttons */
 .filters-grid{
   display: grid;
-  grid-template-columns: minmax(0,1fr) minmax(0,1fr) auto; /* actions content-sized */
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr) minmax(140px, 0.8fr);
   grid-template-areas:
     "from to actions"
     "country country actions";
@@ -122,11 +120,20 @@ html { font-size: clamp(14px, 1.6vw, 16px); }
 .filters .field:nth-child(1){ grid-area: from; }
 .filters .field:nth-child(2){ grid-area: to; }
 .filters .field:nth-child(3){ grid-area: country; }
-.filters .field.actions     { grid-area: actions; display:flex; flex-direction:row; gap:8px; align-items:center; justify-content:flex-end; }
+
+/* Actions: STACK buttons vertically (always) */
+.filters .field.actions{
+  grid-area: actions;
+  display:flex;
+  flex-direction: column;     /* stack */
+  gap:8px;
+  align-items: stretch;       /* full width */
+  justify-content: flex-start;
+}
 
 .field-label{ font-size:12px; color:var(--muted); }
 
-/* Inputs & buttons */
+/* Inputs */
 .input{
   border:1px solid var(--stroke); border-radius:10px; padding:8px 10px; font-size:13px;
   background: var(--bg); color: var(--text);
@@ -140,6 +147,17 @@ html { font-size: clamp(14px, 1.6vw, 16px); }
   flex: 1 1 auto;
 }
 
+/* ==== From / To bigger ==== */
+.filters .field:nth-child(1) .input,
+.filters .field:nth-child(2) .input,
+.filters .field:nth-child(1) input[type="date"],
+.filters .field:nth-child(2) input[type="date"] {
+  height: 48px; /* was 40px */
+  font-size: 15px;
+  padding: 0 14px;
+}
+
+/* Buttons */
 .btn{
   padding:4px 12px; border-radius:12px; border:1px solid var(--stroke); background:var(--bg);
   box-shadow:0 2px 10px rgba(0,0,0,.05); cursor:pointer; font-size:13px; color:var(--text);
@@ -147,10 +165,13 @@ html { font-size: clamp(14px, 1.6vw, 16px); }
 .btn.primary{ background:var(--brand-cta); color:#fff; border-color:var(--brand-cta); }
 .btn:hover{ box-shadow:0 4px 16px rgba(0,0,0,.08); }
 
-/* Actions sizing rules */
+/* ==== Clear / Apply stacked & compact ==== */
 .filters .field.actions .btn{
-  flex: 0 0 auto; /* don’t stretch on desktop */
-  min-width: clamp(96px, 22vw, 160px);
+  width: 100%;              /* full column width */
+  height: 40px;             /* compact but comfy */
+  padding: 6px 10px;
+  font-size: 13px;
+  min-width: 0;             /* prevent overflow */
 }
 
 /* Quick pills */
@@ -161,34 +182,8 @@ html { font-size: clamp(14px, 1.6vw, 16px); }
   padding:6px 10px; border-radius:999px; font-size:12px; cursor:pointer;
 }
 .pill:hover{ background:rgba(0,0,0,.04); }
-@media (prefers-color-scheme: dark){
-  .pill:hover{ background:rgba(255,255,255,.06); }
-}
 
-.tiny{ font-size:11px; }
-
-/* Bubble chart text & tooltip */
-.bubble-value { fill:#fff; font-weight:200; pointer-events:none; }
-.bubble-country { fill:#ffffff; opacity:0.9; font-weight:100; pointer-events:none; }
-.bubble-tip{
-  position:absolute; background:var(--bg); border:1px solid var(--stroke); border-radius:14px;
-  padding:8px 10px; box-shadow: var(--shadow);
-  color:var(--text); font-size:12px; pointer-events:none; transition:opacity .12s ease; z-index:2;
-}
-@media (prefers-reduced-motion: reduce){
-  .bubble-tip{ transition:none; }
-}
-
-/* From/To date: sizing & iOS polish */
-.filters input[type="date"] {
-  height: 40px;
-  padding: 0 12px;
-  font-size: 14px;
-  line-height: 1.2;
-  box-sizing: border-box;
-}
-.filters .field:nth-child(1) .input,
-.filters .field:nth-child(2) .input { height: 40px; }
+/* Dates iOS polish */
 @supports (-webkit-touch-callout: none) {
   .filters input[type="date"] { padding-block: 0; }
   .filters input[type="date"]::-webkit-date-and-time-value {
@@ -201,7 +196,7 @@ html { font-size: clamp(14px, 1.6vw, 16px); }
    Breakpoints
    ========== */
 
-/* Mid widths: collapse to 2 equal columns; actions drops below */
+/* Mid widths: collapse to 2 equal columns; actions drops below (still stacked) */
 @media (max-width: 980px){
   .filters-grid{
     grid-template-columns: repeat(2, minmax(0,1fr));
@@ -209,9 +204,7 @@ html { font-size: clamp(14px, 1.6vw, 16px); }
       "from to"
       "country country"
       "actions actions";
-    grid-auto-rows: auto;
   }
-  .filters .field.actions{ justify-content:flex-start; }
 }
 
 /* Mobile: single column, large tappable buttons; chart & card tweaks */
@@ -221,6 +214,7 @@ html { font-size: clamp(14px, 1.6vw, 16px); }
     gap: 8px;
   }
   .field-label{ font-size: 11px; margin-bottom: 3px; }
+
   .input,
   .filters input[type="date"]{ height: 44px; font-size: 15px; }
 
@@ -235,14 +229,13 @@ html { font-size: clamp(14px, 1.6vw, 16px); }
   }
 
   .filters .field.actions{
-    flex-direction: column;
+    flex-direction: column;   /* keep stacked */
     align-items: stretch;
-    justify-content: flex-start !important;
   }
+
   .filters .field.actions .btn{
-    width: 100%;
-    height: 44px;
-    flex: 1 1 auto;
+    height: 44px;             /* bigger tap target on phones */
+    font-size: 14px;
   }
 
   /* Cards & headers */
@@ -260,58 +253,14 @@ html { font-size: clamp(14px, 1.6vw, 16px); }
   .bubble-tip{ max-width: 92vw; font-size: 11px; }
 }
 
-/* Optional card-specific tweaks */
+/* ==========
+   Cards tweak
+   ========== */
 .card { overflow: visible; }
-
-/* === Card 1: Country list — allow content to grow/scroll === */
-#card-country-new .chart         { min-height: auto; }
-#card-country-new .chart-wrap    { overflow: visible; }
-@media (max-width: 640px){
-  #card-country-new .chart{ aspect-ratio: auto; min-height: auto; }
-}
-#card-country-new .chart-wrap {
-  /* comment OUT the line below if you don't want scrolling */
-  max-height: 480px;      /* pick a cap you like */
-  overflow: auto;         /* tidy inner scroll */
-}
-
-/* === Card 2: Source — allow content to grow === */
-#card-source .chart         { min-height: auto; }
-#card-source .chart-wrap    { overflow: visible; }
-@media (max-width: 640px){
-  #card-source .chart { aspect-ratio: auto; min-height: auto; }
-}
-#card-source .chart-wrap {
-  /* comment OUT the line below if you don’t want scroll */
+#card-country-new .chart-wrap, #card-source .chart-wrap {
   max-height: 480px;
   overflow: auto;
 }
-
-/* Compact tooltip variant */
-.bubble-tip {
-  background: rgba(0,0,0,0.8);
-  color: #fff; padding: 6px 8px; border-radius: 6px;
-  font: 12px/1.3 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  transform: translate(0, 0);
-  white-space: nowrap;
-}
-
-/* Narrow charts in impact columns */
-#card-os .impact-col .chart,
-#card-browser .impact-col .chart {
-  max-width: 360px;
-  margin-inline: auto;
-}
-
-/* ================
-   Container queries
-   ================ */
-@container (max-width: 680px){
-  .card-header { padding: 8px 10px; }
-  .counter { font-size: 1rem; }
-}
-
-
 
 /* =============
    Accessibility
