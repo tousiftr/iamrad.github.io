@@ -1,15 +1,23 @@
+/*******************************
+ * Dashboard UI — Responsive CSS
+ *******************************/
+
+/* =========
+   Variables
+   ========= */
 :root {
+  /* layout scales */
   --grid-gap: clamp(10px, 2vw, 24px);
-  --col-min: clamp(260px, 30vw, 420px);
+  --col-min: clamp(260px, 30vw, 400px);
   --card-min-h: clamp(260px, 40vw, 420px);
   --chart-aspect: 16/9;
 
+  /* colors / shadows */
   --bg: #ffffff;
   --bg-soft: #f9fafb;
   --text: #111827;
   --muted: #6b7280;
   --stroke: rgba(0,0,0,0.06);
-
   --shadow: 0 6px 20px rgba(0,0,0,.08);
 
   --brand: #111827;
@@ -17,23 +25,35 @@
   --bar: #3b82f6;
 }
 
+/* fluid root type size */
+html { font-size: clamp(14px, 1.6vw, 16px); }
 
-/* Basics */
+/* ======
+   Basics
+   ====== */
 .bg-grid { background: var(--bg-soft); }
-.container { max-width:1100px; margin:auto; padding:0 10px; }
-.title { font-size:2rem; text-align:center; margin-bottom:.5rem; color:var(--text); }
-.meta { text-align:right; margin-bottom:10px; }
-.muted { color:var(--muted); }
+.container { max-width: clamp(320px, 92vw, 1200px); margin: auto; padding-inline: clamp(10px, 2vw, 24px); }
+.title { font-size: clamp(1.4rem, 2.2vw, 2.2rem); text-align: center; margin-bottom: .5rem; color: var(--text); }
+.meta { text-align: right; margin-bottom: 10px; }
+.muted { color: var(--muted); }
 
-/* Grid holding cards */
+/* ====================
+   Grid holding cards
+   ==================== */
 .dashboard-grid{
-  display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--col-min), 1fr));
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(100%, var(--col-min)), 1fr)
+  );
   gap: var(--grid-gap);
   align-items: stretch;
+  container-type: inline-size; /* enables container queries below */
 }
 
-/* Cards */
+/* ======
+   Cards
+   ====== */
 .card {
   display: flex;
   flex-direction: column;
@@ -44,13 +64,9 @@
   box-shadow: none;
   overflow: hidden;
 }
-.card.flat { box-shadow: none; overflow: hidden; }
-
+.card.flat { box-shadow: none; }
 #card-top-countries,
-#card-source {
-  box-shadow: none;
-  overflow: hidden;
-}
+#card-source { box-shadow: none; }
 
 .card-header{
   display:flex; justify-content:space-between; align-items:end;
@@ -60,7 +76,9 @@
 .stats{ text-align:right; }
 .counter{ font-weight:800; font-size:1.25rem; color:var(--text); }
 
-/* Chart areas */
+/* ===========
+   Chart areas
+   =========== */
 .chart {
   flex: 1 1 auto;
   width: 100%;
@@ -68,6 +86,7 @@
   display: block;
   padding: 0;
   margin: 0;
+  aspect-ratio: var(--chart-aspect);
 }
 .chart svg{ width:100% !important; height:auto !important; display:block; }
 .chart-wrap {
@@ -82,10 +101,10 @@
 
 /* =========================
    Filters (auto-adjusting)
-   Desktop: 3 cols (From | To | Actions[auto])
-   Row 2: Country spans two cols; Actions stays at right
+   Desktop: 3 cols (From | To | Actions)
+   Row 2: Country spans two cols; Actions on right
    ========================= */
-.filters{ display:flex; flex-direction:column; gap:10px; padding:6px 20px 12px 20px; }
+.filters{ display:flex; flex-direction:column; gap: clamp(8px, 1.6vw, 12px); padding:6px 20px 12px 20px; }
 
 .filters-grid{
   display: grid;
@@ -131,7 +150,7 @@
 /* Actions sizing rules */
 .filters .field.actions .btn{
   flex: 0 0 auto; /* don’t stretch on desktop */
-  min-width: max(96px, fit-content);
+  min-width: clamp(96px, 22vw, 160px);
 }
 
 /* Quick pills */
@@ -169,26 +188,18 @@
   box-sizing: border-box;
 }
 .filters .field:nth-child(1) .input,
-.filters .field:nth-child(2) .input {
-  height: 40px;
-}
+.filters .field:nth-child(2) .input { height: 40px; }
 @supports (-webkit-touch-callout: none) {
-  .filters input[type="date"] {
-    padding-block: 0;
-  }
+  .filters input[type="date"] { padding-block: 0; }
   .filters input[type="date"]::-webkit-date-and-time-value {
-    height: 100%;
-    display: flex;
-    align-items: center;
+    height: 100%; display: flex; align-items: center;
   }
-  .filters input[type="date"]::-webkit-calendar-picker-indicator {
-    margin-right: 4px;
-  }
+  .filters input[type="date"]::-webkit-calendar-picker-indicator { margin-right: 4px; }
 }
 
-/* =========================
+/* ==========
    Breakpoints
-   ========================= */
+   ========== */
 
 /* Mid widths: collapse to 2 equal columns; actions drops below */
 @media (max-width: 980px){
@@ -203,23 +214,15 @@
   .filters .field.actions{ justify-content:flex-start; }
 }
 
-/* Mobile: single column, big tappable buttons; chart & card tweaks */
+/* Mobile: single column, large tappable buttons; chart & card tweaks */
 @media (max-width: 640px){
-
-  /* Filters — tighter spacing */
   .filters{
     padding: 8px 12px 10px 12px;
     gap: 8px;
   }
-  .field-label{
-    font-size: 11px;
-    margin-bottom: 3px;
-  }
+  .field-label{ font-size: 11px; margin-bottom: 3px; }
   .input,
-  .filters input[type="date"]{
-    height: 44px;
-    font-size: 15px;
-  }
+  .filters input[type="date"]{ height: 44px; font-size: 15px; }
 
   .filters-grid{
     grid-template-columns: 1fr;
@@ -248,60 +251,71 @@
   .card-title{ font-size: 1rem; }
   .counter{ font-size: 1.05rem; }
 
-  /* Chart: keep 16:9, remove extra padding */
+  /* Charts: relax forced ratio on phones */
   .chart-wrap{ padding: 6px 8px 2px 8px; }
-  .chart{ min-height: auto; aspect-ratio: 16 / 9; width: 100%; display: block; }
+  .chart{ min-height: auto; aspect-ratio: auto; width: 100%; display: block; }
   .chart svg{ width: 100% !important; height: 100% !important; display: block; }
 
   /* Tooltip readability */
   .bubble-tip{ max-width: 92vw; font-size: 11px; }
 }
+
+/* Optional card-specific tweaks */
 .card { overflow: visible; }
+
+/* === Card 1: Country list — allow content to grow/scroll === */
 #card-country-new .chart         { min-height: auto; }
 #card-country-new .chart-wrap    { overflow: visible; }
 @media (max-width: 640px){
-  #card-country-new .chart{
-    aspect-ratio: auto;   /* stop forcing short height */
-    min-height: auto;     /* let the list grow */
-  }
+  #card-country-new .chart{ aspect-ratio: auto; min-height: auto; }
 }
 #card-country-new .chart-wrap {
   /* comment OUT the line below if you don't want scrolling */
   max-height: 480px;      /* pick a cap you like */
-  overflow: auto;         /* gets you a tidy inner scroll */
+  overflow: auto;         /* tidy inner scroll */
 }
 
 /* === Card 2: Source — allow content to grow === */
 #card-source .chart         { min-height: auto; }
 #card-source .chart-wrap    { overflow: visible; }
-
-/* On mobile, stop forcing 16:9 aspect ratio (which squishes the chart) */
 @media (max-width: 640px){
-  #card-source .chart {
-    aspect-ratio: auto;    /* remove forced height */
-    min-height: auto;      /* grow to fit */
-  }
+  #card-source .chart { aspect-ratio: auto; min-height: auto; }
 }
-
-/* Optional: if the bar list is very long and you prefer scrolling instead */
 #card-source .chart-wrap {
   /* comment OUT the line below if you don’t want scroll */
-  max-height: 480px;       /* choose your own limit */
-  overflow: auto;          /* tidy scroll inside the card */
+  max-height: 480px;
+  overflow: auto;
 }
 
-
+/* Compact tooltip variant */
 .bubble-tip {
   background: rgba(0,0,0,0.8);
   color: #fff; padding: 6px 8px; border-radius: 6px;
   font: 12px/1.3 system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  transform: translate(0, 0); /* keep simple since you set left/top */
+  transform: translate(0, 0);
   white-space: nowrap;
 }
+
+/* Narrow charts in impact columns */
 #card-os .impact-col .chart,
 #card-browser .impact-col .chart {
-  max-width: 360px;   /* tweak as you like */
+  max-width: 360px;
   margin-inline: auto;
 }
 
+/* ================
+   Container queries
+   ================ */
+@container (max-width: 680px){
+  .card-header { padding: 8px 10px; }
+  .counter { font-size: 1rem; }
+}
 
+
+
+/* =============
+   Accessibility
+   ============= */
+@media (prefers-reduced-motion: reduce){
+  * { animation: none !important; transition: none !important; }
+}
