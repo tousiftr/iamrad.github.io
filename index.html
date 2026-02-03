@@ -2958,52 +2958,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 
 <!-- Contact Me -->
- <section class="resume-section" id="contactme" style="padding: 2rem 0;">
+
+
+<section class="resume-section" id="contactme" style="padding: 2rem 0;">
   <div class="resume-section-content container">
 
     <div class="row g-4 align-items-stretch">
-      <!-- Left Column: Intro + CTAs -->
-      <div class="col-lg-5">
-        <h2 class="mb-3 fw-bold">💬 Get in Touch with Me</h2>
-        <p class="lead mb-4">
-          I’m always open to exciting opportunities where I can apply my expertise in data to drive 
-          meaningful insights and impactful decisions. My areas of interest include:
-        </p>
 
-        <ul class="list-unstyled mb-4">
-          <li class="mb-2">📊 <strong>Data Analysis</strong> — uncovering insights and patterns from raw information</li>
-          <li class="mb-2">📈 <strong>Data Visualization</strong> — transforming complex datasets into clear, compelling visuals</li>
-          <li class="mb-2">📑 <strong>Data Reporting</strong> — designing reports and dashboards for informed decision-making</li>
-          <li class="mb-2">⚙️ <strong>Analytics Engineering</strong> — building efficient data pipelines and workflows</li>
-        </ul>
-
-        <p class="mb-4">
-          Whether you’re looking for collaboration, consultancy, or simply want to discuss the latest trends in 
-          data and analytics, I’d be delighted to connect. Let’s explore how we can turn data into actionable knowledge together!
-        </p>
-
-        <!-- Contact Buttons -->
-        <div class="d-flex flex-wrap gap-2 cta-buttons">
-          <a href="mailto:rad.tousif@gmail.com" class="btn btn-gradient shadow-sm rounded-pill px-4 py-2 fw-semibold">
-            📧 Email Me
-          </a>
-          <a href="https://www.linkedin.com/in/radtousif/?utm_source=iamrad&utm_medium=website&utm_campaign=linkedin_button" target="_blank" rel="noopener"
-             class="btn shadow-sm rounded-pill px-4 py-2 fw-semibold"
-             style="background:#0a66c2; color:#fff;">
-            🔗 LinkedIn
-          </a>
-          <a href="https://github.com/tousiftr" target="_blank" rel="noopener"
-             class="btn shadow-sm rounded-pill px-4 py-2 fw-semibold"
-             style="background:#24292e; color:#fff;">
-            💻 GitHub
-          </a>
-        </div>
-      </div>
-
-      <!-- Right Column: Form -->
-      <div class="col-lg-7">
+      <!-- LEFT: CONTACT -->
+      <div class="col-lg-6">
         <div class="card shadow-lg border-0 rounded-4 p-4 h-100">
           <div class="card-body">
+            <h2 class="mb-3 fw-bold">💬 Get in Touch with Me</h2>
+
+            <p class="lead mb-3">
+              I’m always open to exciting opportunities where I can apply my expertise in data to drive
+              meaningful insights and impactful decisions.
+            </p>
+
+            <ul class="list-unstyled mb-3">
+              <li class="mb-2">📊 <strong>Data Analysis</strong> — uncovering insights and patterns</li>
+              <li class="mb-2">📈 <strong>Data Visualization</strong> — clear, compelling visuals</li>
+              <li class="mb-2">📑 <strong>Data Reporting</strong> — dashboards for decisions</li>
+              <li class="mb-2">⚙️ <strong>Analytics Engineering</strong> — scalable pipelines</li>
+            </ul>
+
+            <div class="d-flex flex-wrap gap-2 mb-4">
+              <a href="mailto:rad.tousif@gmail.com" class="btn btn-gradient shadow-sm rounded-pill px-4 py-2 fw-semibold">
+                📧 Email Me
+              </a>
+              <a href="https://www.linkedin.com/in/radtousif/" target="_blank" rel="noopener"
+                 class="btn shadow-sm rounded-pill px-4 py-2 fw-semibold"
+                 style="background:#0a66c2; color:#fff;">
+                🔗 LinkedIn
+              </a>
+              <a href="https://github.com/tousiftr" target="_blank" rel="noopener"
+                 class="btn shadow-sm rounded-pill px-4 py-2 fw-semibold"
+                 style="background:#24292e; color:#fff;">
+                💻 GitHub
+              </a>
+            </div>
+
             <h4 class="mb-3 text-success fw-bold">📨 Send me a message</h4>
 
             <form action="https://formspree.io/f/mjvdnaoj" id="contact_form" name="contact_form" method="POST" novalidate>
@@ -3027,7 +3022,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                 <textarea class="form-control rounded-4" id="message" name="message" rows="5" placeholder="Your message..." required></textarea>
               </div>
 
-              <!-- Success redirect -->
               <input type="hidden" name="_next" value="https://iamrad.xyz/ThankYou.html" />
 
               <button type="submit" class="btn btn-gradient w-100 py-2 btn-lg shadow-sm rounded-pill fw-semibold">
@@ -3037,9 +3031,314 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </div>
         </div>
       </div>
-    </div>
 
+      <!-- RIGHT: REVIEWS (SUPABASE) -->
+      <div class="col-lg-6">
+        <div class="card shadow-lg border-0 rounded-4 p-4 h-100">
+          <div class="card-body">
+            <h2 class="mb-2 fw-bold">⭐ Reviews & Feedback</h2>
+            <p class="text-muted mb-3">Your rating and review will be visible to everyone.</p>
+
+            <div class="review-top">
+              <button id="likeBtn" class="like-btn" type="button">
+                👍 Like <span id="likeCount">0</span>
+              </button>
+
+              <div class="rating-box" aria-label="Star rating">
+                <div class="stars" id="stars">
+                  <button type="button" class="star" data-v="1" aria-label="1 star">★</button>
+                  <button type="button" class="star" data-v="2" aria-label="2 stars">★</button>
+                  <button type="button" class="star" data-v="3" aria-label="3 stars">★</button>
+                  <button type="button" class="star" data-v="4" aria-label="4 stars">★</button>
+                  <button type="button" class="star" data-v="5" aria-label="5 stars">★</button>
+                </div>
+                <div class="rating-stats">
+                  <span>Avg: <b id="avgRating">—</b>/5</span>
+                  <span>•</span>
+                  <span><b id="reviewCount">0</b> reviews</span>
+                </div>
+              </div>
+            </div>
+
+            <form id="reviewForm" class="review-form mt-3">
+              <div class="grid2">
+                <label>
+                  <span class="lbl">Name (optional)</span>
+                  <input id="reviewName" type="text" maxlength="40" placeholder="Your name">
+                </label>
+                <label>
+                  <span class="lbl">Your rating</span>
+                  <input id="ratingValue" type="text" readonly value="5">
+                </label>
+              </div>
+
+              <label>
+                <span class="lbl">Comment</span>
+                <textarea id="reviewText" rows="3" maxlength="240" placeholder="What did you like? Any suggestions?"></textarea>
+              </label>
+
+              <button class="submit-review" type="submit">Submit Review</button>
+              <div id="reviewMsg" class="review-msg" role="status" aria-live="polite"></div>
+            </form>
+
+            <div class="review-list mt-4">
+              <h4 class="mb-2">Latest Reviews</h4>
+              <div id="reviewsList"></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
+
+  <!-- Styles -->
+  <style>
+    /* Reviews UI */
+    .review-top{
+      display:flex; gap:12px; align-items:center; justify-content:space-between;
+      flex-wrap:wrap; padding-bottom:10px; border-bottom:1px solid #f0f0f0;
+    }
+    .like-btn{
+      border:0; border-radius:999px; padding:10px 14px;
+      background: linear-gradient(90deg,#6366f1,#8b5cf6);
+      color:#fff; font-weight:800; cursor:pointer;
+      box-shadow:0 10px 18px rgba(99,102,241,.18);
+    }
+    .like-btn:active{transform: translateY(1px)}
+    .rating-box{display:flex; align-items:center; gap:10px; flex-wrap:wrap}
+    .stars{display:flex; gap:6px}
+    .star{
+      border:0; background:transparent; font-size:26px; line-height:1;
+      cursor:pointer; color:#d1d5db; padding:0;
+      transition: transform .12s ease, color .12s ease;
+    }
+    .star:hover{transform: translateY(-1px)}
+    .star.on{color:#fbbf24}
+    .rating-stats{color:#6b7280; display:flex; gap:10px; align-items:center}
+
+    .review-form{display:grid; gap:10px}
+    .lbl{display:block; font-size:.9rem; color:#374151; margin-bottom:6px}
+    .review-form input, .review-form textarea{
+      width:100%; border:1px solid #e5e7eb; border-radius:12px;
+      padding:10px 12px; outline:none;
+    }
+    .grid2{display:grid; gap:10px; grid-template-columns:1fr 140px}
+    .submit-review{
+      border:0; border-radius:12px; padding:10px 12px; font-weight:800;
+      background:#111827; color:#fff; cursor:pointer;
+    }
+    .review-msg{font-size:.9rem; color:#059669; min-height:18px}
+    .review-item{
+      border:1px solid #f0f0f0; border-radius:14px; padding:12px;
+      margin-top:10px; background:#fafafa;
+    }
+    .review-item .meta{display:flex; gap:10px; flex-wrap:wrap; color:#6b7280; font-size:.85rem}
+    .review-item .text{margin-top:6px; color:#111827}
+    @media (max-width:520px){ .grid2{grid-template-columns:1fr} }
+  </style>
+
+  <!-- Supabase + Script -->
+  <script>
+    (function(){
+      // ===== 1) PUT YOUR SUPABASE KEYS HERE =====
+      const SUPABASE_URL = "https://nmsgbinaxfwwcpgpsucx.supabase.co";
+      const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5tc2diaW5heGZ3d2NwZ3BzdWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0ODAzNzAsImV4cCI6MjA3MjA1NjM3MH0.TC-LcpNJPTB6mwiTZgRYlh69fycs5tcGmS4B8yt0nNY";
+
+      // ===== 2) TABLES =====
+      const TABLE_REVIEWS = "site_reviews";   // create in Supabase
+      const TABLE_LIKES   = "site_likes";     // create in Supabase
+
+      // ===== DOM =====
+      const likeBtn = document.getElementById("likeBtn");
+      const likeCountEl = document.getElementById("likeCount");
+      const starsWrap = document.getElementById("stars");
+      const ratingValue = document.getElementById("ratingValue");
+      const avgRatingEl = document.getElementById("avgRating");
+      const reviewCountEl = document.getElementById("reviewCount");
+      const reviewsListEl = document.getElementById("reviewsList");
+      const form = document.getElementById("reviewForm");
+      const nameEl = document.getElementById("reviewName");
+      const textEl = document.getElementById("reviewText");
+      const msgEl = document.getElementById("reviewMsg");
+
+      // Prevent double-like per browser (basic)
+      const LS_USER_LIKED = "rad_user_liked_global";
+
+      // ===== helpers =====
+      function escapeHtml(s){
+        return String(s).replace(/[&<>"']/g, m => ({
+          "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+        }[m]));
+      }
+
+      function api(path, opts){
+        return fetch(SUPABASE_URL + path, {
+          ...opts,
+          headers: {
+            "apikey": SUPABASE_ANON_KEY,
+            "Authorization": "Bearer " + SUPABASE_ANON_KEY,
+            "Content-Type": "application/json",
+            "Prefer": "return=representation",
+            ...(opts && opts.headers ? opts.headers : {})
+          }
+        });
+      }
+
+      function renderStars(val){
+        [...starsWrap.querySelectorAll(".star")].forEach(b=>{
+          b.classList.toggle("on", parseInt(b.dataset.v,10) <= val);
+        });
+        ratingValue.value = val;
+      }
+
+      async function loadLikes(){
+        // We keep ONE row in site_likes with id=1
+        const r = await api(`/rest/v1/${TABLE_LIKES}?id=eq.1&select=count`, { method:"GET" });
+        if(!r.ok){ likeCountEl.textContent="0"; return; }
+        const data = await r.json();
+        likeCountEl.textContent = (data[0] && data[0].count) ? data[0].count : 0;
+      }
+
+      async function addLike(){
+        const already = localStorage.getItem(LS_USER_LIKED) === "1";
+        if(already){
+          msgEl.textContent = "You already liked 🙂";
+          return;
+        }
+
+        // increment: fetch current then update (simple)
+        const r = await api(`/rest/v1/${TABLE_LIKES}?id=eq.1&select=id,count`, { method:"GET" });
+        if(!r.ok) throw new Error("Like fetch failed");
+        const row = (await r.json())[0];
+
+        const newCount = (row?.count || 0) + 1;
+
+        const u = await api(`/rest/v1/${TABLE_LIKES}?id=eq.1`, {
+          method:"PATCH",
+          body: JSON.stringify({ count: newCount })
+        });
+        if(!u.ok) throw new Error("Like update failed");
+
+        localStorage.setItem(LS_USER_LIKED, "1");
+        msgEl.textContent = "Thanks! 🙌";
+        await loadLikes();
+      }
+
+      async function loadReviews(){
+        const r = await api(`/rest/v1/${TABLE_REVIEWS}?select=name,rating,text,created_at&order=created_at.desc&limit=6`, { method:"GET" });
+        if(!r.ok){
+          reviewsListEl.innerHTML = `<div class="text-muted">Could not load reviews.</div>`;
+          return;
+        }
+        const reviews = await r.json();
+
+        // stats
+        const allR = await api(`/rest/v1/${TABLE_REVIEWS}?select=rating`, { method:"GET" });
+        let avg = "—", count = 0;
+        if(allR.ok){
+          const all = await allR.json();
+          count = all.length;
+          reviewCountEl.textContent = count;
+          if(count > 0){
+            const sum = all.reduce((a,x)=>a + (x.rating||0),0);
+            avg = (sum / count).toFixed(1);
+          }
+          avgRatingEl.textContent = avg;
+        }
+
+        // list
+        reviewsListEl.innerHTML = "";
+        if(reviews.length === 0){
+          reviewsListEl.innerHTML = `<div class="text-muted">No reviews yet. Be the first!</div>`;
+          return;
+        }
+
+        reviews.forEach(rw=>{
+          const div = document.createElement("div");
+          div.className = "review-item";
+          const date = rw.created_at ? new Date(rw.created_at).toLocaleString() : "";
+          const rating = rw.rating || 0;
+          div.innerHTML = `
+            <div class="meta">
+              <span><b>${escapeHtml(rw.name || "Anonymous")}</b></span>
+              <span>•</span>
+              <span>${"★".repeat(rating)}${"☆".repeat(5-rating)}</span>
+              <span>•</span>
+              <span>${escapeHtml(date)}</span>
+            </div>
+            <div class="text">${escapeHtml(rw.text || "")}</div>
+          `;
+          reviewsListEl.appendChild(div);
+        });
+      }
+
+      async function submitReview(){
+        const rating = parseInt(ratingValue.value || "5", 10);
+        const text = (textEl.value || "").trim();
+        const name = (nameEl.value || "").trim();
+
+        if(!text){
+          msgEl.style.color = "#dc2626";
+          msgEl.textContent = "Please write a short comment 🙂";
+          return;
+        }
+
+        msgEl.style.color = "#6b7280";
+        msgEl.textContent = "Saving…";
+
+        const r = await api(`/rest/v1/${TABLE_REVIEWS}`, {
+          method:"POST",
+          body: JSON.stringify({ name: name || null, rating, text })
+        });
+
+        if(!r.ok){
+          msgEl.style.color = "#dc2626";
+          msgEl.textContent = "Could not save review (check Supabase tables / RLS).";
+          return;
+        }
+
+        msgEl.style.color = "#059669";
+        msgEl.textContent = "Saved! Thank you ⭐";
+        textEl.value = "";
+        nameEl.value = "";
+
+        await loadReviews();
+      }
+
+      // ===== events =====
+      likeBtn.addEventListener("click", ()=> addLike().catch(err=>{
+        console.error(err);
+        msgEl.style.color="#dc2626";
+        msgEl.textContent="Like failed (check Supabase).";
+      }));
+
+      starsWrap.addEventListener("click", (e)=>{
+        const btn = e.target.closest(".star");
+        if(!btn) return;
+        renderStars(parseInt(btn.dataset.v,10));
+      });
+
+      form.addEventListener("submit", (e)=>{
+        e.preventDefault();
+        submitReview().catch(err=>{
+          console.error(err);
+          msgEl.style.color="#dc2626";
+          msgEl.textContent="Review failed (check Supabase).";
+        });
+      });
+
+      // ===== init =====
+      renderStars(5);
+
+      // First time setup check
+      Promise.all([loadLikes(), loadReviews()]).catch(err=>{
+        console.error(err);
+      });
+
+    })();
+  </script>
 </section>
 
 
