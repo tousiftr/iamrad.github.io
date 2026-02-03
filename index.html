@@ -1894,247 +1894,302 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     margin-top: 0.15rem;
   }
 </style>
-
- 
-   <!-- Projects -->
+<!-- Projects -->
 <section class="resume-section" id="projects">
   <style>
-   #projects {
-  padding: 60px 20px;
-  background-color: #ffffff; /* Set the background to white */
-}
+    /* ===== Projects Section ===== */
+    #projects {
+      padding: 64px 20px;
+      background: #fff;
+    }
 
-#projects .resume-section-content {
-  max-width: 1300px;
-  margin: 0 auto;
-}
+    #projects .resume-section-content {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
 
-#projects h4 {
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 2.2rem;
-  font-weight: 700;
-  color: #222;
-}
+    #projects h2 {
+      text-align: center;
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      color: #111;
+      margin: 0 0 10px;
+    }
 
-#projects h3 {
-  margin-top: 40px;
-  text-align: center;
-  font-size: 1.6rem;
-  font-weight: 600;
-  color: #333;
-}
+    #projects h3 {
+      margin: 42px 0 10px;
+      text-align: center;
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: #222;
+    }
 
-#projects .projects-subtext {
-  text-align: center;
-  font-size: 1rem;
-  color: #666;
-  margin-bottom: 30px;
-  background-color: #ffffff; /* Set the background to white */
-}
+    #projects .projects-subtext {
+      text-align: center;
+      font-size: 1rem;
+      color: #666;
+      margin: 0 auto 26px;
+      max-width: 760px;
+      line-height: 1.6;
+    }
 
-#projects .projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 30px;
-  background-color: #fffffff; /* White background for the grid */
-}
-#projects .projects-card {
-  background: #ffffff; /* White background for each card */
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  min-height: 450px;
-}
+    /* ===== Grid ===== */
+    #projects .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 22px;
+      margin-top: 18px;
+    }
 
-#projects .projects-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-}
+    /* 3 columns desktop */
+    #projects .projects-card {
+      grid-column: span 4;
+    }
 
-#projects .projects-thumb {
-  width: 100%;
-  height: 320px;
-  object-fit: contain;
-  display: block;
-  background: #f7f7f7;
-  border-radius: 6px 6px 0 0;
-}
+    /* 2 columns tablet */
+    @media (max-width: 992px) {
+      #projects .projects-card {
+        grid-column: span 6;
+      }
+    }
 
-#projects .projects-info {
-  flex-grow: 1;
-  padding: 20px;
-  text-align: center;
-}
+    /* 1 column mobile */
+    @media (max-width: 560px) {
+      #projects .projects-card {
+        grid-column: span 12;
+      }
+    }
 
-#projects .projects-title {
-  margin: 0 0 10px;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #0077cc;
-}
+    /* ===== Card ===== */
+    #projects .projects-card {
+      background: #fff;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+      display: flex;
+      flex-direction: column;
+      min-height: 440px;
+    }
 
-#projects .projects-title a {
-  color: inherit;
-  text-decoration: none;
-}
+    #projects .projects-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.10);
+      border-color: rgba(0, 119, 204, 0.25);
+    }
 
-#projects .projects-title a:hover {
-  text-decoration: underline;
-}
+    /* If the entire card is a link */
+    #projects .projects-card-link {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      color: inherit;
+      text-decoration: none;
+    }
 
-#projects .projects-note {
-  margin: 0;
-  font-size: 0.95rem;
-  color: #555;
-  line-height: 1.5;
-}
+    /* ===== Thumbnail ===== */
+    #projects .projects-thumb {
+      width: 100%;
+      height: 270px;
+      object-fit: contain;
+      display: block;
+      background: #f6f7f9;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
 
-@media (max-width: 480px) {
-  #projects .projects-thumb {
-    height: 240px;
-  }
-}
+    /* ===== Info ===== */
+    #projects .projects-info {
+      flex: 1;
+      padding: 18px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 10px;
+      text-align: center;
+    }
+
+    #projects .projects-title {
+      margin: 0;
+      font-size: 1.12rem;
+      font-weight: 750;
+      color: #0b63b6;
+      line-height: 1.35;
+    }
+
+    #projects .projects-note {
+      margin: 0;
+      font-size: 0.95rem;
+      color: #555;
+      line-height: 1.55;
+    }
+
+    /* Small detail row (optional) */
+    #projects .projects-meta {
+      margin-top: 8px;
+      font-size: 0.86rem;
+      color: #777;
+    }
+
+    /* Better focus for keyboard */
+    #projects .projects-card-link:focus-visible {
+      outline: 3px solid rgba(0, 119, 204, 0.35);
+      outline-offset: 3px;
+      border-radius: 16px;
+    }
+
+    @media (max-width: 480px) {
+      #projects .projects-thumb {
+        height: 230px;
+      }
+    }
   </style>
-  
+
   <div class="resume-section-content">
     <h2>Projects</h2>
 
     <!-- Interactive Dashboards -->
     <h3>Interactive Dashboards</h3>
-    <p class="projects-subtext">Click the thumbnails below to view the live dashboards.</p>
+    <p class="projects-subtext">Click a project to view the live dashboard.</p>
 
     <div class="projects-grid">
       <!-- Project 1 -->
       <article class="projects-card" data-aos="fade-up">
-        <a href="https://app.powerbi.com/view?r=eyJrIjoiMDVlOTI2ODktNTIyZS00ZjMzLWJkYzMtZGZmZDU0MjI1ZmZhIiwidCI6IjE3NTFjZGNhLWVmNmItNGJkZS05ZmVlLTE2ZDMwYjdiMjdkMSJ9">
-  <img class="projects-thumb" src="assets/img/CustomerNPS.gif" alt="Customer NPS dashboard preview" loading="lazy" />
-</a>
-        <div class="projects-info">
-          <h5 class="projects-title"><a href="https://app.powerbi.com/view?r=eyJrIjoiMDVlOTI2ODktNTIyZS00ZjMzLWJkYzMtZGZmZDU0MjI1ZmZhIiwidCI6IjE3NTFjZGNhLWVmNmItNGJkZS05ZmVlLTE2ZDMwYjdiMjdkMSJ9" target="_blank">Customer Net Promoter Score Dashboard</a></h5>
-          <p class="projects-note">Background may take 30–60s • Live connected dashboard • Power BI</p>
-        </div>
+        <a class="projects-card-link"
+           href="https://app.powerbi.com/view?r=eyJrIjoiMDVlOTI2ODktNTIyZS00ZjMzLWJkYzMtZGZmZDU0MjI1ZmZhIiwidCI6IjE3NTFjZGNhLWVmNmItNGJkZS05ZmVlLTE2ZDMwYjdiMjdkMSJ9"
+           target="_blank" rel="noopener">
+          <img class="projects-thumb" src="assets/img/CustomerNPS.gif" alt="Customer NPS dashboard preview" loading="lazy" />
+          <div class="projects-info">
+            <h5 class="projects-title">Customer Net Promoter Score Dashboard</h5>
+            <p class="projects-note">Live connected dashboard • Power BI</p>
+            <div class="projects-meta">Background may take 30–60s</div>
+          </div>
+        </a>
       </article>
 
       <!-- Project 2 -->
       <article class="projects-card" data-aos="fade-up">
-        <a href="https://app.powerbi.com/view?r=eyJrIjoiYTg1MTUxMzAtOTFiZi00MDU3LWI1MWQtZTUxNGM1MGRiOTI2IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" target="_blank" rel="noopener">
+        <a class="projects-card-link"
+           href="https://app.powerbi.com/view?r=eyJrIjoiYTg1MTUxMzAtOTFiZi00MDU3LWI1MWQtZTUxNGM1MGRiOTI2IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection"
+           target="_blank" rel="noopener">
           <img class="projects-thumb" src="assets/img/HRanalytics.gif" alt="HR Analytics dashboard preview" loading="lazy" />
+          <div class="projects-info">
+            <h5 class="projects-title">HR Analytics Dashboard</h5>
+            <p class="projects-note">Data prep: SQL • Power BI</p>
+            <div class="projects-meta">Background may take 30–60s</div>
+          </div>
         </a>
-        <div class="projects-info">
-          <h5 class="projects-title"><a href="https://app.powerbi.com/view?r=eyJrIjoiYTg1MTUxMzAtOTFiZi00MDU3LWI1MWQtZTUxNGM1MGRiOTI2IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" target="_blank">HR Analytics Dashboard</a></h5>
-          <p class="projects-note">Background may take 30–60s • Data prep: SQL • Power BI</p>
-        </div>
       </article>
 
       <!-- Project 3 -->
       <article class="projects-card" data-aos="fade-up">
-        <a href="https://app.powerbi.com/view?r=eyJrIjoiN2UzNWVhY2EtMzY5Yy00ZTE3LThjNzEtNmEzODQ1NjU4OGU1IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" target="_blank" rel="noopener">
+        <a class="projects-card-link"
+           href="https://app.powerbi.com/view?r=eyJrIjoiN2UzNWVhY2EtMzY5Yy00ZTE3LThjNzEtNmEzODQ1NjU4OGU1IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection"
+           target="_blank" rel="noopener">
           <img class="projects-thumb" src="assets/img/SalesDashboardKPI.gif" alt="Sales KPI Dashboard preview" loading="lazy" />
+          <div class="projects-info">
+            <h5 class="projects-title">Monthly Sales KPI Dashboard</h5>
+            <p class="projects-note">Data prep: Power Query • Power BI</p>
+            <div class="projects-meta">Background may take 30–60s</div>
+          </div>
         </a>
-        <div class="projects-info">
-          <h5 class="projects-title"><a href="https://app.powerbi.com/view?r=eyJrIjoiN2UzNWVhY2EtMzY5Yy00ZTE3LThjNzEtNmEzODQ1NjU4OGU1IiwidCI6ImRiZGRiMmZkLWE0NDUtNGRjOC1iN2QwLTQzODE3MDkyMDg1MSJ9&pageName=ReportSection" target="_blank">Monthly Sales KPI Dashboard</a></h5>
-          <p class="projects-note">Background may take 30–60s • Data prep: Power Query • Power BI</p>
-        </div>
       </article>
     </div>
 
+    <!-- Analytics and Data Engineering -->
+    <h3>Analytics and Data Engineering</h3>
+    <p class="projects-subtext">Click a project to view details or pipeline structure.</p>
 
-<!-- Analytics Engnieering -->
-    <h3>Analytics and Data Engineering </h3>
-    <p class="projects-subtext">Click the thumbnails to see the pipeline structure</p>
     <div class="projects-grid">
-      <!-- Project AE1 -->
+      <!-- Project AE1 (internal anchor) -->
       <article class="projects-card" data-aos="fade-up">
-          <img class="projects-thumb" src="assets/img/webanalytics.png" alt="Website Analytics" loading="lazy" />
- 
-        <div class="projects-info">
-          <h5 class="projects-title"><a class="nav-link js-scroll-trigger"  href="#liveanalytics" >Website Analytics</a></h5>
- 
-
-          <p class="projects-note">iamrad.info(GA4) → Google Apps Script API → Supabase → Live Analytics(iamrad.info)</p>
-        </div>
+        <a class="projects-card-link nav-link js-scroll-trigger" href="#liveanalytics">
+          <img class="projects-thumb" src="assets/img/webanalytics.png" alt="Website Analytics pipeline preview" loading="lazy" />
+          <div class="projects-info">
+            <h5 class="projects-title">Website Analytics</h5>
+            <p class="projects-note">iamrad.info (GA4) → Apps Script API → Supabase → Live Analytics (iamrad.info)</p>
+            <div class="projects-meta">Pipeline + real-time reporting</div>
+          </div>
+        </a>
       </article>
 
-
-<article class="projects-card" data-aos="fade-up">
-  
-  <img class="projects-thumb" src="assets/img/uber.jpeg" alt="Uber logo" loading="lazy" />
-  <a href="https://github.com/tousiftr/dbt-radytics" target="_blank" rel="noopener"></a>
-  <div class="projects-info">
-    <h5 class="projects-title">
-      <a href="https://github.com/tousiftr/dbt-radytics" target="_blank" rel="noopener">Uber Customer Analytics</a>
-    </h5>
-    <p class="projects-note">
-  Uber Customer Analytics • Ingest CSV files from Google Cloud Storage into BigQuery, transform and model data with dbt, write results back to BigQuery, and build visualizations for insights.
-</p>
-  </div>
-</article>
-
-
+      <!-- Project AE2 -->
+      <article class="projects-card" data-aos="fade-up">
+        <a class="projects-card-link"
+           href="https://github.com/tousiftr/dbt-radytics"
+           target="_blank" rel="noopener">
+          <img class="projects-thumb" src="assets/img/uber.jpeg" alt="Uber Customer Analytics preview" loading="lazy" />
+          <div class="projects-info">
+            <h5 class="projects-title">Uber Customer Analytics</h5>
+            <p class="projects-note">Ingest CSV from GCS → BigQuery → dbt modeling → BigQuery marts → insights</p>
+            <div class="projects-meta">dbt • BigQuery • GCS</div>
+          </div>
+        </a>
+      </article>
     </div>
-
-
-
-
 
     <!-- Reports / Other Projects -->
     <h3>Reports & Analytics Projects</h3>
- 
+    <p class="projects-subtext">Reports, analysis, and dashboards from end-to-end projects.</p>
 
     <div class="projects-grid">
       <!-- Project 4 -->
       <article class="projects-card" data-aos="fade-up">
-        <a href="https://drive.google.com/file/d/1sJULN7vqqWn2wgQ6nczvsjQmo56cAr6N/view?usp=sharing" target="_blank">
+        <a class="projects-card-link"
+           href="https://github.com/tousifrad/Sprocket-Central-Pty-Ltd/blob/main/Dashboard.pdf"
+           target="_blank" rel="noopener">
           <img class="projects-thumb" src="assets/img/SprocketCentralPtyLty.gif" alt="Customer Segmentation preview" loading="lazy" />
+          <div class="projects-info">
+            <h5 class="projects-title">Customer Segmentation (Sprocket Central Pty Ltd)</h5>
+            <p class="projects-note">Final report • RFM analysis • Tableau dashboard</p>
+            <div class="projects-meta">Segmentation + recommendations</div>
+          </div>
         </a>
-        <div class="projects-info">
-          <h5 class="projects-title"><a href="https://github.com/tousifrad/Sprocket-Central-Pty-Ltd/blob/main/Dashboard.pdf" target="_blank">Customer Segmentation Analysis (Sprocket Central Pty Ltd)</a></h5>
-          <p class="projects-note">Final report • RFM analysis • Tableau dashboard</p>
-        </div>
       </article>
 
       <!-- Project 5 -->
       <article class="projects-card" data-aos="fade-up">
-        <a href="https://drive.google.com/file/d/1LLKPUMGidUcQf1CJD0TAOpko9r3Hmo6k/view?usp=sharing" target="_blank">
+        <a class="projects-card-link"
+           href="https://github.com/tousifrad/Bank-Marketing-Analysis/blob/main/Report.pdf"
+           target="_blank" rel="noopener">
           <img class="projects-thumb" src="assets/img/BankingMarketDataAnalysis.gif" alt="Bank marketing preview" loading="lazy" />
+          <div class="projects-info">
+            <h5 class="projects-title">Marketing Campaign (Portuguese Banking Institution)</h5>
+            <p class="projects-note">EDA • Predictive models (regression, decision trees) • Python</p>
+            <div class="projects-meta">Modeling + evaluation</div>
+          </div>
         </a>
-        <div class="projects-info">
-          <h5 class="projects-title"><a href="https://github.com/tousifrad/Bank-Marketing-Analysis/blob/main/Report.pdf" target="_blank">Marketing Campaign (Portuguese Banking Institution)</a></h5>
-          <p class="projects-note">EDA • Predictive models (regression, decision trees) • Python</p>
-        </div>
       </article>
 
       <!-- Project 6 -->
       <article class="projects-card" data-aos="fade-up">
-        <a href="https://drive.google.com/file/d/12zPSZTRGveBgOetfyzAu8VmnOZ6hWZYS/view?usp=sharing" target="_blank">
+        <a class="projects-card-link"
+           href="https://github.com/tousifrad/Adult-Data-Set/blob/main/Report.pdf"
+           target="_blank" rel="noopener">
           <img class="projects-thumb" src="assets/img/AdultSalaryDataset.gif" alt="Census income preview" loading="lazy" />
+          <div class="projects-info">
+            <h5 class="projects-title">Salary Analysis (Census Income)</h5>
+            <p class="projects-note">Exploratory analysis • Large dataset • Python</p>
+            <div class="projects-meta">Feature insights + patterns</div>
+          </div>
         </a>
-        <div class="projects-info">
-          <h5 class="projects-title"><a href="https://github.com/tousifrad/Adult-Data-Set/blob/main/Report.pdf" target="_blank">Salary Analysis (Census Income)</a></h5>
-          <p class="projects-note">Exploratory analysis • Large dataset • Python</p>
-        </div>
       </article>
     </div>
   </div>
 </section>
 
 <!-- in <head> -->
-       
+
 <link rel="stylesheet" href="css/live-analytics.css">
 <script src="js/live-analytics.js" defer></script>
- 
 
-
- <!-- Live Analytics (refined, aligned) -->
+<!-- Live Analytics (refined, aligned) -->
 <section class="resume-section" id="liveanalytics" aria-labelledby="liveanalytics-title">
+
   <div class="resume-section-content container">
     <h2 id="liveanalytics-title">Live Analytics</h2>
     <br>
-
     <h5>IAMRAD.INFO Insight</h5>
 
     <div class="meta">
@@ -2143,44 +2198,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     <div class="dashboard-grid">
 
-      <!-- Card 3: Last 7 Days Summary -->
-
-      <div class="card" id="card-country-summary">
+      <!-- Card 1: Top 5 Countries -->
+      <div class="card" id="card-top-countries">
         <div class="card-header">
-          <h3 class="card-title">Last 7 Days Summary</h3>
-          <div class="stats muted">
-            <span id="csDateFrom">—</span> → <span id="csDateTo">—</span>
+          <h3 class="card-title">Top 5 Countries by Visitors</h3>
+          <div class="stats">
+            <span class="muted">Visitors</span>
+            <span id="gaVisitorsValue" class="counter" aria-live="polite">—</span>
           </div>
         </div>
 
-        <!-- Counters -->
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px">
-          <div>
-            <div class="muted tiny">Total Users</div>
-            <div id="csTotalUsers" class="counter" aria-live="polite">—</div>
-          </div>
-          <div>
-            <div class="muted tiny">New Users</div>
-            <div id="csNewUsers" class="counter" aria-live="polite">—</div>
-          </div>
-          <div>
-            <div class="muted tiny">Sessions</div>
-            <div id="csSessions" class="counter" aria-live="polite">—</div>
-          </div>
-        </div>
-
-        <!-- Chart -->
         <div class="chart-wrap">
-          <div
-            id="csChart"
-            class="chart"
-            role="img"
-            aria-label="Last 7 days: Total vs New vs Sessions">
-          </div>
+          <div id="gaCountryBarChart" class="chart" role="img"
+               aria-label="Bubble chart of visitors by country"></div>
         </div>
-
-        <!-- Fallback -->
-        <div id="csEmpty" class="empty muted" hidden>No data found.</div>
+        <div id="gaEmpty" class="empty muted" hidden>No data available.</div>
       </div>
 
       <!-- Card 2: Source -->
@@ -2188,14 +2220,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="card-header">
           <h3 class="card-title">Source</h3>
           <div class="stats">
-            <span id="gaVisitorsLabel" class="muted" aria-live="polite">Visitors</span>
+            <span class="muted">Visitors</span>
             <span id="srcTotalVisitors" class="counter" aria-live="polite">—</span>
           </div>
         </div>
 
-        <!-- Filter section -->
+        <!-- Filters -->
         <div class="filters">
           <div class="filters-grid" role="group" aria-label="Filters">
+
             <label class="field">
               <span class="field-label" id="srcDateStartLabel">From</span>
               <input id="srcDateStart" type="date" class="input" aria-labelledby="srcDateStartLabel">
@@ -2206,7 +2239,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <input id="srcDateEnd" type="date" class="input" aria-labelledby="srcDateEndLabel">
             </label>
 
-            <label class="field">
+            <label class="field field-country">
               <span class="field-label" id="srcCountryLabel">Country</span>
               <select id="srcCountry" class="input" aria-labelledby="srcCountryLabel">
                 <option value="">(All)</option>
@@ -2214,9 +2247,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             </label>
 
             <div class="field actions">
-              <button id="srcRefresh" class="btn primary" type="button" title="Apply filters">Apply</button>
-              <button id="srcClear" class="btn" type="button" title="Clear filters">Clear</button>
+              <button id="srcRefresh" class="btn primary" type="button">Apply</button>
+              <button id="srcClear" class="btn" type="button">Clear</button>
             </div>
+
           </div>
 
           <div class="filters-row">
@@ -2230,35 +2264,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
 
         <div class="chart-wrap">
-          <div
-            id="gaCountryBarChart2"
-            class="chart"
-            role="img"
-            aria-label="Bar chart of visitors by source">
-          </div>
+          <div id="gaCountryBarChart2" class="chart" role="img"
+               aria-label="Bar chart of visitors by source"></div>
           <div id="srcLoading" class="empty muted" hidden>Loading…</div>
-          <div id="srcEmpty" class="empty muted" hidden>No data for the selected filters.</div>
+          <div id="srcEmpty" class="empty muted" hidden>No data for selected filters.</div>
         </div>
       </div>
-<!-- Card 1: Top 5 Countries (Bubble Cloud) -->
-<div class="card" id="card-top-countries">
-  <div class="card-header">
-    <h3 class="card-title">Top 5 Countries by Visitors</h3>
-    <div class="stats">
-      <span id="gaVisitorsLabel" class="muted" aria-live="polite">Visitors</span>
-      <span id="gaVisitorsValue" class="counter" aria-live="polite">—</span>
-    </div>
-  </div>
-  <div class="chart-wrap">
-    <div
-      class="chart"
-      id="gaCountryBarChart"
-      role="img"
-      aria-label="Bubble chart of visitors by country">
-    </div>
-  </div>
-  <div id="gaEmpty" class="empty muted" hidden>No data available.</div>
-</div>
 
       <!-- Card 4: Top Countries — New Users -->
       <div class="card" id="card-country-new">
@@ -2268,105 +2279,238 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
 
         <div class="chart-wrap">
-          <div
-            id="csCountryNewChart"
-            class="chart"
-            role="img"
-            aria-label="Top countries by new users">
-          </div>
+          <div id="csCountryNewChart" class="chart" role="img"
+               aria-label="Top countries by new users"></div>
           <div id="csCountryNewEmpty" class="empty muted" hidden>No data found.</div>
         </div>
-      </div> 
+      </div>
 
+      <!-- Card 5: Operating Systems -->
+      <div class="card" id="card-os">
+        <div class="card-header">
+          <h3 class="card-title">Operating Systems</h3>
+        </div>
 
-<!-- Card 5 — Operating Systems (Donut + Legend) -->
-<!-- Optional: global default scale if you don't use per-card data-scale -->
-<!-- <script>window.DONUT_SCALE = 0.75;</script> -->
+        <div class="content">
+          <div id="osLoading" class="muted" hidden>Loading…</div>
+          <div id="osEmpty" class="empty muted" hidden>No data found.</div>
 
-<!-- Card 5 — Operating Systems (Donut + Legend) -->
-<section id="card-os" class="card">
-  <div class="card-header">
-    <h3 class="card-title">Operating Systems </h3>
-    <div class="stats">
- 
-    </div>
-  </div>
+          <div class="impact-col">
+            <div id="osPie" class="chart" role="img"
+                 aria-label="OS share donut"
+                 data-scale="0.75"></div>
 
-  <div class="content">
-    <div id="osLoading" class="muted" hidden>Loading…</div>
-    <div id="osEmpty" class="empty muted" hidden>No data for the selected filters.</div>
+            <div id="osLegend" class="legend" aria-label="OS legend"></div>
+          </div>
+        </div>
+      </div>
 
-    <div class="impact-col">
-      <!-- Smaller donut: data-scale + constrained width -->
-      <div
-        id="osPie"
-        class="chart"
-        role="img"
-        aria-label="OS share donut"
-        data-scale="0.75"
-        style="min-height:280px; max-width:360px; margin-inline:auto;"
-      ></div>
+      <!-- Card 6: Browsers -->
+      <div class="card" id="card-browser">
+        <div class="card-header">
+          <h3 class="card-title">Browsers</h3>
+        </div>
 
-      <div
-        id="osLegend"
-        class="legend"
-        aria-label="OS legend"
-        style="margin-top:10px; max-width:360px; margin-inline:auto;"
-      ></div>
-    </div>
-  </div>
-</section>
+        <div class="content">
+          <div id="brLoading" class="muted" hidden>Loading…</div>
+          <div id="brEmpty" class="empty muted" hidden>No data found.</div>
 
-<!-- Card 6 — Browsers (Donut + Legend) -->
-<section id="card-browser" class="card">
-  <div class="card-header">
-    <h3 class="card-title">Browsers</h3>
-    <div class="stats">
-       
-    </div>
-  </div>
+          <div class="impact-col">
+            <div id="brPie" class="chart" role="img"
+                 aria-label="Browser share donut"
+                 data-scale="0.75"></div>
 
-  <div class="content">
-    <div id="brLoading" class="muted" hidden>Loading…</div>
-    <div id="brEmpty" class="empty muted" hidden>No data for the selected filters.</div>
-
-    <div class="impact-col">
-      <!-- Smaller donut: data-scale + constrained width -->
-      <div
-        id="brPie"
-        class="chart"
-        role="img"
-        aria-label="Browser share donut"
-        data-scale="0.75"
-        style="min-height:280px; max-width:360px; margin-inline:auto;"
-      ></div>
-
-      <div
-        id="brLegend"
-        class="legend"
-        aria-label="Browser legend"
-        style="margin-top:10px; max-width:360px; margin-inline:auto;"
-      ></div>
-    </div>
-  </div>
-</section>
-
- 
+            <div id="brLegend" class="legend" aria-label="Browser legend"></div>
+          </div>
+        </div>
+      </div>
 
     </div> <!-- /.dashboard-grid -->
   </div> <!-- /.resume-section-content.container -->
 </section>
 
+<style>
+  /* ===== Section ===== */
+  #liveanalytics { padding: 64px 20px; background: #fff; }
+  #liveanalytics .container { max-width: 1200px; margin: 0 auto; }
+  #liveanalytics h2 { text-align:center; font-size:2.2rem; font-weight:800; margin:0 0 10px; color:#111; }
+  #liveanalytics h5 { text-align:center; font-size:1.05rem; font-weight:700; margin:0 0 14px; color:#333; }
+  #liveanalytics .meta { display:flex; justify-content:center; margin-bottom:22px; }
 
-<style>#card-top-countries { order: 1; }
-#card-source         { order: 2; }
-#card-country-summary{ order: 3; }
-#card-country-new    { order: 4; } 
-#card-os   { order: 5; }
-#card-browser    { order: 5; }
+  /* ===== Grid (desktop fixed) =====
+     - >=1200px: 3 columns (medium size)
+     - 900–1199px: 2 columns
+     - <600px: 1 column
+  */
+  .dashboard-grid{
+    display:grid;
+    grid-template-columns:repeat(12, 1fr);
+    gap:20px;
+    align-items:stretch;
+  }
+
+  /* desktop (3 across) */
+  .dashboard-grid .card{ grid-column: span 4; }
+
+  /* Source card needs more width on desktop so filters stay in one line */
+  @media (min-width: 1200px){
+    #card-source{ grid-column: span 8; }  /* 2/3 row width */
+  }
+
+  /* medium screens: 2 across, source full width */
+  @media (max-width: 1199px){
+    .dashboard-grid .card{ grid-column: span 6; }
+    #card-source{ grid-column: span 12; }
+  }
+
+  /* mobile */
+  @media (max-width: 600px){
+    .dashboard-grid .card{ grid-column: span 12; }
+  }
+
+  /* ===== Card ===== */
+  .card{
+    background:#fff;
+    border-radius:16px;
+    border:1px solid rgba(0,0,0,0.08);
+    box-shadow:0 10px 26px rgba(0,0,0,0.06);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    min-height:420px;
+    transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  }
+
+  .card:hover{
+    transform:translateY(-4px);
+    box-shadow:0 16px 34px rgba(0,0,0,0.10);
+    border-color:rgba(11,99,182,0.25);
+  }
+
+  .card-header{
+    padding:14px 18px;
+    border-bottom:1px solid rgba(0,0,0,0.06);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.03), rgba(0,0,0,0));
+  }
+
+  .card-title{ margin:0; font-size:1rem; font-weight:850; color:#111827; }
+  .stats{ display:flex; gap:10px; align-items:baseline; white-space:nowrap; }
+  .counter{ font-size:1.2rem; font-weight:900; color:#0b63b6; letter-spacing:-0.2px; }
+
+  .chart-wrap,.content{ padding:16px; flex:1; }
+  .chart{ min-height:260px; width:100%; }
+  .empty{ padding:12px 16px 16px; text-align:center; }
+
+  /* ===== Filters (DESKTOP FIX: no stacking/mess) ===== */
+  .filters{
+    padding:16px;
+    border-bottom:1px solid rgba(0,0,0,0.06);
+  }
+
+  /* Above 1200px we keep ONE neat row:
+     From | To | Country (flex) | Actions */
+  .filters-grid{
+    display:grid;
+    gap:12px;
+    align-items:end;
+    grid-template-columns: minmax(160px, 200px) minmax(160px, 200px) minmax(220px, 1fr) auto;
+  }
+
+  /* When Source is full width (<=1199px), allow 2 columns layout nicely */
+  @media (max-width: 1199px){
+    .filters-grid{
+      grid-template-columns: repeat(2, minmax(160px, 1fr));
+    }
+    .field-country{ grid-column: span 2; }
+    .field.actions{ grid-column: span 2; justify-content:flex-start; }
+  }
+
+  /* Mobile keeps your "good" view */
+  @media (max-width: 600px){
+    .filters-grid{
+      grid-template-columns: 1fr 1fr;
+    }
+    .field-country{ grid-column: span 2; }
+    .field.actions{ grid-column: span 2; }
+  }
+
+  .field{
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    min-width: 0;
+  }
+
+  .field-label{
+    font-size:0.86rem;
+    color:#6b7280;
+    font-weight:650;
+  }
+
+  /* Same height + clean look */
+  .input,.btn{
+    height:40px;
+    line-height:40px;
+    border-radius:12px;
+    border:1px solid rgba(0,0,0,0.15);
+    padding:0 12px;
+    box-sizing:border-box;
+    background:#fff;
+  }
+
+  .input:focus{
+    outline:none;
+    border-color: rgba(11,99,182,0.55);
+    box-shadow: 0 0 0 4px rgba(11,99,182,0.12);
+  }
+
+  /* Actions aligned nicely */
+  .field.actions{
+    display:flex;
+    gap:10px;
+    align-items:flex-end;
+    justify-content:flex-end;
+    white-space:nowrap;
+  }
+
+  .btn{
+    font-weight:850;
+    cursor:pointer;
+    transition: transform .15s ease, box-shadow .15s ease;
+  }
+  .btn:hover{ transform: translateY(-1px); box-shadow:0 10px 18px rgba(0,0,0,0.10); }
+  .btn.primary{ background:#0b63b6; color:#fff; border-color:#0b63b6; }
+
+  /* Pills row */
+  .filters-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    margin-top:12px;
+    flex-wrap:wrap;
+  }
+
+  .quick-pills{ display:flex; gap:8px; flex-wrap:wrap; }
+  .pill{
+    padding:7px 14px;
+    border-radius:999px;
+    border:1px solid rgba(0,0,0,0.15);
+    background:#fff;
+    cursor:pointer;
+    font-weight:800;
+    transition: transform .15s ease, background .15s ease;
+  }
+  .pill:hover{ transform: translateY(-1px); background: rgba(0,0,0,0.03); }
+
+  .legend{ margin-top:10px; }
+  .muted{ color:#6b7280; }
+  .tiny{ font-size:0.85rem; }
 </style>
-
-
 
 <!-- Education -->
 <section class="resume-section" id="education">
@@ -2959,7 +3103,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <!-- Contact Me -->
 
-
 <section class="resume-section" id="contactme" style="padding: 2rem 0;">
   <div class="resume-section-content container">
 
@@ -2983,18 +3126,27 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <li class="mb-2">⚙️ <strong>Analytics Engineering</strong> — scalable pipelines</li>
             </ul>
 
-            <div class="d-flex flex-wrap gap-2 mb-4">
-              <a href="mailto:rad.tousif@gmail.com" class="btn btn-gradient shadow-sm rounded-pill px-4 py-2 fw-semibold">
+            <!-- ✅ FIXED BUTTONS -->
+            <div class="d-flex flex-wrap gap-2 gap-md-3 mb-4">
+              <a href="mailto:rad.tousif@gmail.com"
+                 class="btn btn-gradient shadow-sm rounded-pill px-4 py-2 fw-semibold contact-btn"
+                 aria-label="Send me an email">
                 📧 Email Me
               </a>
-              <a href="https://www.linkedin.com/in/radtousif/" target="_blank" rel="noopener"
-                 class="btn shadow-sm rounded-pill px-4 py-2 fw-semibold"
-                 style="background:#0a66c2; color:#fff;">
+
+              <a href="https://www.linkedin.com/in/radtousif/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="btn btn-linkedin shadow-sm rounded-pill px-4 py-2 fw-semibold contact-btn"
+                 aria-label="Open my LinkedIn profile">
                 🔗 LinkedIn
               </a>
-              <a href="https://github.com/tousiftr" target="_blank" rel="noopener"
-                 class="btn shadow-sm rounded-pill px-4 py-2 fw-semibold"
-                 style="background:#24292e; color:#fff;">
+
+              <a href="https://github.com/tousiftr"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="btn btn-github shadow-sm rounded-pill px-4 py-2 fw-semibold contact-btn"
+                 aria-label="Open my GitHub profile">
                 💻 GitHub
               </a>
             </div>
@@ -3024,7 +3176,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
               <input type="hidden" name="_next" value="https://iamrad.xyz/ThankYou.html" />
 
-              <button type="submit" class="btn btn-gradient w-100 py-2 btn-lg shadow-sm rounded-pill fw-semibold">
+              <button type="submit" class="btn btn-gradient w-100 py-.5 btn-lg shadow-sm rounded-pill fw-semibold">
                 🚀 Send Message
               </button>
             </form>
@@ -3095,7 +3247,45 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <!-- Styles -->
   <style>
-    /* Reviews UI */
+    /* ✅ Contact buttons */
+    .contact-btn{
+      display:inline-flex;
+      align-items:center;
+      gap:.5rem;
+      text-decoration:none;
+      white-space:nowrap;
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease;
+    }
+    .contact-btn:hover{
+      transform: translateY(-1px);
+      filter: brightness(1.02);
+    }
+    .contact-btn:active{
+      transform: translateY(0);
+    }
+
+    .btn-gradient{
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color:#fff;
+      border:none;
+    }
+    .btn-gradient:hover{ color:#fff; }
+
+    .btn-linkedin{
+      background:#0a66c2;
+      color:#fff;
+      border:none;
+    }
+    .btn-linkedin:hover{ background:#084d94; color:#fff; }
+
+    .btn-github{
+      background:#24292e;
+      color:#fff;
+      border:none;
+    }
+    .btn-github:hover{ background:#000; color:#fff; }
+
+    /* Reviews UI (your existing styles) */
     .review-top{
       display:flex; gap:12px; align-items:center; justify-content:space-between;
       flex-wrap:wrap; padding-bottom:10px; border-bottom:1px solid #f0f0f0;
@@ -3139,18 +3329,15 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     @media (max-width:520px){ .grid2{grid-template-columns:1fr} }
   </style>
 
-  <!-- Supabase + Script -->
+  <!-- Supabase + Script (unchanged from yours) -->
   <script>
     (function(){
-      // ===== 1) PUT YOUR SUPABASE KEYS HERE =====
       const SUPABASE_URL = "https://nmsgbinaxfwwcpgpsucx.supabase.co";
       const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5tc2diaW5heGZ3d2NwZ3BzdWN4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY0ODAzNzAsImV4cCI6MjA3MjA1NjM3MH0.TC-LcpNJPTB6mwiTZgRYlh69fycs5tcGmS4B8yt0nNY";
 
-      // ===== 2) TABLES =====
-      const TABLE_REVIEWS = "site_reviews";   // create in Supabase
-      const TABLE_LIKES   = "site_likes";     // create in Supabase
+      const TABLE_REVIEWS = "site_reviews";
+      const TABLE_LIKES   = "site_likes";
 
-      // ===== DOM =====
       const likeBtn = document.getElementById("likeBtn");
       const likeCountEl = document.getElementById("likeCount");
       const starsWrap = document.getElementById("stars");
@@ -3163,10 +3350,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       const textEl = document.getElementById("reviewText");
       const msgEl = document.getElementById("reviewMsg");
 
-      // Prevent double-like per browser (basic)
       const LS_USER_LIKED = "rad_user_liked_global";
 
-      // ===== helpers =====
       function escapeHtml(s){
         return String(s).replace(/[&<>"']/g, m => ({
           "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
@@ -3194,7 +3379,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
 
       async function loadLikes(){
-        // We keep ONE row in site_likes with id=1
         const r = await api(`/rest/v1/${TABLE_LIKES}?id=eq.1&select=count`, { method:"GET" });
         if(!r.ok){ likeCountEl.textContent="0"; return; }
         const data = await r.json();
@@ -3208,7 +3392,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           return;
         }
 
-        // increment: fetch current then update (simple)
         const r = await api(`/rest/v1/${TABLE_LIKES}?id=eq.1&select=id,count`, { method:"GET" });
         if(!r.ok) throw new Error("Like fetch failed");
         const row = (await r.json())[0];
@@ -3234,7 +3417,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         }
         const reviews = await r.json();
 
-        // stats
         const allR = await api(`/rest/v1/${TABLE_REVIEWS}?select=rating`, { method:"GET" });
         let avg = "—", count = 0;
         if(allR.ok){
@@ -3248,7 +3430,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           avgRatingEl.textContent = avg;
         }
 
-        // list
         reviewsListEl.innerHTML = "";
         if(reviews.length === 0){
           reviewsListEl.innerHTML = `<div class="text-muted">No reviews yet. Be the first!</div>`;
@@ -3307,7 +3488,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         await loadReviews();
       }
 
-      // ===== events =====
       likeBtn.addEventListener("click", ()=> addLike().catch(err=>{
         console.error(err);
         msgEl.style.color="#dc2626";
@@ -3329,18 +3509,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         });
       });
 
-      // ===== init =====
       renderStars(5);
-
-      // First time setup check
-      Promise.all([loadLikes(), loadReviews()]).catch(err=>{
-        console.error(err);
-      });
-
+      Promise.all([loadLikes(), loadReviews()]).catch(err=> console.error(err));
     })();
   </script>
 </section>
-
 
 <!-- Custom Styling -->
 <style>
@@ -3411,4 +3584,3 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </script>
 </body>
 </html>
-
